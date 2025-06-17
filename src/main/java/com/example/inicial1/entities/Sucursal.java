@@ -41,6 +41,7 @@ public class Sucursal extends Base{
 
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "fk_sucursal_id")
+    //@Builder.Default
     private List<SucursalProducto> sucursalProductoList;
 
 

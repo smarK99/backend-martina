@@ -38,6 +38,7 @@ public class Producto extends Base{
 
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_producto_id")
+    //@Builder.Default
     private List<ProductoInsumo> productoInsumoList;
 
 }

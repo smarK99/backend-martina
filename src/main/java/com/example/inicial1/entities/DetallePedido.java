@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString
 @SuperBuilder
-@Table(name = "detalle_producto")
+@Table(name = "detalle_pedido")
 public class DetallePedido extends Base{
 
     @Column(name = "cantidad_detalle_pedido", nullable = false)

@@ -34,6 +34,7 @@ public class Reparto extends Base {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_reparto_id")
+    //@Builder.Default
     private List<Pedido> pedidosList;
 
     @ManyToOne

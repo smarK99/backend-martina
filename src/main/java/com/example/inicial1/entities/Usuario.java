@@ -48,7 +48,7 @@ public class Usuario extends Base{
 
     //Relaciones
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "fk_tipo_usuario_id")
-    private TipoUsuario tipoUsuario;
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_usuario_id")
+    private List<TipoUsuario> tipoUsuarioList;
 }

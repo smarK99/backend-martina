@@ -1,4 +1,6 @@
 package com.example.inicial1.services;
 
-public interface ITipoUsuarioService {
+import com.example.inicial1.entities.TipoUsuario;
+
+public interface ITipoUsuarioService extends BaseService<TipoUsuario,Long>{
 }

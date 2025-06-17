@@ -33,19 +33,22 @@ public class Inicial1Application {
 	private EstadoPedidoRepository estadoPedidoRepository;
 
 	@Autowired
-	CategoriaRepository categoriaRepository;
+	private CategoriaRepository categoriaRepository;
 
 	@Autowired
-	ProductoInsumoRepository productoInsumoRepository;
+	private ProductoInsumoRepository productoInsumoRepository;
 
 	@Autowired
-	SucursalProductoRepository sucursalProductoRepository;
+	private SucursalProductoRepository sucursalProductoRepository;
 
 	@Autowired
-	RepartoRepository repartoRepository;
+	private RepartoRepository repartoRepository;
 
 	@Autowired
-	EstadoRepartoRepository estadoRepartoRepository;
+	private EstadoRepartoRepository estadoRepartoRepository;
+
+	@Autowired
+	private TipoUsuarioRepository tipoUsuarioRepository;
 
 
 	public static void main(String[] args) {
@@ -68,12 +71,18 @@ public class Inicial1Application {
 					.fechaHoraInicioVigenciaTipoUsuario(LocalDate.now())
 					.fechaHoraFinVigenciaTipoUsuario(null)
 					.build();
+
+			tipoUsuarioRepository.save(admin);
+
 			TipoUsuario cliente = TipoUsuario.builder()
 					.descripcionTipoUsuario("Acceso a crear pedido y ver mis pedidos")
 					.nombreTipoUsuario("CLIENTE")
 					.fechaHoraInicioVigenciaTipoUsuario(LocalDate.now())
 					.fechaHoraFinVigenciaTipoUsuario(null)
 					.build();
+
+			tipoUsuarioRepository.save(cliente);
+
 			TipoUsuario repartidor = TipoUsuario.builder()
 					.descripcionTipoUsuario("Acceso a crear reparto y ver mis repartos")
 					.nombreTipoUsuario("REPARTIDOR")
@@ -81,36 +90,38 @@ public class Inicial1Application {
 					.fechaHoraFinVigenciaTipoUsuario(null)
 					.build();
 
+			tipoUsuarioRepository.save(repartidor);
+
 
 
 			/*---------Alta Usuario---------*/
 
 			Usuario u1 = Usuario.builder()
 					.dni("40987221")
-					.username("w21 I")
+					.username("W21")
 					.email("cliente1@gmail.com")
 					.direccion("San Martin 298")
 					.fechaHoraAltaUsuario(LocalDate.now())
 					.fechaHoraBajaUsuario(null)
-					.nombreCompletoUsuario("")
+					.nombreCompletoUsuario("Federico w21")
 					.password("123")
 					.telefono("413219")
 					.build();
-			u1.setTipoUsuario(cliente);
+			u1.setTipoUsuarioList(List.of(cliente));
 			usuarioRepository.save(u1);
 
 			Usuario u2 = Usuario.builder()
 					.dni("23453123")
-					.username("flavio72")
+					.username("flavio74")
 					.email("admin1@gmail.com")
 					.direccion("Ozamis 123")
 					.fechaHoraAltaUsuario(LocalDate.now())
 					.fechaHoraBajaUsuario(null)
-					.nombreCompletoUsuario("")
+					.nombreCompletoUsuario("Flavio Sabattini")
 					.password("123")
 					.telefono("423949")
 					.build();
-			u2.setTipoUsuario(admin);
+			u2.setTipoUsuarioList(List.of(admin));
 			usuarioRepository.save(u2);
 
 			Usuario u3 = Usuario.builder()
@@ -124,8 +135,38 @@ public class Inicial1Application {
 					.password("123")
 					.telefono("413219")
 					.build();
-			u3.setTipoUsuario(repartidor);
+			u3.setTipoUsuarioList(List.of(repartidor));
 			usuarioRepository.save(u3);
+
+			Usuario u4 = Usuario.builder()
+					.dni("22386759")
+					.username("turcokiosco")
+					.email("elturco@gmail.com")
+					.direccion("Ozamis 566")
+					.fechaHoraAltaUsuario(LocalDate.now())
+					.fechaHoraBajaUsuario(null)
+					.nombreCompletoUsuario("Turco Mucarzel")
+					.password("123")
+					.telefono("433619")
+					.build();
+
+			u4.setTipoUsuarioList(List.of(cliente));
+			usuarioRepository.save(u4);
+
+			Usuario u5 = Usuario.builder()
+					.dni("5489750")
+					.username("Magus")
+					.email("marisol@gmail.com")
+					.direccion("Barrio Canciller M D C 32")
+					.fechaHoraAltaUsuario(LocalDate.now())
+					.fechaHoraBajaUsuario(null)
+					.nombreCompletoUsuario("Marisol")
+					.password("123")
+					.telefono("466678")
+					.build();
+
+			u4.setTipoUsuarioList(List.of(cliente));
+			usuarioRepository.save(u5);
 
 			/*---------Alta Sucursal---------*/
 
@@ -139,13 +180,40 @@ public class Inicial1Application {
 			s1.setSucursalProductoList(null);
 
 			Sucursal s2 = Sucursal.builder()
+					.nombreSucursal("BEBE II")
+					.direccionSucursal("Ozamis y San Martin")
+					.descripcionSucursal("Erwin boy esquina")
+					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraBajaSucursal(null)
+					.build();
+			s2.setSucursalProductoList(null);
+
+			Sucursal s3 = Sucursal.builder()
+					.nombreSucursal("BEBE III")
+					.direccionSucursal("Padre Vazquez 435")
+					.descripcionSucursal("Erwin boy original casi esquina")
+					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraBajaSucursal(null)
+					.build();
+			s3.setSucursalProductoList(null);
+
+			Sucursal s4 = Sucursal.builder()
 					.nombreSucursal("W21 I")
 					.direccionSucursal("Av. Vistalba 231")
 					.descripcionSucursal("")
 					.fechaHoraAltaSucursal(LocalDate.now())
 					.fechaHoraBajaSucursal(null)
 					.build();
-			s2.setSucursalProductoList(null);
+			s4.setSucursalProductoList(null);
+
+			Sucursal s5 = Sucursal.builder()
+					.nombreSucursal("W21 II")
+					.direccionSucursal("Av. Saenz Peña 786")
+					.descripcionSucursal("Sucursal mitad de cuadra")
+					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraBajaSucursal(null)
+					.build();
+			s5.setSucursalProductoList(null);
 
 			/*---------Alta Estado Pedido---------*/
 
@@ -179,8 +247,8 @@ public class Inicial1Application {
 			/*---------Alta Categoria---------*/
 
 			Categoria c1 = Categoria.builder()
-					.nombreCategoria("Sandwich")
-					.descripcionCategoria("Todas las variedades de sandwiches")
+					.nombreCategoria("Sandwich Simple")
+					.descripcionCategoria("Escolares/Economicos")
 					.fechaHoraAltaCategoria(LocalDate.now())
 					.fechaHoraBajaCategoria(null)
 					.build();
@@ -195,6 +263,24 @@ public class Inicial1Application {
 					.build();
 
 			categoriaRepository.save(c2);
+
+			Categoria c3 = Categoria.builder()
+					.nombreCategoria("Sandwich Triple")
+					.descripcionCategoria("Triple envasado al vacio")
+					.fechaHoraAltaCategoria(LocalDate.now())
+					.fechaHoraBajaCategoria(null)
+					.build();
+
+			categoriaRepository.save(c3);
+
+			Categoria c4 = Categoria.builder()
+					.nombreCategoria("Sandwich Caja Premium")
+					.descripcionCategoria("x6 Sandwiches dobles en caja")
+					.fechaHoraAltaCategoria(LocalDate.now())
+					.fechaHoraBajaCategoria(null)
+					.build();
+
+			categoriaRepository.save(c4);
 
 			/*---------Alta Insumo---------*/
 
@@ -222,6 +308,30 @@ public class Inicial1Application {
 					.fechaHoraBajaInsumo(null)
 					.build();
 
+			Insumo i4 = Insumo.builder()
+					.nombreInsumo("Pan de Miga Comun")
+					.descripcionInsumo("Paquete de 2kg cortado")
+					.precioCompraInsumo(1500.00)
+					.fechaHoraAltaInsumo(LocalDate.now())
+					.fechaHoraBajaInsumo(null)
+					.build();
+
+			Insumo i5 = Insumo.builder()
+					.nombreInsumo("Mayonesa")
+					.descripcionInsumo("Pouch 3kg p/untar")
+					.precioCompraInsumo(6000.00)
+					.fechaHoraAltaInsumo(LocalDate.now())
+					.fechaHoraBajaInsumo(null)
+					.build();
+
+			Insumo i6 = Insumo.builder()
+					.nombreInsumo("Pan de Miga Integral")
+					.descripcionInsumo("Paquete de 2kg cortado")
+					.precioCompraInsumo(1300.00)
+					.fechaHoraAltaInsumo(LocalDate.now())
+					.fechaHoraBajaInsumo(null)
+					.build();
+
 			/*---------Alta ProductoInsumo---------*/
 
 			ProductoInsumo pi1 = ProductoInsumo.builder()
@@ -230,6 +340,20 @@ public class Inicial1Application {
 
 			pi1.setInsumo(i1);
 			productoInsumoRepository.save(pi1);
+
+			ProductoInsumo pi4 = ProductoInsumo.builder()
+					.cantidadInsumo(3)
+					.build();
+
+			pi4.setInsumo(i4);
+			productoInsumoRepository.save(pi4);
+
+			ProductoInsumo pi5 = ProductoInsumo.builder()
+					.cantidadInsumo(5)
+					.build();
+
+			pi5.setInsumo(i5);
+			productoInsumoRepository.save(pi5);
 
 			ProductoInsumo pi2 = ProductoInsumo.builder()
 					.cantidadInsumo(3)
@@ -245,6 +369,13 @@ public class Inicial1Application {
 			pi3.setInsumo(i3);
 			productoInsumoRepository.save(pi3);
 
+			ProductoInsumo pi6 = ProductoInsumo.builder()
+					.cantidadInsumo(3)
+					.build();
+
+			pi6.setInsumo(i6);
+			productoInsumoRepository.save(pi6);
+
 
 			/*---------Alta Producto---------*/
 
@@ -255,8 +386,8 @@ public class Inicial1Application {
 					.fechaHoraBajaProducto(null)
 					.build();
 
-			triplejyq.setProductoInsumoList(List.of(pi1));
-			triplejyq.setCategoria(c1);
+			triplejyq.setProductoInsumoList(List.of(pi1,pi4,pi5));
+			triplejyq.setCategoria(c3);
 			productoRepository.save(triplejyq);
 
 			Producto trsalame = Producto.builder()
@@ -266,8 +397,8 @@ public class Inicial1Application {
 					.fechaHoraBajaProducto(null)
 					.build();
 
-			trsalame.setProductoInsumoList(List.of(pi2));
-			trsalame.setCategoria(c1);
+			trsalame.setProductoInsumoList(List.of(pi2,pi4,pi5));
+			trsalame.setCategoria(c3);
 			productoRepository.save(trsalame);
 
 			Producto trcrudo = Producto.builder()
@@ -277,23 +408,57 @@ public class Inicial1Application {
 					.fechaHoraBajaProducto(null)
 					.build();
 
-			trcrudo.setProductoInsumoList(List.of(pi3));
-			trcrudo.setCategoria(c1);
+			trcrudo.setProductoInsumoList(List.of(pi3,pi6));
+			trcrudo.setCategoria(c3);
 			productoRepository.save(trcrudo);
+
+			Producto simplejyq = Producto.builder()
+					.nombreProducto("Escolar JyQ")
+					.descripcionProducto("Sandwich simple de Jamon cocido y queso")
+					.fechaHoraAltaProducto(LocalDate.now())
+					.fechaHoraBajaProducto(null)
+					.build();
+
+			simplejyq.setProductoInsumoList(List.of(pi1, pi4, pi5));
+			simplejyq.setCategoria(c1);
+			productoRepository.save(simplejyq);
 
 			/*---------Alta DetallePedido---------*/
 
 			DetallePedido dp1 = DetallePedido.builder()
+					.cantidadDetallePedido(3)
+					.build();
+
+			dp1.setProducto(triplejyq);
+
+			DetallePedido dp2 = DetallePedido.builder()
 					.cantidadDetallePedido(2)
 					.build();
 
-			DetallePedido dp2 = DetallePedido.builder()
-					.cantidadDetallePedido(4)
-					.build();
+			dp2.setProducto(trsalame);
 
 			DetallePedido dp3 = DetallePedido.builder()
+					.cantidadDetallePedido(2)
+					.build();
+
+			dp3.setProducto(trcrudo);
+
+			DetallePedido dp4 = DetallePedido.builder()
+					.cantidadDetallePedido(25)
+					.build();
+
+			dp4.setProducto(simplejyq);
+
+			DetallePedido dp5 = DetallePedido.builder()
 					.cantidadDetallePedido(1)
 					.build();
+
+			dp5.setProducto(triplejyq);
+
+			DetallePedido dp6 = DetallePedido.builder()
+					.cantidadDetallePedido(1)
+					.build();
+			dp6.setProducto(trcrudo);
 
 			/*---------Alta Pedido---------*/
 
@@ -320,6 +485,30 @@ public class Inicial1Application {
 			p2.setDetallePedidoList(List.of(dp1,dp3));
 
 			pedidoRepository.save(p2);
+
+			Pedido p3 = Pedido.builder()
+					.descripcionPedido("Pedido #3")
+					.fechaHoraAltaPedido(LocalDate.now())
+					.fechaHoraBajaPedido(null)
+					.build();
+
+			p3.setSucursal(s3);
+			p3.setEstadoPedido(creado);
+			p3.setDetallePedidoList(List.of(dp4));
+
+			pedidoRepository.save(p3);
+
+			Pedido p4 = Pedido.builder()
+					.descripcionPedido("Pedido #4")
+					.fechaHoraAltaPedido(LocalDate.now())
+					.fechaHoraBajaPedido(null)
+					.build();
+
+			p4.setSucursal(s4);
+			p4.setEstadoPedido(creado);
+			p4.setDetallePedidoList(List.of(dp5, dp6));
+
+			pedidoRepository.save(p4);
 
 			/*---------Alta EstadoReparto---------*/
 

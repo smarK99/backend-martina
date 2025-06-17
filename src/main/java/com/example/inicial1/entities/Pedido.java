@@ -39,6 +39,7 @@ public class Pedido extends Base{
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_pedido_id")
+    //@Builder.Default
     private List<DetallePedido> detallePedidoList;
 
 
