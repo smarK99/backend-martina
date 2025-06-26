@@ -47,8 +47,16 @@ public class Usuario extends Base{
     private LocalDate fechaHoraBajaUsuario;
 
     //Relaciones
-
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "fk_usuario_id")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "usuario_tipo_usuario",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "tipo_usuario_id")
+    )
     private List<TipoUsuario> tipoUsuarioList;
+
+
+//    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "fk_usuario_id")
+//    private List<TipoUsuario> tipoUsuarioList;
 }

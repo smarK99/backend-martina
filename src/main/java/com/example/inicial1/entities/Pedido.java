@@ -33,7 +33,8 @@ public class Pedido extends Base{
     @JoinColumn(name = "fk_estado_pedido_id")
     private EstadoPedido estadoPedido;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    //cascade type persist hace que las sucursales no se guarden en la bdd hasta que se las vincule a un pedido
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_sucursal_id")
     private Sucursal sucursal;
 

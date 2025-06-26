@@ -36,7 +36,7 @@ public class Producto extends Base{
     @JoinColumn(name = "fk_categoria_id")
     private Categoria categoria;
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_producto_id")
     //@Builder.Default
     private List<ProductoInsumo> productoInsumoList;

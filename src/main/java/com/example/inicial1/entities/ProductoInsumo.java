@@ -19,7 +19,8 @@ public class ProductoInsumo extends Base{
 
     //Relaciones
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    //Sacar el cascade persist, ya que entidad insumo es precargada y solo necesita vincularse con prodINSUMO
+    @ManyToOne
     @JoinColumn(name = "fk_insumo_id")
     private Insumo insumo;
 }

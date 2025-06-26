@@ -36,10 +36,10 @@ public class Inicial1Application {
 	private CategoriaRepository categoriaRepository;
 
 	@Autowired
-	private ProductoInsumoRepository productoInsumoRepository;
+	private InsumoRepository insumoRepository;
 
 	@Autowired
-	private SucursalProductoRepository sucursalProductoRepository;
+	private SucursalRepository sucursalRepository;
 
 	@Autowired
 	private RepartoRepository repartoRepository;
@@ -140,12 +140,12 @@ public class Inicial1Application {
 
 			Usuario u4 = Usuario.builder()
 					.dni("22386759")
-					.username("turcokiosco")
-					.email("elturco@gmail.com")
-					.direccion("Ozamis 566")
+					.username("shell")
+					.email("shell@gmail.com")
+					.direccion("Barrio El marquesado M A C 12")
 					.fechaHoraAltaUsuario(LocalDate.now())
 					.fechaHoraBajaUsuario(null)
-					.nombreCompletoUsuario("Turco Mucarzel")
+					.nombreCompletoUsuario("Osvaldo Scaglione")
 					.password("123")
 					.telefono("433619")
 					.build();
@@ -155,65 +155,19 @@ public class Inicial1Application {
 
 			Usuario u5 = Usuario.builder()
 					.dni("5489750")
-					.username("Magus")
-					.email("marisol@gmail.com")
+					.username("ErwinBoy")
+					.email("erwin@gmail.com")
 					.direccion("Barrio Canciller M D C 32")
 					.fechaHoraAltaUsuario(LocalDate.now())
 					.fechaHoraBajaUsuario(null)
-					.nombreCompletoUsuario("Marisol")
+					.nombreCompletoUsuario("Erwin Rodriguez")
 					.password("123")
 					.telefono("466678")
 					.build();
 
-			u4.setTipoUsuarioList(List.of(cliente));
+			u5.setTipoUsuarioList(List.of(cliente));
 			usuarioRepository.save(u5);
 
-			/*---------Alta Sucursal---------*/
-
-			Sucursal s1 = Sucursal.builder()
-					.nombreSucursal("BEBE I")
-					.direccionSucursal("Sarmiento 432")
-					.descripcionSucursal("Erwin boy mitad de cuadra")
-					.fechaHoraAltaSucursal(LocalDate.now())
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s1.setSucursalProductoList(null);
-
-			Sucursal s2 = Sucursal.builder()
-					.nombreSucursal("BEBE II")
-					.direccionSucursal("Ozamis y San Martin")
-					.descripcionSucursal("Erwin boy esquina")
-					.fechaHoraAltaSucursal(LocalDate.now())
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s2.setSucursalProductoList(null);
-
-			Sucursal s3 = Sucursal.builder()
-					.nombreSucursal("BEBE III")
-					.direccionSucursal("Padre Vazquez 435")
-					.descripcionSucursal("Erwin boy original casi esquina")
-					.fechaHoraAltaSucursal(LocalDate.now())
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s3.setSucursalProductoList(null);
-
-			Sucursal s4 = Sucursal.builder()
-					.nombreSucursal("W21 I")
-					.direccionSucursal("Av. Vistalba 231")
-					.descripcionSucursal("")
-					.fechaHoraAltaSucursal(LocalDate.now())
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s4.setSucursalProductoList(null);
-
-			Sucursal s5 = Sucursal.builder()
-					.nombreSucursal("W21 II")
-					.direccionSucursal("Av. Saenz Peña 786")
-					.descripcionSucursal("Sucursal mitad de cuadra")
-					.fechaHoraAltaSucursal(LocalDate.now())
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s5.setSucursalProductoList(null);
 
 			/*---------Alta Estado Pedido---------*/
 
@@ -292,6 +246,8 @@ public class Inicial1Application {
 					.fechaHoraBajaInsumo(null)
 					.build();
 
+			insumoRepository.save(i1);
+
 			Insumo i2 = Insumo.builder()
 					.nombreInsumo("Jamon Crudo")
 					.descripcionInsumo("Pieza de 4kg p/cortar")
@@ -299,6 +255,8 @@ public class Inicial1Application {
 					.fechaHoraAltaInsumo(LocalDate.now())
 					.fechaHoraBajaInsumo(null)
 					.build();
+
+			insumoRepository.save(i2);
 
 			Insumo i3 = Insumo.builder()
 					.nombreInsumo("Salame picado grueso")
@@ -308,6 +266,8 @@ public class Inicial1Application {
 					.fechaHoraBajaInsumo(null)
 					.build();
 
+			insumoRepository.save(i3);
+
 			Insumo i4 = Insumo.builder()
 					.nombreInsumo("Pan de Miga Comun")
 					.descripcionInsumo("Paquete de 2kg cortado")
@@ -315,6 +275,8 @@ public class Inicial1Application {
 					.fechaHoraAltaInsumo(LocalDate.now())
 					.fechaHoraBajaInsumo(null)
 					.build();
+
+			insumoRepository.save(i4);
 
 			Insumo i5 = Insumo.builder()
 					.nombreInsumo("Mayonesa")
@@ -324,6 +286,8 @@ public class Inicial1Application {
 					.fechaHoraBajaInsumo(null)
 					.build();
 
+			insumoRepository.save(i5);
+
 			Insumo i6 = Insumo.builder()
 					.nombreInsumo("Pan de Miga Integral")
 					.descripcionInsumo("Paquete de 2kg cortado")
@@ -332,6 +296,8 @@ public class Inicial1Application {
 					.fechaHoraBajaInsumo(null)
 					.build();
 
+			insumoRepository.save(i6);
+
 			/*---------Alta ProductoInsumo---------*/
 
 			ProductoInsumo pi1 = ProductoInsumo.builder()
@@ -339,42 +305,36 @@ public class Inicial1Application {
 					.build();
 
 			pi1.setInsumo(i1);
-			productoInsumoRepository.save(pi1);
 
 			ProductoInsumo pi4 = ProductoInsumo.builder()
 					.cantidadInsumo(3)
 					.build();
 
 			pi4.setInsumo(i4);
-			productoInsumoRepository.save(pi4);
 
 			ProductoInsumo pi5 = ProductoInsumo.builder()
 					.cantidadInsumo(5)
 					.build();
 
 			pi5.setInsumo(i5);
-			productoInsumoRepository.save(pi5);
 
 			ProductoInsumo pi2 = ProductoInsumo.builder()
 					.cantidadInsumo(3)
 					.build();
 
 			pi2.setInsumo(i2);
-			productoInsumoRepository.save(pi2);
 
 			ProductoInsumo pi3 = ProductoInsumo.builder()
 					.cantidadInsumo(1)
 					.build();
 
 			pi3.setInsumo(i3);
-			productoInsumoRepository.save(pi3);
 
 			ProductoInsumo pi6 = ProductoInsumo.builder()
 					.cantidadInsumo(3)
 					.build();
 
 			pi6.setInsumo(i6);
-			productoInsumoRepository.save(pi6);
 
 
 			/*---------Alta Producto---------*/
@@ -422,6 +382,113 @@ public class Inicial1Application {
 			simplejyq.setProductoInsumoList(List.of(pi1, pi4, pi5));
 			simplejyq.setCategoria(c1);
 			productoRepository.save(simplejyq);
+
+			/*---------Alta Sucursal Producto---------*/
+
+			SucursalProducto sp1 = SucursalProducto.builder()
+					.precioSucursalProducto(2900.0)
+					.fechaHoraUltModif(LocalDate.now())
+					.build();
+
+			sp1.setProducto(triplejyq);
+
+			/*---------Alta Sucursal---------*/
+
+			Sucursal s1 = Sucursal.builder()
+					.nombreSucursal("BEBE I")
+					.direccionSucursal("Sarmiento 432")
+					.descripcionSucursal("Erwin boy mitad de cuadra")
+					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraBajaSucursal(null)
+					.build();
+			s1.setSucursalProductoList(List.of(sp1));
+			s1.setUsuario(u5);
+
+			sucursalRepository.save(s1);
+
+			Sucursal s2 = Sucursal.builder()
+					.nombreSucursal("BEBE II")
+					.direccionSucursal("Ozamis y San Martin")
+					.descripcionSucursal("Erwin boy esquina")
+					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraBajaSucursal(null)
+					.build();
+			s2.setSucursalProductoList(null);
+			s2.setUsuario(u5);
+
+			sucursalRepository.save(s2);
+
+			Sucursal s3 = Sucursal.builder()
+					.nombreSucursal("BEBE III")
+					.direccionSucursal("Padre Vazquez 435")
+					.descripcionSucursal("Erwin boy original casi esquina")
+					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraBajaSucursal(null)
+					.build();
+			s3.setSucursalProductoList(null);
+			s3.setUsuario(u5);
+
+			sucursalRepository.save(s3);
+
+			Sucursal s4 = Sucursal.builder()
+					.nombreSucursal("W21 I")
+					.direccionSucursal("Av. Vistalba 231")
+					.descripcionSucursal("")
+					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraBajaSucursal(null)
+					.build();
+			s4.setSucursalProductoList(null);
+			s4.setUsuario(u1);
+
+			sucursalRepository.save(s4);
+
+			Sucursal s5 = Sucursal.builder()
+					.nombreSucursal("W21 II")
+					.direccionSucursal("Av. Saenz Peña 786")
+					.descripcionSucursal("Sucursal mitad de cuadra")
+					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraBajaSucursal(null)
+					.build();
+			s5.setSucursalProductoList(null);
+			s5.setUsuario(u1);
+
+			sucursalRepository.save(s5);
+
+			Sucursal s6 = Sucursal.builder()
+					.nombreSucursal("Shell Maipu")
+					.direccionSucursal("Ozamis 433")
+					.descripcionSucursal("Shell esquina Ozamis y Mitre")
+					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraBajaSucursal(null)
+					.build();
+			s6.setSucursalProductoList(null);
+			s6.setUsuario(u4);
+
+			sucursalRepository.save(s6);
+
+			Sucursal s7 = Sucursal.builder()
+					.nombreSucursal("Shell La Consulta")
+					.direccionSucursal("Huarpes 324")
+					.descripcionSucursal("Shell esquina Huarpes y Colon")
+					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraBajaSucursal(null)
+					.build();
+			s7.setSucursalProductoList(null);
+			s7.setUsuario(u4);
+
+			sucursalRepository.save(s7);
+
+			Sucursal s8 = Sucursal.builder()
+					.nombreSucursal("Shell Eugenio Bustos")
+					.direccionSucursal("Ruta Nacional 40 y San Juan Bosco")
+					.descripcionSucursal("IIP S.A")
+					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraBajaSucursal(null)
+					.build();
+			s8.setSucursalProductoList(null);
+			s8.setUsuario(u4);
+
+			sucursalRepository.save(s8);
 
 			/*---------Alta DetallePedido---------*/
 
@@ -510,6 +577,18 @@ public class Inicial1Application {
 
 			pedidoRepository.save(p4);
 
+			Pedido p5 = Pedido.builder()
+					.descripcionPedido("Pedido Vacio")
+					.fechaHoraAltaPedido(LocalDate.now())
+					.fechaHoraBajaPedido(null)
+					.build();
+
+			p5.setSucursal(s8);
+			p5.setEstadoPedido(creado);
+			p5.setDetallePedidoList(null);
+
+			pedidoRepository.save(p5);
+
 			/*---------Alta EstadoReparto---------*/
 
 			EstadoReparto er1 = EstadoReparto.builder()
@@ -555,6 +634,7 @@ public class Inicial1Application {
 			r2.setEstadoReparto(er2);
 			r2.setUsuario(u3);
 			repartoRepository.save(r2);
+
 
 
 		};
