@@ -12,8 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
@@ -304,40 +302,41 @@ public class Inicial1Application {
 					.cantidadInsumo(2)
 					.build();
 
-			pi1.setInsumo(i1);
-
-			ProductoInsumo pi4 = ProductoInsumo.builder()
-					.cantidadInsumo(3)
-					.build();
-
-			pi4.setInsumo(i4);
-
-			ProductoInsumo pi5 = ProductoInsumo.builder()
-					.cantidadInsumo(5)
-					.build();
-
-			pi5.setInsumo(i5);
+			pi1.setInsumo(i1);//COCIDO
 
 			ProductoInsumo pi2 = ProductoInsumo.builder()
 					.cantidadInsumo(3)
 					.build();
 
-			pi2.setInsumo(i2);
+			pi2.setInsumo(i4);//Pan de miga
 
 			ProductoInsumo pi3 = ProductoInsumo.builder()
+					.cantidadInsumo(5)
+					.build();
+
+			pi3.setInsumo(i5);//Mayonesa
+
+			ProductoInsumo pi4 = ProductoInsumo.builder()
+					.cantidadInsumo(3)
+					.build();
+
+			pi4.setInsumo(i2);//Jamon crudo
+
+			ProductoInsumo pi5 = ProductoInsumo.builder()
 					.cantidadInsumo(1)
 					.build();
 
-			pi3.setInsumo(i3);
+			pi5.setInsumo(i3);//Salame
 
 			ProductoInsumo pi6 = ProductoInsumo.builder()
 					.cantidadInsumo(3)
 					.build();
 
-			pi6.setInsumo(i6);
+			pi6.setInsumo(i6);//Miga integral
 
 
 			/*---------Alta Producto---------*/
+			/*Da error si vinculamos un pi a un producto ya que esto es invalido por el DC*/
 
 			Producto triplejyq = Producto.builder()
 					.nombreProducto("Triple Jamon Cocido")
@@ -346,7 +345,7 @@ public class Inicial1Application {
 					.fechaHoraBajaProducto(null)
 					.build();
 
-			triplejyq.setProductoInsumoList(List.of(pi1,pi4,pi5));
+			triplejyq.setProductoInsumoList(List.of(pi1));
 			triplejyq.setCategoria(c3);
 			productoRepository.save(triplejyq);
 
@@ -357,7 +356,7 @@ public class Inicial1Application {
 					.fechaHoraBajaProducto(null)
 					.build();
 
-			trsalame.setProductoInsumoList(List.of(pi2,pi4,pi5));
+			trsalame.setProductoInsumoList(List.of(pi2));
 			trsalame.setCategoria(c3);
 			productoRepository.save(trsalame);
 
@@ -368,7 +367,7 @@ public class Inicial1Application {
 					.fechaHoraBajaProducto(null)
 					.build();
 
-			trcrudo.setProductoInsumoList(List.of(pi3,pi6));
+			trcrudo.setProductoInsumoList(List.of(pi3));
 			trcrudo.setCategoria(c3);
 			productoRepository.save(trcrudo);
 
@@ -379,9 +378,31 @@ public class Inicial1Application {
 					.fechaHoraBajaProducto(null)
 					.build();
 
-			simplejyq.setProductoInsumoList(List.of(pi1, pi4, pi5));
+			simplejyq.setProductoInsumoList(List.of(pi4));
 			simplejyq.setCategoria(c1);
 			productoRepository.save(simplejyq);
+
+			Producto blisterjyq = Producto.builder()
+					.nombreProducto("Blister x6 JyQ")
+					.descripcionProducto("x6 Sandwich de Jamon cocido y queso")
+					.fechaHoraAltaProducto(LocalDate.now())
+					.fechaHoraBajaProducto(null)
+					.build();
+
+			blisterjyq.setProductoInsumoList(List.of(pi5));
+			blisterjyq.setCategoria(c4);
+			productoRepository.save(blisterjyq);
+
+			Producto blistercrudo = Producto.builder()
+					.nombreProducto("Blister x6 Crudo")
+					.descripcionProducto("x6 Sandwich de Jamon crudo y queso")
+					.fechaHoraAltaProducto(LocalDate.now())
+					.fechaHoraBajaProducto(null)
+					.build();
+
+			blistercrudo.setProductoInsumoList(List.of(pi6));
+			blistercrudo.setCategoria(c4);
+			productoRepository.save(blistercrudo);
 
 			/*---------Alta Sucursal Producto---------*/
 
@@ -392,6 +413,13 @@ public class Inicial1Application {
 
 			sp1.setProducto(triplejyq);
 
+			SucursalProducto sp2 = SucursalProducto.builder()
+					.precioSucursalProducto(2700.0)
+					.fechaHoraUltModif(LocalDate.now())
+					.build();
+
+			sp2.setProducto(triplejyq);
+
 			/*---------Alta Sucursal---------*/
 
 			Sucursal s1 = Sucursal.builder()
@@ -401,7 +429,7 @@ public class Inicial1Application {
 					.fechaHoraAltaSucursal(LocalDate.now())
 					.fechaHoraBajaSucursal(null)
 					.build();
-			s1.setSucursalProductoList(List.of(sp1));
+			s1.setSucursalProductoList(List.of(sp2));
 			s1.setUsuario(u5);
 
 			sucursalRepository.save(s1);
@@ -413,7 +441,7 @@ public class Inicial1Application {
 					.fechaHoraAltaSucursal(LocalDate.now())
 					.fechaHoraBajaSucursal(null)
 					.build();
-			s2.setSucursalProductoList(null);
+			s2.setSucursalProductoList(List.of(sp1));
 			s2.setUsuario(u5);
 
 			sucursalRepository.save(s2);
