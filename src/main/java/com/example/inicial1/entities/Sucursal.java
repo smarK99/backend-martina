@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -28,10 +27,10 @@ public class Sucursal extends Base{
     private String direccionSucursal;
 
     @Column(name = "fecha_hora_alta_sucursal", nullable = false)
-    private LocalDate fechaHoraAltaSucursal;
+    private LocalDateTime fechaHoraAltaSucursal;
 
     @Column(name = "fecha_hora_baja_sucursal", nullable = true)
-    private LocalDate fechaHoraBajaSucursal;
+    private LocalDateTime fechaHoraBajaSucursal;
 
     //Relaciones
 

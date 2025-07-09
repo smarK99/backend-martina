@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -21,7 +21,7 @@ public class SucursalProducto extends Base{
     private Double precioSucursalProducto;
 
     @Column(name = "fecha_hora_ultima_modif", nullable = false)
-    private LocalDate fechaHoraUltModif;
+    private LocalDateTime fechaHoraUltModif;
 
     //Relaciones
 

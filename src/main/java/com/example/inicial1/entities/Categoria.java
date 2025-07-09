@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -26,9 +26,9 @@ public class Categoria extends Base{
     private String descripcionCategoria;
 
     @Column(name = "fecha_hora_alta_categoria", nullable = false)
-    private LocalDate fechaHoraAltaCategoria;
+    private LocalDateTime fechaHoraAltaCategoria;
 
     @Column(name = "fecha_hora_baja_categoria", nullable = true)
-    private LocalDate fechaHoraBajaCategoria;
+    private LocalDateTime fechaHoraBajaCategoria;
 
 }

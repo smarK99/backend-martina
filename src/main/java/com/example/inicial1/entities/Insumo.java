@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -29,9 +29,9 @@ public class Insumo extends Base{
     private Double precioCompraInsumo;
 
     @Column(name = "fecha_hora_alta_insumo", nullable = false)
-    private LocalDate fechaHoraAltaInsumo;
+    private LocalDateTime fechaHoraAltaInsumo;
 
     @Column(name = "fecha_hora_baja_insumo", nullable = true)
-    private LocalDate fechaHoraBajaInsumo;
+    private LocalDateTime fechaHoraBajaInsumo;
 
 }

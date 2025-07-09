@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,10 +22,13 @@ public class Pedido extends Base{
     private String descripcionPedido;
 
     @Column(name = "fecha_hora_alta_pedido", nullable = false)
-    private LocalDate fechaHoraAltaPedido;
+    private LocalDateTime fechaHoraAltaPedido;
 
     @Column(name = "fecha_hora_baja_pedido", nullable = true)
-    private LocalDate fechaHoraBajaPedido;
+    private LocalDateTime fechaHoraBajaPedido;
+
+    @Column(name = "importe_total_pedido")
+    private Double importeTotalPedido;
 
     //Relaciones
 

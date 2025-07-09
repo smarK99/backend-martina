@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -24,11 +24,11 @@ public class Reparto extends Base {
     @Column(name = "descripcion_reparto", nullable = false)
     private String descripcionReparto;
 
-    @Column(name = "fecha_hora_alta_reparto", nullable = false)
-    private LocalDate fechaHoraAltaReparto;
+    @Column(name = "fecha_hora_inicio_reparto", nullable = false)
+    private LocalDateTime fechaHoraInicioReparto;
 
-    @Column(name = "fecha_hora_baja_reparto", nullable = true)
-    private LocalDate fechaHoraBajaReparto;
+    @Column(name = "fecha_hora_fin_reparto", nullable = true)
+    private LocalDateTime fechaHoraFinReparto;
 
     //Relaciones
 

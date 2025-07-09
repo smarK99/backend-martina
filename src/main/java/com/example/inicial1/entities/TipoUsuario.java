@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -28,9 +28,9 @@ public class TipoUsuario extends Base{
     private String descripcionTipoUsuario;
 
     @Column(name = "fecha_hora_inicio_vigencia_tu", nullable = false)
-    private LocalDate fechaHoraInicioVigenciaTipoUsuario;
+    private LocalDateTime fechaHoraInicioVigenciaTipoUsuario;
 
     @Column(name = "fecha_hora_fin_vigencia_tu", nullable = true)
-    private LocalDate fechaHoraFinVigenciaTipoUsuario;
+    private LocalDateTime fechaHoraFinVigenciaTipoUsuario;
 
 }

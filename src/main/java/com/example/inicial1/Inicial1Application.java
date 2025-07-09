@@ -11,7 +11,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @SpringBootApplication
@@ -66,7 +67,7 @@ public class Inicial1Application {
 			TipoUsuario admin = TipoUsuario.builder()
 					.descripcionTipoUsuario("Acceso a todas las funcionalidades")
 					.nombreTipoUsuario("ADMIN")
-					.fechaHoraInicioVigenciaTipoUsuario(LocalDate.now())
+					.fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraFinVigenciaTipoUsuario(null)
 					.build();
 
@@ -75,7 +76,7 @@ public class Inicial1Application {
 			TipoUsuario cliente = TipoUsuario.builder()
 					.descripcionTipoUsuario("Acceso a crear pedido y ver mis pedidos")
 					.nombreTipoUsuario("CLIENTE")
-					.fechaHoraInicioVigenciaTipoUsuario(LocalDate.now())
+					.fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraFinVigenciaTipoUsuario(null)
 					.build();
 
@@ -84,7 +85,7 @@ public class Inicial1Application {
 			TipoUsuario repartidor = TipoUsuario.builder()
 					.descripcionTipoUsuario("Acceso a crear reparto y ver mis repartos")
 					.nombreTipoUsuario("REPARTIDOR")
-					.fechaHoraInicioVigenciaTipoUsuario(LocalDate.now())
+					.fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraFinVigenciaTipoUsuario(null)
 					.build();
 
@@ -99,7 +100,7 @@ public class Inicial1Application {
 					.username("W21")
 					.email("cliente1@gmail.com")
 					.direccion("San Martin 298")
-					.fechaHoraAltaUsuario(LocalDate.now())
+					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaUsuario(null)
 					.nombreCompletoUsuario("Federico w21")
 					.password("123")
@@ -113,7 +114,7 @@ public class Inicial1Application {
 					.username("flavio74")
 					.email("admin1@gmail.com")
 					.direccion("Ozamis 123")
-					.fechaHoraAltaUsuario(LocalDate.now())
+					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaUsuario(null)
 					.nombreCompletoUsuario("Flavio Sabattini")
 					.password("123")
@@ -127,7 +128,7 @@ public class Inicial1Application {
 					.username("sm99")
 					.email("repartidor1@gmail.com")
 					.direccion("B° 24sept 5")
-					.fechaHoraAltaUsuario(LocalDate.now())
+					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaUsuario(null)
 					.nombreCompletoUsuario("Santiago Marquez")
 					.password("123")
@@ -141,7 +142,7 @@ public class Inicial1Application {
 					.username("shell")
 					.email("shell@gmail.com")
 					.direccion("Barrio El marquesado M A C 12")
-					.fechaHoraAltaUsuario(LocalDate.now())
+					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaUsuario(null)
 					.nombreCompletoUsuario("Osvaldo Scaglione")
 					.password("123")
@@ -156,7 +157,7 @@ public class Inicial1Application {
 					.username("ErwinBoy")
 					.email("erwin@gmail.com")
 					.direccion("Barrio Canciller M D C 32")
-					.fechaHoraAltaUsuario(LocalDate.now())
+					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaUsuario(null)
 					.nombreCompletoUsuario("Erwin Rodriguez")
 					.password("123")
@@ -172,7 +173,7 @@ public class Inicial1Application {
 			EstadoPedido creado = EstadoPedido.builder()
 					.nombreEstadoPedido("CREADO")
 					.descripcionEstadoPedido("El cliente/dueño da de alta un pedido y este toma el estado creado")
-					.fechaHoraAltaEstadoPedido(LocalDate.now())
+					.fechaHoraAltaEstadoPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaEstadoPedido(null)
 					.build();
 
@@ -181,7 +182,7 @@ public class Inicial1Application {
 			EstadoPedido enproceso = EstadoPedido.builder()
 					.nombreEstadoPedido("EN_PROCESO")
 					.descripcionEstadoPedido("El dueño da la orden para empezar a elaborar un pedido y este toma el estado en proceso")
-					.fechaHoraAltaEstadoPedido(LocalDate.now())
+					.fechaHoraAltaEstadoPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaEstadoPedido(null)
 					.build();
 
@@ -190,7 +191,7 @@ public class Inicial1Application {
 			EstadoPedido listo = EstadoPedido.builder()
 					.nombreEstadoPedido("LISTO")
 					.descripcionEstadoPedido("El pedido ya esta preparado en la camara de frio")
-					.fechaHoraAltaEstadoPedido(LocalDate.now())
+					.fechaHoraAltaEstadoPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaEstadoPedido(null)
 					.build();
 
@@ -201,7 +202,7 @@ public class Inicial1Application {
 			Categoria c1 = Categoria.builder()
 					.nombreCategoria("Sandwich Simple")
 					.descripcionCategoria("Escolares/Economicos")
-					.fechaHoraAltaCategoria(LocalDate.now())
+					.fechaHoraAltaCategoria(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaCategoria(null)
 					.build();
 
@@ -210,7 +211,7 @@ public class Inicial1Application {
 			Categoria c2 = Categoria.builder()
 					.nombreCategoria("Postre")
 					.descripcionCategoria("Postres en potes de 300gr")
-					.fechaHoraAltaCategoria(LocalDate.now())
+					.fechaHoraAltaCategoria(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaCategoria(null)
 					.build();
 
@@ -219,7 +220,7 @@ public class Inicial1Application {
 			Categoria c3 = Categoria.builder()
 					.nombreCategoria("Sandwich Triple")
 					.descripcionCategoria("Triple envasado al vacio")
-					.fechaHoraAltaCategoria(LocalDate.now())
+					.fechaHoraAltaCategoria(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaCategoria(null)
 					.build();
 
@@ -228,7 +229,7 @@ public class Inicial1Application {
 			Categoria c4 = Categoria.builder()
 					.nombreCategoria("Sandwich Caja Premium")
 					.descripcionCategoria("x6 Sandwiches dobles en caja")
-					.fechaHoraAltaCategoria(LocalDate.now())
+					.fechaHoraAltaCategoria(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaCategoria(null)
 					.build();
 
@@ -240,7 +241,7 @@ public class Inicial1Application {
 					.nombreInsumo("Jamon Cocido")
 					.descripcionInsumo("Pieza de 5kg p/cortar 80% cerdo")
 					.precioCompraInsumo(5000.00)
-					.fechaHoraAltaInsumo(LocalDate.now())
+					.fechaHoraAltaInsumo(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaInsumo(null)
 					.build();
 
@@ -250,7 +251,7 @@ public class Inicial1Application {
 					.nombreInsumo("Jamon Crudo")
 					.descripcionInsumo("Pieza de 4kg p/cortar")
 					.precioCompraInsumo(7000.00)
-					.fechaHoraAltaInsumo(LocalDate.now())
+					.fechaHoraAltaInsumo(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaInsumo(null)
 					.build();
 
@@ -260,7 +261,7 @@ public class Inicial1Application {
 					.nombreInsumo("Salame picado grueso")
 					.descripcionInsumo("Pieza de 3kg p/cortar")
 					.precioCompraInsumo(4000.00)
-					.fechaHoraAltaInsumo(LocalDate.now())
+					.fechaHoraAltaInsumo(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaInsumo(null)
 					.build();
 
@@ -270,7 +271,7 @@ public class Inicial1Application {
 					.nombreInsumo("Pan de Miga Comun")
 					.descripcionInsumo("Paquete de 2kg cortado")
 					.precioCompraInsumo(1500.00)
-					.fechaHoraAltaInsumo(LocalDate.now())
+					.fechaHoraAltaInsumo(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaInsumo(null)
 					.build();
 
@@ -280,7 +281,7 @@ public class Inicial1Application {
 					.nombreInsumo("Mayonesa")
 					.descripcionInsumo("Pouch 3kg p/untar")
 					.precioCompraInsumo(6000.00)
-					.fechaHoraAltaInsumo(LocalDate.now())
+					.fechaHoraAltaInsumo(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaInsumo(null)
 					.build();
 
@@ -290,7 +291,7 @@ public class Inicial1Application {
 					.nombreInsumo("Pan de Miga Integral")
 					.descripcionInsumo("Paquete de 2kg cortado")
 					.precioCompraInsumo(1300.00)
-					.fechaHoraAltaInsumo(LocalDate.now())
+					.fechaHoraAltaInsumo(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaInsumo(null)
 					.build();
 
@@ -341,7 +342,7 @@ public class Inicial1Application {
 			Producto triplejyq = Producto.builder()
 					.nombreProducto("Triple Jamon Cocido")
 					.descripcionProducto("Sandwich triple de jamon cocido y queso")
-					.fechaHoraAltaProducto(LocalDate.now())
+					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
 
@@ -352,7 +353,7 @@ public class Inicial1Application {
 			Producto trsalame = Producto.builder()
 					.nombreProducto("Triple Salame")
 					.descripcionProducto("Sandwich triple de salame y queso")
-					.fechaHoraAltaProducto(LocalDate.now())
+					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
 
@@ -363,7 +364,7 @@ public class Inicial1Application {
 			Producto trcrudo = Producto.builder()
 					.nombreProducto("Triple crudo")
 					.descripcionProducto("Sandwich triple de Jamon crudo y queso")
-					.fechaHoraAltaProducto(LocalDate.now())
+					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
 
@@ -374,7 +375,7 @@ public class Inicial1Application {
 			Producto simplejyq = Producto.builder()
 					.nombreProducto("Escolar JyQ")
 					.descripcionProducto("Sandwich simple de Jamon cocido y queso")
-					.fechaHoraAltaProducto(LocalDate.now())
+					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
 
@@ -385,7 +386,7 @@ public class Inicial1Application {
 			Producto blisterjyq = Producto.builder()
 					.nombreProducto("Blister x6 JyQ")
 					.descripcionProducto("x6 Sandwich de Jamon cocido y queso")
-					.fechaHoraAltaProducto(LocalDate.now())
+					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
 
@@ -396,7 +397,7 @@ public class Inicial1Application {
 			Producto blistercrudo = Producto.builder()
 					.nombreProducto("Blister x6 Crudo")
 					.descripcionProducto("x6 Sandwich de Jamon crudo y queso")
-					.fechaHoraAltaProducto(LocalDate.now())
+					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
 
@@ -408,14 +409,14 @@ public class Inicial1Application {
 
 			SucursalProducto sp1 = SucursalProducto.builder()
 					.precioSucursalProducto(2900.0)
-					.fechaHoraUltModif(LocalDate.now())
+					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.build();
 
 			sp1.setProducto(triplejyq);
 
 			SucursalProducto sp2 = SucursalProducto.builder()
 					.precioSucursalProducto(2700.0)
-					.fechaHoraUltModif(LocalDate.now())
+					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.build();
 
 			sp2.setProducto(triplejyq);
@@ -426,7 +427,7 @@ public class Inicial1Application {
 					.nombreSucursal("BEBE I")
 					.direccionSucursal("Sarmiento 432")
 					.descripcionSucursal("Erwin boy mitad de cuadra")
-					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaSucursal(null)
 					.build();
 			s1.setSucursalProductoList(List.of(sp2));
@@ -438,7 +439,7 @@ public class Inicial1Application {
 					.nombreSucursal("BEBE II")
 					.direccionSucursal("Ozamis y San Martin")
 					.descripcionSucursal("Erwin boy esquina")
-					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaSucursal(null)
 					.build();
 			s2.setSucursalProductoList(List.of(sp1));
@@ -450,7 +451,7 @@ public class Inicial1Application {
 					.nombreSucursal("BEBE III")
 					.direccionSucursal("Padre Vazquez 435")
 					.descripcionSucursal("Erwin boy original casi esquina")
-					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaSucursal(null)
 					.build();
 			s3.setSucursalProductoList(null);
@@ -462,7 +463,7 @@ public class Inicial1Application {
 					.nombreSucursal("W21 I")
 					.direccionSucursal("Av. Vistalba 231")
 					.descripcionSucursal("")
-					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaSucursal(null)
 					.build();
 			s4.setSucursalProductoList(null);
@@ -474,7 +475,7 @@ public class Inicial1Application {
 					.nombreSucursal("W21 II")
 					.direccionSucursal("Av. Saenz Peña 786")
 					.descripcionSucursal("Sucursal mitad de cuadra")
-					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaSucursal(null)
 					.build();
 			s5.setSucursalProductoList(null);
@@ -486,7 +487,7 @@ public class Inicial1Application {
 					.nombreSucursal("Shell Maipu")
 					.direccionSucursal("Ozamis 433")
 					.descripcionSucursal("Shell esquina Ozamis y Mitre")
-					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaSucursal(null)
 					.build();
 			s6.setSucursalProductoList(null);
@@ -498,7 +499,7 @@ public class Inicial1Application {
 					.nombreSucursal("Shell La Consulta")
 					.direccionSucursal("Huarpes 324")
 					.descripcionSucursal("Shell esquina Huarpes y Colon")
-					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaSucursal(null)
 					.build();
 			s7.setSucursalProductoList(null);
@@ -510,7 +511,7 @@ public class Inicial1Application {
 					.nombreSucursal("Shell Eugenio Bustos")
 					.direccionSucursal("Ruta Nacional 40 y San Juan Bosco")
 					.descripcionSucursal("IIP S.A")
-					.fechaHoraAltaSucursal(LocalDate.now())
+					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaSucursal(null)
 					.build();
 			s8.setSucursalProductoList(null);
@@ -522,36 +523,42 @@ public class Inicial1Application {
 
 			DetallePedido dp1 = DetallePedido.builder()
 					.cantidadDetallePedido(3)
+					.subtotalDetallePedido(9000.0)
 					.build();
 
 			dp1.setProducto(triplejyq);
 
 			DetallePedido dp2 = DetallePedido.builder()
 					.cantidadDetallePedido(2)
+					.subtotalDetallePedido(4000.0)
 					.build();
 
 			dp2.setProducto(trsalame);
 
 			DetallePedido dp3 = DetallePedido.builder()
 					.cantidadDetallePedido(2)
+					.subtotalDetallePedido(5500.0)
 					.build();
 
 			dp3.setProducto(trcrudo);
 
 			DetallePedido dp4 = DetallePedido.builder()
 					.cantidadDetallePedido(25)
+					.subtotalDetallePedido(32500.0)
 					.build();
 
 			dp4.setProducto(simplejyq);
 
 			DetallePedido dp5 = DetallePedido.builder()
 					.cantidadDetallePedido(1)
+					.subtotalDetallePedido(2900.0)
 					.build();
 
 			dp5.setProducto(triplejyq);
 
 			DetallePedido dp6 = DetallePedido.builder()
 					.cantidadDetallePedido(1)
+					.subtotalDetallePedido(3050.0)
 					.build();
 			dp6.setProducto(trcrudo);
 
@@ -559,70 +566,88 @@ public class Inicial1Application {
 
 			Pedido p1 = Pedido.builder()
 					.descripcionPedido("Pedido #1")
-					.fechaHoraAltaPedido(LocalDate.now())
+					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaPedido(null)
 					.build();
 
 			p1.setSucursal(s1);
 			p1.setEstadoPedido(creado);
 			p1.setDetallePedidoList(List.of(dp2));
+			p1.setImporteTotalPedido(4000.0);
 
 			pedidoRepository.save(p1);
 
 			Pedido p2 = Pedido.builder()
 					.descripcionPedido("Pedido #2")
-					.fechaHoraAltaPedido(LocalDate.now())
+					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaPedido(null)
 					.build();
 
 			p2.setSucursal(s2);
 			p2.setEstadoPedido(creado);
 			p2.setDetallePedidoList(List.of(dp1,dp3));
+			p2.setImporteTotalPedido(14500.0);
 
 			pedidoRepository.save(p2);
 
 			Pedido p3 = Pedido.builder()
 					.descripcionPedido("Pedido #3")
-					.fechaHoraAltaPedido(LocalDate.now())
+					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaPedido(null)
 					.build();
 
 			p3.setSucursal(s3);
 			p3.setEstadoPedido(creado);
 			p3.setDetallePedidoList(List.of(dp4));
+			p3.setImporteTotalPedido(32500.0);
 
 			pedidoRepository.save(p3);
 
 			Pedido p4 = Pedido.builder()
 					.descripcionPedido("Pedido #4")
-					.fechaHoraAltaPedido(LocalDate.now())
+					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaPedido(null)
 					.build();
 
 			p4.setSucursal(s4);
 			p4.setEstadoPedido(creado);
 			p4.setDetallePedidoList(List.of(dp5, dp6));
+			p4.setImporteTotalPedido(5950.0);
 
 			pedidoRepository.save(p4);
 
 			Pedido p5 = Pedido.builder()
 					.descripcionPedido("Pedido Vacio")
-					.fechaHoraAltaPedido(LocalDate.now())
+					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaPedido(null)
 					.build();
 
 			p5.setSucursal(s8);
 			p5.setEstadoPedido(creado);
 			p5.setDetallePedidoList(null);
+			p5.setImporteTotalPedido(0.0);
 
 			pedidoRepository.save(p5);
+
+			Pedido p6 = Pedido.builder()
+					.descripcionPedido("Pedido Vacio #2")
+					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraBajaPedido(null)
+					.build();
+
+			p6.setSucursal(s1);
+			p6.setEstadoPedido(creado);
+			p6.setDetallePedidoList(null);
+			p6.setImporteTotalPedido(0.0);
+
+			pedidoRepository.save(p6);
 
 			/*---------Alta EstadoReparto---------*/
 
 			EstadoReparto er1 = EstadoReparto.builder()
 					.nombreEstadoReparto("EN_CURSO")
 					.descripcionEstadoReparto("El recorrido se encuentra siendo realizado")
-					.fechaHoraAltaEstadoReparto(LocalDate.now())
+					.fechaHoraAltaEstadoReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaEstadoReparto(null)
 					.build();
 
@@ -631,7 +656,7 @@ public class Inicial1Application {
 			EstadoReparto er2 = EstadoReparto.builder()
 					.nombreEstadoReparto("TERMINADO")
 					.descripcionEstadoReparto("El recorrido ha terminado")
-					.fechaHoraAltaEstadoReparto(LocalDate.now())
+					.fechaHoraAltaEstadoReparto(LocalDateTime.now())
 					.fechaHoraBajaEstadoReparto(null)
 					.build();
 
@@ -642,8 +667,8 @@ public class Inicial1Application {
 			Reparto r1 = Reparto.builder()
 					.nombreReparto("Tunuyan/San Carlos/E. Bustos")
 					.descripcionReparto("Recorrido por el sur, aprox. 6hs")
-					.fechaHoraAltaReparto(LocalDate.now())
-					.fechaHoraBajaReparto(null)
+					.fechaHoraInicioReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraFinReparto(null)
 					.build();
 
 			r1.setPedidosList(List.of(p1));
@@ -654,8 +679,8 @@ public class Inicial1Application {
 			Reparto r2 = Reparto.builder()
 					.nombreReparto("Lujan/Vistalba")
 					.descripcionReparto("Recorrido semanal, aprox. 3hs")
-					.fechaHoraAltaReparto(LocalDate.now())
-					.fechaHoraBajaReparto(null)
+					.fechaHoraInicioReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraFinReparto(null)
 					.build();
 
 			r2.setPedidosList(List.of(p2));

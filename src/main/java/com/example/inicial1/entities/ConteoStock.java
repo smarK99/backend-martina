@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
 public class ConteoStock extends Base{
 
     @Column(name = "fecha_hora_alta_conteo_stock", nullable = false)
-    private LocalDate fechaHoraAltaConteoStock;
+    private LocalDateTime fechaHoraAltaConteoStock;
 
     //Relaciones
     @OneToMany(fetch = FetchType.EAGER)

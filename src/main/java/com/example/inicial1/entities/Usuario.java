@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -41,10 +41,10 @@ public class Usuario extends Base{
     private String direccion;
 
     @Column(name = "fecha_hora_alta_usuario", nullable = false)
-    private LocalDate fechaHoraAltaUsuario;
+    private LocalDateTime fechaHoraAltaUsuario;
 
     @Column(name = "fecha_hora_baja_usuario", nullable = true)
-    private LocalDate fechaHoraBajaUsuario;
+    private LocalDateTime fechaHoraBajaUsuario;
 
     //Relaciones
     @ManyToMany(fetch = FetchType.LAZY)

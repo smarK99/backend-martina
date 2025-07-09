@@ -17,6 +17,9 @@ public class DetallePedido extends Base{
     @Column(name = "cantidad_detalle_pedido", nullable = false)
     private Integer cantidadDetallePedido;
 
+    @Column(name = "subtotal_detalle_pedido", nullable = false)
+    private Double subtotalDetallePedido;
+
     //Relaciones
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_producto_id")

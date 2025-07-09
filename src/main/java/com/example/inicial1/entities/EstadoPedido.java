@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -26,10 +26,10 @@ public class EstadoPedido extends Base {
     private String descripcionEstadoPedido;
 
     @Column(name = "fecha_hora_alta_estado_pedido", nullable = false)
-    private LocalDate fechaHoraAltaEstadoPedido;
+    private LocalDateTime fechaHoraAltaEstadoPedido;
 
     @Column(name = "fecha_hora_baja_estado_pedido", nullable = true)
-    private LocalDate fechaHoraBajaEstadoPedido;
+    private LocalDateTime fechaHoraBajaEstadoPedido;
 
 
 }
