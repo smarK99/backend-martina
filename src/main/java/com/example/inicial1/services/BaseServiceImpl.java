@@ -49,13 +49,14 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
         }
     }
 
+    //Por ahora todas las entidades usaran este metodo para ser modificadas
     @Transactional
     @Override
     public E update(ID id, E entity) throws Exception {
         try {
             Optional<E> optional = baseRepository.findById(id);
             E entityUpdated = optional.get();
-            entityUpdated = baseRepository.save(entity);
+            entityUpdated = baseRepository.save(entity); //Cuando la entidad viene con un id, jpa detecta que es una entidad existente y hace un update en la bdd
             return entityUpdated;
         } catch (Exception e) {
             throw new Exception(e.getMessage());

@@ -40,6 +40,8 @@ public class UsuarioController extends BaseControllerImpl<Usuario, UsuarioServic
         }
     }
 
+    //Revocar Rol usuario
+
     @DeleteMapping("/borrar/{idUsuario}")
     public ResponseEntity<?> borrarUsuario(@PathVariable Long idUsuario) {
         try{

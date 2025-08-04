@@ -10,4 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 @RequestMapping(path = "api/conteostock")
 public class ConteoStockController extends BaseControllerImpl<ConteoStock, ConteoStockServiceImpl>{
+
+    //AM
 }

@@ -197,6 +197,15 @@ public class Inicial1Application {
 
 			estadoPedidoRepository.save(listo);
 
+			EstadoPedido entregado = EstadoPedido.builder()
+					.nombreEstadoPedido("ENTREGADO")
+					.descripcionEstadoPedido("El pedido ya esta entregado al cliente")
+					.fechaHoraAltaEstadoPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraBajaEstadoPedido(null)
+					.build();
+
+			estadoPedidoRepository.save(entregado);
+
 			/*---------Alta Categoria---------*/
 
 			Categoria c1 = Categoria.builder()
@@ -656,7 +665,7 @@ public class Inicial1Application {
 			EstadoReparto er2 = EstadoReparto.builder()
 					.nombreEstadoReparto("TERMINADO")
 					.descripcionEstadoReparto("El recorrido ha terminado")
-					.fechaHoraAltaEstadoReparto(LocalDateTime.now())
+					.fechaHoraAltaEstadoReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaEstadoReparto(null)
 					.build();
 
@@ -669,6 +678,7 @@ public class Inicial1Application {
 					.descripcionReparto("Recorrido por el sur, aprox. 6hs")
 					.fechaHoraInicioReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraFinReparto(null)
+					.rendicion(new Rendicion(0D, 0D, 0D, null))
 					.build();
 
 			r1.setPedidosList(List.of(p1));
@@ -681,6 +691,7 @@ public class Inicial1Application {
 					.descripcionReparto("Recorrido semanal, aprox. 3hs")
 					.fechaHoraInicioReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraFinReparto(null)
+					.rendicion(new Rendicion(0D, 0D, 0D, null))
 					.build();
 
 			r2.setPedidosList(List.of(p2));

@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
-public class ProductoInsumoDTO {
+public class ProductoInsumoDTO { //Configurar ProductoInsumo
 
     private Long idProducto;
     private Long idInsumo;

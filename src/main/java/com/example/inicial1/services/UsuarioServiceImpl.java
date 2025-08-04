@@ -90,7 +90,6 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario,Long> implements
             else{
                 return false;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());

@@ -1,5 +1,6 @@
 package com.example.inicial1.entities;
 
+import com.example.inicial1.enums.MetodoPago;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -29,6 +30,10 @@ public class Pedido extends Base{
 
     @Column(name = "importe_total_pedido")
     private Double importeTotalPedido;
+
+    //Enum
+    @Column(name = "metodo_pago", nullable = true)
+    private MetodoPago metodoPago;
 
     //Relaciones
 

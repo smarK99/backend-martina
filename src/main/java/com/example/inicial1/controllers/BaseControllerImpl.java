@@ -13,7 +13,7 @@ public abstract class BaseControllerImpl<E extends Base, S extends BaseServiceIm
     @Autowired
     protected S service;
 
-    @GetMapping("")
+    @GetMapping("/getAll")
     public ResponseEntity<?> getAll() {
         try{
             return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
@@ -33,6 +33,7 @@ public abstract class BaseControllerImpl<E extends Base, S extends BaseServiceIm
         }
     }
 
+    //Por ahora todas las entidades usaran este metodo para ser modificadas
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id,@RequestBody E entity) {
         try{

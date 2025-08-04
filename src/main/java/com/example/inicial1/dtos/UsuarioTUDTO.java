@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
-public class UsuarioTUDTO {
+public class UsuarioTUDTO {//Agregar Rol Usuario
 
     private Long idUsuario;
     private Long idTipoUsuario;

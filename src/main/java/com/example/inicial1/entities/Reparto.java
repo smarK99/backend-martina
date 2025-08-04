@@ -45,6 +45,8 @@ public class Reparto extends Base {
     @JoinColumn(name = "fk_usuario_id")
     private Usuario usuario;
 
-
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_rendicion_id")
+    private Rendicion rendicion;
 }
 

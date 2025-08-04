@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
-public class RepartoDTO {
+public class RepartoDTO { //Alta Reparto
 
     private String nombreReparto;
     private String descripcionReparto;
