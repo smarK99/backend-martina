@@ -22,17 +22,17 @@ public class ConteoStock extends Base{
     private LocalDateTime fechaHoraAltaConteoStock;
 
     //Relaciones
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_conteo_stock_id")
     //@Builder.Default
-    private List<Insumo> insumosList;
+    private List<ConteoStockInsumo> csinsumosList;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_conteo_stock_id")
     //@Builder.Default
-    private List<Producto> productosList;
+    private List<ConteoStockProducto> csproductosList;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_usuario_id")
     private Usuario usuario;
 

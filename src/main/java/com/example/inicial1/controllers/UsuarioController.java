@@ -1,6 +1,7 @@
 package com.example.inicial1.controllers;
 
 import com.example.inicial1.dtos.AltaUsuarioDTO;
+import com.example.inicial1.dtos.RevocarRolUsuarioDTO;
 import com.example.inicial1.dtos.UsuarioTUDTO;
 import com.example.inicial1.entities.Usuario;
 import com.example.inicial1.services.UsuarioServiceImpl;
@@ -16,6 +17,18 @@ public class UsuarioController extends BaseControllerImpl<Usuario, UsuarioServic
 
     @Autowired
     UsuarioServiceImpl usuarioService;
+
+    //Obtener Todos los usuarios no dados de baja
+    @GetMapping("")
+    public ResponseEntity<?> obtenerTodos() {
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.obtenerTodos());
+        }
+        catch (Exception e){
+            e.printStackTrace(); // Imprime el stack trace de la excepción
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
+        }
+    }
 
     @PostMapping("/crear")
     public ResponseEntity<?> crearUsuario(@RequestBody AltaUsuarioDTO altaUsuarioDTO) {
@@ -41,6 +54,16 @@ public class UsuarioController extends BaseControllerImpl<Usuario, UsuarioServic
     }
 
     //Revocar Rol usuario
+    @PostMapping("/revocarRolUsuario")
+    public ResponseEntity<?> revocarRolUsuario(@RequestBody RevocarRolUsuarioDTO revocarRolUsuarioDTO) {
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.revocarRolUsuario(revocarRolUsuarioDTO));
+        }
+        catch (Exception e){
+            e.printStackTrace(); // Imprime el stack trace de la excepción
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
+        }
+    }
 
     @DeleteMapping("/borrar/{idUsuario}")
     public ResponseEntity<?> borrarUsuario(@PathVariable Long idUsuario) {

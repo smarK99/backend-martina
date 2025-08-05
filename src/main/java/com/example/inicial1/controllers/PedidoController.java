@@ -42,4 +42,6 @@ public class PedidoController extends BaseControllerImpl<Pedido, PedidoServiceIm
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
         }
     }
+
+    //Cancelar Pedido
 }

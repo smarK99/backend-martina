@@ -1,7 +1,9 @@
 package com.example.inicial1.services;
 
 import com.example.inicial1.dtos.AltaUsuarioDTO;
+import com.example.inicial1.dtos.RevocarRolUsuarioDTO;
 import com.example.inicial1.dtos.UsuarioTUDTO;
+import com.example.inicial1.entities.Usuario;
 import com.example.inicial1.entities.TipoUsuario;
 import com.example.inicial1.entities.Usuario;
 import com.example.inicial1.repositories.TipoUsuarioRepository;
@@ -23,6 +25,16 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario,Long> implements
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Transactional
+    @Override
+    public List<Usuario> obtenerTodos() throws Exception {
+        try {
+            return usuarioRepository.obtenerTodos();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 
     @Transactional
     @Override
@@ -58,7 +70,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario,Long> implements
     }
 
     @Transactional
-    public Usuario asignarRolUsuario(UsuarioTUDTO utudto) throws Exception {
+    public Usuario asignarRolUsuario(UsuarioTUDTO utudto) throws Exception { //Arreglar que no se pueda asignar 2 veces el mismo tipo usuario
         try{
             //Validamos la existencia del TipoUsuario
             if(tipoUsuarioRepository.existsById(utudto.getIdTipoUsuario()) && usuarioRepository.existsById(utudto.getIdUsuario())){
@@ -74,6 +86,21 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario,Long> implements
         }catch (Exception e){
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Boolean revocarRolUsuario(RevocarRolUsuarioDTO revocarRolUsuarioDTO) throws Exception {
+
+        Usuario usuario = usuarioRepository.findById(revocarRolUsuarioDTO.getIdUsuario()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        TipoUsuario tipoAEliminar = tipoUsuarioRepository.findById(revocarRolUsuarioDTO.getIdTipoUsuario()).orElseThrow(() -> new RuntimeException("TipoUsuario no encontrado"));
+
+        if(usuario.getTipoUsuarioList().contains(tipoAEliminar)){ //Chequeo si esta el tipo
+            usuario.getTipoUsuarioList().remove(tipoAEliminar); //Lo elimino
+            usuarioRepository.save(usuario);
+            return true;
+        }else{
+            return false;
         }
     }
 
