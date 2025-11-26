@@ -21,6 +21,7 @@ public class ConteoStockController extends BaseControllerImpl<ConteoStock, Conte
 
     //Se usa el getAll generico
 
+
     @PostMapping("/crear")
     public ResponseEntity<?> crearConteoStock(@RequestBody AltaConteoStockDTO altaConteoStockDTO) {
         try{

@@ -49,6 +49,9 @@ public class Inicial1Application {
 	@Autowired
 	private TipoUsuarioRepository tipoUsuarioRepository;
 
+	@Autowired
+	private ConteoStockRepository conteoStockRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(Inicial1Application.class, args);
@@ -351,6 +354,7 @@ public class Inicial1Application {
 			Producto triplejyq = Producto.builder()
 					.nombreProducto("Triple Jamon Cocido")
 					.descripcionProducto("Sandwich triple de jamon cocido y queso")
+					.precioCostoProducto(1000D)
 					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
@@ -362,6 +366,7 @@ public class Inicial1Application {
 			Producto trsalame = Producto.builder()
 					.nombreProducto("Triple Salame")
 					.descripcionProducto("Sandwich triple de salame y queso")
+					.precioCostoProducto(1000D)
 					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
@@ -373,6 +378,7 @@ public class Inicial1Application {
 			Producto trcrudo = Producto.builder()
 					.nombreProducto("Triple crudo")
 					.descripcionProducto("Sandwich triple de Jamon crudo y queso")
+					.precioCostoProducto(1200D)
 					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
@@ -384,6 +390,7 @@ public class Inicial1Application {
 			Producto simplejyq = Producto.builder()
 					.nombreProducto("Escolar JyQ")
 					.descripcionProducto("Sandwich simple de Jamon cocido y queso")
+					.precioCostoProducto(700D)
 					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
@@ -395,6 +402,7 @@ public class Inicial1Application {
 			Producto blisterjyq = Producto.builder()
 					.nombreProducto("Blister x6 JyQ")
 					.descripcionProducto("x6 Sandwich de Jamon cocido y queso")
+					.precioCostoProducto(6500D)
 					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
@@ -406,6 +414,7 @@ public class Inicial1Application {
 			Producto blistercrudo = Producto.builder()
 					.nombreProducto("Blister x6 Crudo")
 					.descripcionProducto("x6 Sandwich de Jamon crudo y queso")
+					.precioCostoProducto(6500D)
 					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
@@ -663,13 +672,22 @@ public class Inicial1Application {
 			estadoRepartoRepository.save(er1);
 
 			EstadoReparto er2 = EstadoReparto.builder()
-					.nombreEstadoReparto("TERMINADO")
+					.nombreEstadoReparto("FINALIZADO")
 					.descripcionEstadoReparto("El recorrido ha terminado")
 					.fechaHoraAltaEstadoReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaEstadoReparto(null)
 					.build();
 
 			estadoRepartoRepository.save(er2);
+
+			EstadoReparto er3 = EstadoReparto.builder()
+					.nombreEstadoReparto("PENDIENTE")
+					.descripcionEstadoReparto("El recorrido aún no comienza")
+					.fechaHoraAltaEstadoReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraBajaEstadoReparto(null)
+					.build();
+
+			estadoRepartoRepository.save(er3);
 
 			/*---------Alta Reparto---------*/
 
@@ -681,7 +699,7 @@ public class Inicial1Application {
 					.rendicion(new Rendicion(0D, 0D, 0D, null))
 					.build();
 
-			r1.setPedidosList(List.of(p1));
+			r1.setPedidosList(List.of(p1,p4));
 			r1.setEstadoReparto(er1);
 			r1.setUsuario(u3);
 			repartoRepository.save(r1);
@@ -699,7 +717,41 @@ public class Inicial1Application {
 			r2.setUsuario(u3);
 			repartoRepository.save(r2);
 
+			/*---------Alta Conteo Stock---------*/
 
+			ConteoStockInsumo csi = ConteoStockInsumo.builder()
+					.cantidadStockInsumo(3)
+					.build();
+
+			csi.setInsumo(i1);
+
+			ConteoStockInsumo csi2 = ConteoStockInsumo.builder()
+					.cantidadStockInsumo(2)
+					.build();
+
+			csi2.setInsumo(i2);
+
+			ConteoStockProducto csp = ConteoStockProducto.builder()
+					.cantidadStockProducto(100)
+					.build();
+
+			csp.setProducto(triplejyq);
+
+			ConteoStockProducto csp2 = ConteoStockProducto.builder()
+					.cantidadStockProducto(50)
+					.build();
+
+			csp2.setProducto(trsalame);
+
+			ConteoStock cs = ConteoStock.builder()
+					.fechaHoraAltaConteoStock(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.build();
+
+			cs.setCsinsumosList(List.of(csi, csi2));
+			cs.setCsproductosList(List.of(csp, csp2));
+			cs.setUsuario(u2);
+
+			conteoStockRepository.save(cs);
 
 		};
 	};
