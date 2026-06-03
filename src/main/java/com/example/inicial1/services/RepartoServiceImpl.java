@@ -32,9 +32,6 @@ public class RepartoServiceImpl extends BaseServiceImpl<Reparto,Long> implements
     @Autowired
     EstadoPedidoRepository estadoPedidoRepository;
 
-    //MOSTRAR PEDIDOS DEL REPARTO
-
-
     @Transactional
     @Override
     public Reparto crearReparto(RepartoDTO repartoDTO) throws Exception {
@@ -66,17 +63,14 @@ public class RepartoServiceImpl extends BaseServiceImpl<Reparto,Long> implements
     @Override
     public Boolean agregarPedido(Long idReparto, List<AgregarPedidosDTO> pedidos) throws Exception {
         //Validar que el pedido no este asignado a otro reparto
-        //Validar que el reparto no este finalizado
         try{
-            if(repartoRepository.existsById(idReparto)){
-
-                Reparto reparto = repartoRepository.findById(idReparto).orElseThrow(() -> new RuntimeException("El reparto no existe"));
+            //Primero busco si existe la instancia
+            Reparto reparto = repartoRepository.findById(idReparto).orElseThrow(() -> new RuntimeException("El reparto no existe"));
+            //Valido si el estado del reparto es distinto a finalizado
+            if(!reparto.getEstadoReparto().getNombreEstadoReparto().equals("FINALIZADO")){
 
                 for(AgregarPedidosDTO p : pedidos){
-                    //Chequear si existe el pedido
-                    if (pedidoRepository.existsById(p.getIdPedido())){
-                        reparto.getPedidosList().add(pedidoRepository.findById(p.getIdPedido()).orElseThrow(() -> new RuntimeException("El pedido no existe")));
-                    }
+                    reparto.getPedidosList().add(pedidoRepository.findById(p.getIdPedido()).orElseThrow(() -> new RuntimeException("El pedido no existe")));
                 }
                 repartoRepository.save(reparto);
                 return true;

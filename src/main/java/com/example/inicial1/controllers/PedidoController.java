@@ -43,5 +43,17 @@ public class PedidoController extends BaseControllerImpl<Pedido, PedidoServiceIm
         }
     }
 
+    //Parte del caso de uso Asignar Pedido a Reparto
+    @GetMapping("/disponibles_reparto")
+    public ResponseEntity<?> obtenerPedidosDisponiblesParaReparto(){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(pedidoService.obtenerPedidosDisponiblesParaReparto());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
+        }
+    }
+
     //Cancelar Pedido
 }

@@ -189,7 +189,7 @@ public class Inicial1Application {
 					.fechaHoraBajaEstadoPedido(null)
 					.build();
 
-			estadoPedidoRepository.save(enproceso);
+			estadoPedidoRepository.save(enproceso); //Sin uso por ahora
 
 			EstadoPedido listo = EstadoPedido.builder()
 					.nombreEstadoPedido("LISTO")
@@ -198,7 +198,7 @@ public class Inicial1Application {
 					.fechaHoraBajaEstadoPedido(null)
 					.build();
 
-			estadoPedidoRepository.save(listo);
+			estadoPedidoRepository.save(listo); //Sin uso por ahora
 
 			EstadoPedido entregado = EstadoPedido.builder()
 					.nombreEstadoPedido("ENTREGADO")
@@ -208,6 +208,15 @@ public class Inicial1Application {
 					.build();
 
 			estadoPedidoRepository.save(entregado);
+
+			EstadoPedido cancelado = EstadoPedido.builder()
+					.nombreEstadoPedido("CANCELADO")
+					.descripcionEstadoPedido("El pedido ha sido cancelado")
+					.fechaHoraAltaEstadoPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraBajaEstadoPedido(null)
+					.build();
+
+			estadoPedidoRepository.save(cancelado);
 
 			/*---------Alta Categoria---------*/
 
@@ -246,6 +255,15 @@ public class Inicial1Application {
 					.build();
 
 			categoriaRepository.save(c4);
+
+			Categoria c5 = Categoria.builder()
+					.nombreCategoria("Pan frances")
+					.descripcionCategoria("Milanesa/Frances/Hamburguesa")
+					.fechaHoraAltaCategoria(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraBajaCategoria(null)
+					.build();
+
+			categoriaRepository.save(c5);
 
 			/*---------Alta Insumo---------*/
 
@@ -354,7 +372,6 @@ public class Inicial1Application {
 			Producto triplejyq = Producto.builder()
 					.nombreProducto("Triple Jamon Cocido")
 					.descripcionProducto("Sandwich triple de jamon cocido y queso")
-					.precioCostoProducto(1000D)
 					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
@@ -366,7 +383,6 @@ public class Inicial1Application {
 			Producto trsalame = Producto.builder()
 					.nombreProducto("Triple Salame")
 					.descripcionProducto("Sandwich triple de salame y queso")
-					.precioCostoProducto(1000D)
 					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
@@ -378,7 +394,6 @@ public class Inicial1Application {
 			Producto trcrudo = Producto.builder()
 					.nombreProducto("Triple crudo")
 					.descripcionProducto("Sandwich triple de Jamon crudo y queso")
-					.precioCostoProducto(1200D)
 					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
@@ -390,7 +405,6 @@ public class Inicial1Application {
 			Producto simplejyq = Producto.builder()
 					.nombreProducto("Escolar JyQ")
 					.descripcionProducto("Sandwich simple de Jamon cocido y queso")
-					.precioCostoProducto(700D)
 					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
@@ -402,7 +416,6 @@ public class Inicial1Application {
 			Producto blisterjyq = Producto.builder()
 					.nombreProducto("Blister x6 JyQ")
 					.descripcionProducto("x6 Sandwich de Jamon cocido y queso")
-					.precioCostoProducto(6500D)
 					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
@@ -414,7 +427,6 @@ public class Inicial1Application {
 			Producto blistercrudo = Producto.builder()
 					.nombreProducto("Blister x6 Crudo")
 					.descripcionProducto("x6 Sandwich de Jamon crudo y queso")
-					.precioCostoProducto(6500D)
 					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaProducto(null)
 					.build();
@@ -423,21 +435,86 @@ public class Inicial1Application {
 			blistercrudo.setCategoria(c4);
 			productoRepository.save(blistercrudo);
 
+			Producto blistercombinado = Producto.builder()
+					.nombreProducto("Blister x6 Combinado")
+					.descripcionProducto("x6 Sandwich de Jamon cocido y crudo en pan integral")
+					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraBajaProducto(null)
+					.build();
+
+			blistercombinado.setProductoInsumoList(null); //No poner piX ya utilizados en anteriores productos
+			blistercombinado.setCategoria(c4);
+			productoRepository.save(blistercombinado);
+
+			Producto milanesa = Producto.builder()
+					.nombreProducto("Milanesa Simple")
+					.descripcionProducto("Sandwich de milanesa simple con jamon, queso y mayonesa")
+					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraBajaProducto(null)
+					.build();
+
+			milanesa.setProductoInsumoList(null);
+			milanesa.setCategoria(c5);
+			productoRepository.save(milanesa);
+
+
 			/*---------Alta Sucursal Producto---------*/
 
 			SucursalProducto sp1 = SucursalProducto.builder()
-					.precioSucursalProducto(2900.0)
+					.precioSucursalProducto(2900D)
 					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.build();
 
 			sp1.setProducto(triplejyq);
 
 			SucursalProducto sp2 = SucursalProducto.builder()
-					.precioSucursalProducto(2700.0)
+					.precioSucursalProducto(2700D)
 					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.build();
 
 			sp2.setProducto(triplejyq);
+
+			SucursalProducto sp3 = SucursalProducto.builder()
+					.precioSucursalProducto(3500D)
+					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.build();
+
+			sp3.setProducto(triplejyq);
+
+			SucursalProducto sp4 = SucursalProducto.builder()
+					.precioSucursalProducto(3800D)
+					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.build();
+
+			sp4.setProducto(triplejyq);
+
+			SucursalProducto sp5 = SucursalProducto.builder()
+					.precioSucursalProducto(3700D)
+					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.build();
+
+			sp5.setProducto(trcrudo);
+
+			SucursalProducto sp6 = SucursalProducto.builder()
+					.precioSucursalProducto(6500D)
+					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.build();
+
+			sp6.setProducto(blisterjyq);
+
+			SucursalProducto sp7 = SucursalProducto.builder()
+					.precioSucursalProducto(1700D)
+					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.build();
+
+			sp7.setProducto(simplejyq);
+
+			SucursalProducto sp8 = SucursalProducto.builder()
+					.precioSucursalProducto(4200D)
+					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.build();
+
+			sp8.setProducto(milanesa);
 
 			/*---------Alta Sucursal---------*/
 
@@ -448,7 +525,7 @@ public class Inicial1Application {
 					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaSucursal(null)
 					.build();
-			s1.setSucursalProductoList(List.of(sp2));
+			s1.setSucursalProductoList(List.of(sp2,sp6));
 			s1.setUsuario(u5);
 
 			sucursalRepository.save(s1);
@@ -472,7 +549,7 @@ public class Inicial1Application {
 					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaSucursal(null)
 					.build();
-			s3.setSucursalProductoList(null);
+			s3.setSucursalProductoList(List.of(sp7));
 			s3.setUsuario(u5);
 
 			sucursalRepository.save(s3);
@@ -484,7 +561,7 @@ public class Inicial1Application {
 					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaSucursal(null)
 					.build();
-			s4.setSucursalProductoList(null);
+			s4.setSucursalProductoList(List.of(sp8));
 			s4.setUsuario(u1);
 
 			sucursalRepository.save(s4);

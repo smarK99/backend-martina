@@ -24,8 +24,8 @@ public class Producto extends Base{
     @Column(name = "descripcion_producto", nullable = false)
     private String descripcionProducto;
 
-    @Column(name = "precio_costo_producto", nullable = false)
-    private Double precioCostoProducto; //Precio de lo que cuesta hacer cada producto.
+//    @Column(name = "precio_costo_producto", nullable = false)
+//    private Double precioCostoProducto; //Precio de lo que cuesta hacer cada producto.
 
     @Column(name = "fecha_hora_alta_producto", nullable = false)
     private LocalDateTime fechaHoraAltaProducto;

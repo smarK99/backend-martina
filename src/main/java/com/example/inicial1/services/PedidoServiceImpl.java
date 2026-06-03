@@ -101,7 +101,6 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido,Long> implements I
     }
 
     @Transactional
-    @Override
     public List<PedidosPorSucursalDTO> buscarPedidosPorSucursal(Long idSucursal) throws Exception {
         try{
             if (sucursalRepository.existsById(idSucursal)){
@@ -153,6 +152,17 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido,Long> implements I
                 return Collections.emptyList();
             }
         }catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    //Parte del caso de uso Asignar Pedido a Reparto
+    @Transactional
+    public List<Pedido> obtenerPedidosDisponiblesParaReparto() throws Exception{
+        try{
+            return pedidoRepository.obtenerPedidosDisponiblesParaReparto();
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
