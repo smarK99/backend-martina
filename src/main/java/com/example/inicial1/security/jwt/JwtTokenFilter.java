@@ -39,6 +39,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         filterChain.doFilter(req, res);
     }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        // Le decimos al filtro que ni se moleste en revisar el Token en estas rutas
+        return path.startsWith("/swagger-ui") ||
+                path.startsWith("/v3/api-docs") ||
+                path.startsWith("/h2-console") ||
+                path.startsWith("/api/auth");
+    }
+
     private String getToken(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer "))
