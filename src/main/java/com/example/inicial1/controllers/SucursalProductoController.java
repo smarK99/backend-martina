@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(path = "api/sucursal_producto")
@@ -29,10 +31,10 @@ public class SucursalProductoController extends BaseControllerImpl<SucursalProdu
     }
 
     @PostMapping("/configurar_precio")
-    public ResponseEntity<?> configurarPrecioSP(@RequestBody SucursalProductoDTO spdto) throws Exception{
+    public ResponseEntity<?> configurarPrecioSP(@RequestBody List<SucursalProductoDTO> spdtoList) throws Exception{
         try{
             return ResponseEntity.status(HttpStatus.OK).
-                    body(sucursalProductoService.configurarPrecioSP(spdto));
+                    body(sucursalProductoService.configurarPrecioSP(spdtoList));
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error, por favor intente más tarde\"}");

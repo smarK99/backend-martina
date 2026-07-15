@@ -3,6 +3,10 @@ package com.example.inicial1.security;
 import com.example.inicial1.security.jwt.JwtEntryPoint;
 import com.example.inicial1.security.jwt.JwtTokenFilter;
 import com.example.inicial1.services.UserDetailsServiceImpl;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +27,16 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@OpenAPIDefinition(
+        // Esto le dice a Swagger que todos los endpoints requieren seguridad
+        security = @SecurityRequirement(name = "Bearer Authentication")
+)
+@SecurityScheme(
+        name = "Bearer Authentication",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        scheme = "bearer"
+)
 public class MainSecurity {
 
     @Autowired
