@@ -14,4 +14,5 @@ public interface TipoUsuarioRepository extends BaseRepository<TipoUsuario,Long> 
             nativeQuery = true
     )
     public List<TipoUsuario> obtenerTodos();
+    List<TipoUsuario> findByNombreTipoUsuarioIn(List<String> nombres);
 }

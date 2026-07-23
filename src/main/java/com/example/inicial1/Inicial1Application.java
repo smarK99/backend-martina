@@ -98,6 +98,31 @@ public class Inicial1Application {
 
 			tipoUsuarioRepository.save(repartidor);
 
+            /*--------- Faltaban estos roles ---------*/
+            TipoUsuario duenio = TipoUsuario.builder()
+                    .descripcionTipoUsuario("Acceso total y reportes del negocio")
+                    .nombreTipoUsuario("DUENIO") // Usamos DUENIO sin la Ñ por seguridad
+                    .fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .fechaHoraFinVigenciaTipoUsuario(null)
+                    .build();
+            tipoUsuarioRepository.save(duenio);
+
+            TipoUsuario empleado = TipoUsuario.builder()
+                    .descripcionTipoUsuario("Acceso a gestión operativa")
+                    .nombreTipoUsuario("EMPLEADO")
+                    .fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .fechaHoraFinVigenciaTipoUsuario(null)
+                    .build();
+            tipoUsuarioRepository.save(empleado);
+
+            TipoUsuario stock = TipoUsuario.builder()
+                    .descripcionTipoUsuario("Acceso a inventario y almacén")
+                    .nombreTipoUsuario("STOCK")
+                    .fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .fechaHoraFinVigenciaTipoUsuario(null)
+                    .build();
+            tipoUsuarioRepository.save(stock);
+
 
 
 			/*---------Alta Usuario---------*/

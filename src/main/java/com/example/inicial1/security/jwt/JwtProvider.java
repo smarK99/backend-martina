@@ -39,15 +39,15 @@ public class JwtProvider {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
         } catch (MalformedJwtException e) {
-            // Log: Token mal formado
+            System.out.println(">>> DEBUG [Provider]: Token mal formado (A veces pasa si Angular manda el token con comillas).");
         } catch (UnsupportedJwtException e) {
-            // Log: Token no soportado
+            System.out.println(">>> DEBUG [Provider]: Token no soportado.");
         } catch (ExpiredJwtException e) {
-            // Log: Token expirado
+            System.out.println(">>> DEBUG [Provider]: El Token ya expiró, hay que iniciar sesión de nuevo.");
         } catch (IllegalArgumentException e) {
-            // Log: Token vacío
+            System.out.println(">>> DEBUG [Provider]: Token vacío.");
         } catch (SignatureException e) {
-            // Log: Fallo en la firma
+            System.out.println(">>> DEBUG [Provider]: Falló la firma. La secret no coincide.");
         }
         return false;
     }

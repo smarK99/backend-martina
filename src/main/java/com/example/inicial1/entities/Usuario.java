@@ -32,16 +32,16 @@ public class Usuario extends Base implements UserDetails{
     @Column(name = "nombre_completo_usuario", nullable = false)
     private String nombreCompletoUsuario;
 
-    @Column(name = "dni", nullable = false)
+    @Column(name = "dni", nullable = true)
     private String dni;
 
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "telefono", nullable = false)
+    @Column(name = "telefono", nullable = true)
     private String telefono;
 
-    @Column(name = "direccion", nullable = false)
+    @Column(name = "direccion", nullable = true)
     private String direccion;
 
     @Column(name = "fecha_hora_alta_usuario", nullable = false)

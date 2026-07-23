@@ -1,124 +1,177 @@
 package com.example.inicial1.services;
 
-import com.example.inicial1.dtos.AltaUsuarioDTO;
-import com.example.inicial1.dtos.RevocarRolUsuarioDTO;
-import com.example.inicial1.dtos.UsuarioTUDTO;
-import com.example.inicial1.entities.Usuario;
+import com.example.inicial1.security.dto.CambioClaveDTO;
+import com.example.inicial1.security.dto.UsuarioAltaDTO;
+import com.example.inicial1.security.dto.UsuarioModificacionDTO;
+import com.example.inicial1.security.dto.UsuarioRolDTO;
 import com.example.inicial1.entities.TipoUsuario;
 import com.example.inicial1.entities.Usuario;
 import com.example.inicial1.repositories.TipoUsuarioRepository;
 import com.example.inicial1.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class UsuarioServiceImpl extends BaseServiceImpl<Usuario,Long> implements IUsuarioService {
+public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Long> implements IUsuarioService {
 
     @Autowired
-    TipoUsuarioRepository tipoUsuarioRepository;
+    private TipoUsuarioRepository tipoUsuarioRepository;
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
+
+    // Inyectamos el encriptador de contraseñas de Spring Security
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
-    public List<Usuario> obtenerTodos() throws Exception {
+    public List<Usuario> obtenerTodos() {
         try {
             return usuarioRepository.obtenerTodos();
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            throw new RuntimeException("Error al obtener los usuarios: " + e.getMessage());
         }
     }
 
+    /**
+     * CU N°19: Alta de Usuario
+     */
     @Transactional
-    @Override
-    public Usuario crearUsuario(AltaUsuarioDTO altaUsuarioDTO) throws Exception {
-        try{
-            //Buscamos primero el tipo usuario recibido
-            TipoUsuario tu = tipoUsuarioRepository.findById(altaUsuarioDTO.getIdTipoUsuario()).orElseThrow(() -> new RuntimeException("TipoUsuario no existe"));
+    public Usuario crear(UsuarioAltaDTO dto) {
+        try {
+            // Verificamos que el usuario o email no existan previamente (regla de negocio)
+            // if (usuarioRepository.existsByUsername(dto.getUsuario())) { throw new RuntimeException("El usuario ya existe"); }
 
-            //Creamos el nuevo usuario
             Usuario usuario = Usuario.builder()
-                    .username(altaUsuarioDTO.getUsername())
-                    .password(altaUsuarioDTO.getPassword())
-                    .nombreCompletoUsuario(altaUsuarioDTO.getNombreCompletoUsuario())
-                    .dni(altaUsuarioDTO.getDni())
-                    .email(altaUsuarioDTO.getEmail())
-                    .telefono(altaUsuarioDTO.getTelefono())
-                    .direccion(altaUsuarioDTO.getDireccion())
+                    .username(dto.getUsuario()) // Mapeamos el DTO a la Entidad
+                    .password(passwordEncoder.encode(dto.getClaveUsuario())) // ¡Contraseña encriptada!
+                    .nombreCompletoUsuario(dto.getNombreApellido())
+                    .email(dto.getMailUsuario())
+                    .telefono(dto.getTelefonoUsuario())
+                    .direccion(dto.getDomicilioUsuario())
                     .fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     .fechaHoraBajaUsuario(null)
                     .tiposUsuario(new ArrayList<>())
                     .build();
 
-            //Agregamos a la lista de TU al tipo usuario recibido
-            usuario.getTiposUsuario().add(tu);
+            return usuarioRepository.save(usuario);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al crear el usuario: " + e.getMessage());
+        }
+    }
+
+    /**
+     * CU N°19 (C.A. 1): Modificación de Usuario
+     */
+    @Transactional
+    public Usuario actualizar(UsuarioModificacionDTO dto) {
+        try {
+            Usuario usuario = usuarioRepository.findById(dto.getCodUsuario())
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+            // Actualizamos solo los campos permitidos
+            usuario.setNombreCompletoUsuario(dto.getNombreApellido());
+            usuario.setEmail(dto.getMailUsuario());
+            usuario.setTelefono(dto.getTelefonoUsuario());
+            usuario.setDireccion(dto.getDomicilioUsuario());
 
             return usuarioRepository.save(usuario);
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException("Error al actualizar el usuario: " + e.getMessage());
         }
-
     }
 
+    /**
+     * CU N°19 (C.A. 2): Baja Lógica
+     */
     @Transactional
-    public Usuario asignarRolUsuario(UsuarioTUDTO utudto) throws Exception { //Arreglar que no se pueda asignar 2 veces el mismo tipo usuario
-        try{
-            //Validamos la existencia del TipoUsuario
-            if(tipoUsuarioRepository.existsById(utudto.getIdTipoUsuario()) && usuarioRepository.existsById(utudto.getIdUsuario())){
+    public void bajaLogica(Long idUsuario) {
+        try {
+            Usuario usuario = usuarioRepository.findById(idUsuario)
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-                Usuario usuario = usuarioRepository.findById(utudto.getIdUsuario()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-                List<TipoUsuario> tipoUsuarioList = usuario.getTiposUsuario();
-                tipoUsuarioList.add(tipoUsuarioRepository.findById(utudto.getIdTipoUsuario()).orElseThrow(() -> new RuntimeException("Tipo usuario no encontrado")));
-
-                return usuarioRepository.save(usuario);
-            }else {
-                return null;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    @Override
-    public Boolean revocarRolUsuario(RevocarRolUsuarioDTO revocarRolUsuarioDTO) throws Exception {
-
-        Usuario usuario = usuarioRepository.findById(revocarRolUsuarioDTO.getIdUsuario()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        TipoUsuario tipoAEliminar = tipoUsuarioRepository.findById(revocarRolUsuarioDTO.getIdTipoUsuario()).orElseThrow(() -> new RuntimeException("TipoUsuario no encontrado"));
-
-        if(usuario.getTiposUsuario().contains(tipoAEliminar)){ //Chequeo si esta el tipo
-            usuario.getTiposUsuario().remove(tipoAEliminar); //Lo elimino
+            usuario.setFechaHoraBajaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
             usuarioRepository.save(usuario);
-            return true;
-        }else{
-            return false;
-        }
-    }
 
-    @Transactional
-    @Override
-    public Boolean borrarUsuario(Long idUsuario) throws Exception {
-        try{
-            if(usuarioRepository.existsById(idUsuario)){
-                Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-                usuario.setFechaHoraBajaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
-                usuarioRepository.save(usuario);
-                return true;
-            }
-            else{
-                return false;
-            }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("Error al dar de baja el usuario: " + e.getMessage());
+        }
+    }
+
+    /**
+     * CU N°20 y 21 unificados: Actualización de Roles (Permisos)
+     */
+    @Transactional
+    public void actualizarRoles(UsuarioRolDTO dto) {
+        try {
+            System.out.println(">>> DEBUG [Servicio]: Iniciando actualización de roles...");
+            System.out.println(">>> DEBUG [Servicio]: ID del usuario: " + dto.getCodUsuario());
+            System.out.println(">>> DEBUG [Servicio]: Roles recibidos desde Angular: " + dto.getRoles());
+
+            Usuario usuario = usuarioRepository.findById(dto.getCodUsuario())
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+            // Verificamos que la lista no sea nula para evitar errores
+            if (dto.getRoles() == null || dto.getRoles().isEmpty()) {
+                System.out.println(">>> DEBUG [Servicio]: ¡ALERTA! La lista de roles llegó vacía o nula desde Angular.");
+                usuario.setTiposUsuario(new ArrayList<>());
+            } else {
+                List<TipoUsuario> nuevosRoles = tipoUsuarioRepository.findByNombreTipoUsuarioIn(dto.getRoles());
+                System.out.println(">>> DEBUG [Servicio]: Roles encontrados en la Base de Datos: " + nuevosRoles.size());
+
+                for(TipoUsuario tu : nuevosRoles) {
+                    System.out.println("    - Encontrado: " + tu.getNombreTipoUsuario());
+                }
+
+                usuario.setTiposUsuario(nuevosRoles);
+            }
+
+            usuarioRepository.save(usuario);
+            System.out.println(">>> DEBUG [Servicio]: Guardado exitoso en Hibernate.");
+
+        } catch (Exception e) {
+            System.out.println(">>> DEBUG [Servicio]: ERROR FATAL - " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error al actualizar los roles: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Cambio de Contraseña Personal
+     */
+    @Transactional
+    public void cambiarClave(String username, CambioClaveDTO dto) {
+        try {
+            // Buscamos al usuario por su username
+            // Asume que tenés un método findByUsername en tu repositorio
+            Usuario usuario = usuarioRepository.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+            // 1. Verificamos que la clave actual ingresada coincida con la de la base de datos
+            // passwordEncoder.matches(clave_sin_encriptar, clave_encriptada_en_bd)
+            if (!passwordEncoder.matches(dto.getClaveActual(), usuario.getPassword())) {
+                throw new RuntimeException("La contraseña actual es incorrecta.");
+            }
+
+            // 2. Si pasó la prueba, encriptamos la nueva y la guardamos
+            usuario.setPassword(passwordEncoder.encode(dto.getNuevaClave()));
+            usuarioRepository.save(usuario);
+
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
