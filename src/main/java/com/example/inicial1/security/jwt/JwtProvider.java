@@ -53,4 +53,14 @@ public class JwtProvider {
     }
 
 
+    // Metodo exclusivo para recuperación de contraseña (dura 15 minutos)
+    public String generateResetToken(String email) {
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(new Date().getTime() + 15 * 60 * 1000L)) // 15 minutos en milisegundos
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
+
 }

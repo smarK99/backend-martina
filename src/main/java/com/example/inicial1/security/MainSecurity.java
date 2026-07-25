@@ -64,16 +64,23 @@ public class MainSecurity {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/api/producto/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll() // Login y Registro público
+
+                        // --- LÍNEA NUEVA PARA RECUPERAR CONTRASEÑA ---
+                        .requestMatchers(HttpMethod.POST, "/api/usuarios/recuperar-clave").permitAll()
+
+                        // --- LÍNEA NUEVA PARA CAMBIAR LA CLAVE ---
+                        .requestMatchers(HttpMethod.POST, "/api/usuarios/reset-password").permitAll()
+
                         .requestMatchers("/v3/api-docs/**",
-                                                    "/swagger-ui/**",
-                                                    "/swagger-ui.html",
-                                                    "/v3/api-docs",
-                                                    "/api-docs/**",
-                                                    "/swagger-ui.html",
-                                                    "/swagger-ui/**",
-                                                    "/swagger-resources",
-                                                    "/swagger-resources/**",
-                                                    "/webjars/**").permitAll()
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs",
+                                "/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/swagger-resources",
+                                "/swagger-resources/**",
+                                "/webjars/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll() // <-- PERMISO PARA LA BASE DE DATOS H2
                         .anyRequest().authenticated() // Todo lo demás requiere login
                 )

@@ -1,18 +1,24 @@
 package com.example.inicial1.security.controller;
 
+import com.example.inicial1.entities.Usuario;
+import com.example.inicial1.repositories.UsuarioRepository;
 import com.example.inicial1.security.dto.CambioClaveDTO;
 import com.example.inicial1.security.dto.UsuarioAltaDTO;
 import com.example.inicial1.security.dto.UsuarioModificacionDTO;
 import com.example.inicial1.security.dto.UsuarioRolDTO;
+import com.example.inicial1.security.jwt.JwtProvider;
+import com.example.inicial1.services.EmailService;
 import com.example.inicial1.services.IUsuarioService; // <-- Importamos la interfaz correcta
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -21,6 +27,15 @@ public class UsuarioController {
 
     @Autowired
     private IUsuarioService usuarioService; // <-- Inyectamos usando la 'I'
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private JwtProvider jwtProvider;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository; // Lo inyectamos directo para la búsqueda rápida
 
     /**
      * Obtiene todos los usuarios activos (o inactivos, según defina el servicio)
@@ -98,4 +113,77 @@ public class UsuarioController {
             return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
         }
     }
+
+
+    @PostMapping("/recuperar-clave")
+    public ResponseEntity<?> solicitarRecuperacionClave(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+
+        try {
+            // 1. BUSCAR USUARIO POR EMAIL
+            Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
+
+            if (usuarioOpt.isEmpty()) {
+                // RETORNO SIMULADO:
+                // Por seguridad, si el correo no existe, igual le decimos "te mandamos un correo".
+                // Así los hackers no pueden usar este endpoint para adivinar correos de tus clientes.
+                return ResponseEntity.ok(Map.of("mensaje", "Si el correo está registrado, se enviaron las instrucciones."));
+            }
+
+            // 2. GENERAR TOKEN TEMPORAL
+            // Usamos el método nuevo que dura 15 minutos
+            String token = jwtProvider.generateResetToken(email);
+
+            // 3. ARMAR EL LINK PARA ANGULAR
+            // Esta ruta /reset-password la vamos a crear en Angular en el próximo paso
+            String linkRecuperacion = "http://localhost:4200/reset-password?token=" + token;
+
+            // 4. ARMAR Y ENVIAR EL CORREO
+            String mensaje = "Hola,\n\n"
+                    + "Recibimos una solicitud para restablecer tu contraseña en Martina Sandwichs.\n"
+                    + "Hacé clic en el siguiente enlace para cambiar tu clave (válido por 15 minutos):\n\n"
+                    + linkRecuperacion + "\n\n"
+                    + "Si no solicitaste este cambio, podés ignorar este correo de forma segura.\n";
+
+            emailService.enviarCorreo(email, "Recuperación de Contraseña - Martina Sandwichs", mensaje);
+
+            return ResponseEntity.ok(Map.of("mensaje", "Si el correo está registrado, se enviaron las instrucciones."));
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Error al procesar la solicitud"));
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> restablecerClave(@RequestBody Map<String, String> request) {
+        String token = request.get("token");
+        String nuevaClave = request.get("nuevaClave");
+
+        try {
+            // 1. Verificar que el token sea válido y no haya expirado (los 15 min)
+            if (!jwtProvider.validateToken(token)) {
+                return ResponseEntity.badRequest().body(Map.of("error", "El enlace es inválido o ha expirado."));
+            }
+
+            // 2. Extraer el email que guardamos adentro del token
+            String email = jwtProvider.getNombreUsuarioFromToken(token);
+
+            // 3. Buscar al usuario en la base de datos
+            Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
+            if (usuarioOpt.isEmpty()) {
+                return ResponseEntity.badRequest().body(Map.of("error", "Usuario no encontrado."));
+            }
+
+            // 4. Encriptar la nueva clave y guardarla
+            Usuario usuario = usuarioOpt.get();
+            usuario.setPassword(passwordEncoder.encode(nuevaClave));
+            usuarioRepository.save(usuario);
+
+            return ResponseEntity.ok(Map.of("mensaje", "Contraseña actualizada correctamente."));
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Error interno al restablecer la contraseña."));
+        }
+    }
+
 }

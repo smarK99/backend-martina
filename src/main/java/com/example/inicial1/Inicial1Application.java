@@ -16,6 +16,10 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import com.example.inicial1.services.EmailService;
+
 @SpringBootApplication
 public class Inicial1Application {
 	private static final Logger logger = LoggerFactory.getLogger(Inicial1Application.class);
@@ -62,6 +66,20 @@ public class Inicial1Application {
 
 		System.out.println("Funcionando");
 	}
+
+
+    //Prueba MailTrap
+    /*@Bean
+    public CommandLineRunner probarEmail(EmailService emailService) {
+        return args -> {
+            System.out.println("Enviando correo de prueba...");
+            emailService.enviarCorreo(
+                    "prueba@martinasandwichs.com",
+                    "¡Prueba de Mailtrap exitosa!",
+                    "Si estás leyendo esto en Mailtrap, la configuración de correos está funcionando a la perfección. ¡Podemos seguir con la recuperación de clave!"
+            );
+        };
+    }*/
 
 
 	@Bean
@@ -863,8 +881,5 @@ public class Inicial1Application {
 
 		};
 	};
-
-
-
 
 }
