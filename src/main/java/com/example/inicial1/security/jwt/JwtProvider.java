@@ -63,4 +63,14 @@ public class JwtProvider {
                 .compact();
     }
 
+    public String generateTokenFromUsername(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                // Usá tu variable de tiempo de expiración normal (ej: 15 minutos)
+                .setExpiration(new Date((new Date()).getTime() + expiration * 1000))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
+
 }

@@ -63,6 +63,8 @@ public class MainSecurity {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/api/producto/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/categoria/**").permitAll() // <-- LÍNEA NUEVA
+                        .requestMatchers(HttpMethod.GET, "/api/insumo/**").permitAll()    // <-- LÍNEA NUEVA (por las dudas)
                         .requestMatchers("/api/auth/**").permitAll() // Login y Registro público
 
                         // --- LÍNEA NUEVA PARA RECUPERAR CONTRASEÑA ---
