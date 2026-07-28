@@ -9,11 +9,12 @@ import java.util.List;
 @AllArgsConstructor
 @Setter
 @Getter
-public class AltaConteoStockDTO {
+public class UpdateControlStockDTO {
 
     private Long idUsuario;
 
-    private List<AltaConteoStockProductoDTO> productoDTOList;
+    private List<ItemProductoDTO> productoDTOList;
 
-    private List<AltaConteoStockInsumoDTO> insumoDTOList;
+    private List<ItemInsumoDTO> insumoDTOList;
+
 }

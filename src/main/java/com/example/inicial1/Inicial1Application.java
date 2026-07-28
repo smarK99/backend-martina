@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -51,6 +52,9 @@ public class Inicial1Application {
 
 	@Autowired
 	private ConteoStockRepository conteoStockRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder; // Añade esta inyección
 
 
 	public static void main(String[] args) {
@@ -98,33 +102,35 @@ public class Inicial1Application {
 
 			/*---------Alta Usuario---------*/
 
-			Usuario u1 = Usuario.builder()
-					.dni("40987221")
-					.username("W21")
-					.email("cliente1@gmail.com")
-					.direccion("San Martin 298")
-					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaUsuario(null)
-					.nombreCompletoUsuario("Federico w21")
-					.password("123")
-					.telefono("413219")
-					.build();
-			u1.setTipoUsuarioList(List.of(cliente));
-			usuarioRepository.save(u1);
+            /*---------Alta Usuario (CORREGIDO)---------*/
 
-			Usuario u2 = Usuario.builder()
-					.dni("23453123")
-					.username("flavio74")
-					.email("admin1@gmail.com")
-					.direccion("Ozamis 123")
-					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaUsuario(null)
-					.nombreCompletoUsuario("Flavio Sabattini")
-					.password("123")
-					.telefono("423949")
-					.build();
-			u2.setTipoUsuarioList(List.of(admin));
-			usuarioRepository.save(u2);
+            Usuario u1 = Usuario.builder()
+                    .dni("40987221")
+                    .username("W21")
+                    .email("cliente1@gmail.com")
+                    .direccion("San Martin 298")
+                    .fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .nombreCompletoUsuario("Federico w21")
+                    .password(passwordEncoder.encode("123")) // <--- ENCRIPTADO
+                    .telefono("413219")
+                    .build();
+            u1.setTiposUsuario(List.of(cliente)); // Asegúrate de usar el nombre correcto: tiposUsuario
+            usuarioRepository.save(u1);
+
+            Usuario u2 = Usuario.builder()
+                    .dni("23453123")
+                    .username("flavio74")
+                    .email("admin1@gmail.com")
+                    .direccion("Ozamis 123")
+                    .fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .nombreCompletoUsuario("Flavio Sabattini")
+                    .password(passwordEncoder.encode("123")) // <--- ENCRIPTADO
+                    .telefono("423949")
+                    .build();
+            u2.setTiposUsuario(List.of(admin));
+            usuarioRepository.save(u2);
+
+// Repite lo mismo para u3, u4 y u5 usando passwordEncoder.encode("123")
 
 			Usuario u3 = Usuario.builder()
 					.dni("41755355")
@@ -134,10 +140,10 @@ public class Inicial1Application {
 					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaUsuario(null)
 					.nombreCompletoUsuario("Santiago Marquez")
-					.password("123")
+					.password(passwordEncoder.encode("123"))
 					.telefono("413219")
 					.build();
-			u3.setTipoUsuarioList(List.of(repartidor));
+			u3.setTiposUsuario(List.of(repartidor));
 			usuarioRepository.save(u3);
 
 			Usuario u4 = Usuario.builder()
@@ -148,11 +154,11 @@ public class Inicial1Application {
 					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaUsuario(null)
 					.nombreCompletoUsuario("Osvaldo Scaglione")
-					.password("123")
+					.password(passwordEncoder.encode("123"))
 					.telefono("433619")
 					.build();
 
-			u4.setTipoUsuarioList(List.of(cliente));
+			u4.setTiposUsuario(List.of(cliente));
 			usuarioRepository.save(u4);
 
 			Usuario u5 = Usuario.builder()
@@ -163,11 +169,11 @@ public class Inicial1Application {
 					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaUsuario(null)
 					.nombreCompletoUsuario("Erwin Rodriguez")
-					.password("123")
+					.password(passwordEncoder.encode("123"))
 					.telefono("466678")
 					.build();
 
-			u5.setTipoUsuarioList(List.of(cliente));
+			u5.setTiposUsuario(List.of(cliente));
 			usuarioRepository.save(u5);
 
 

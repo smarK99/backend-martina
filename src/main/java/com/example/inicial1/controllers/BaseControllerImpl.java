@@ -33,7 +33,7 @@ public abstract class BaseControllerImpl<E extends Base, S extends BaseServiceIm
         }
     }
 
-    //Por ahora todas las entidades usaran este metodo para ser modificadas
+    //Solo funciona si las peticiones del front mandan la clase cruda y no un DTO
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id,@RequestBody E entity) {
         try{

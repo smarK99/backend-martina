@@ -54,11 +54,11 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario,Long> implements
                     .direccion(altaUsuarioDTO.getDireccion())
                     .fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     .fechaHoraBajaUsuario(null)
-                    .tipoUsuarioList(new ArrayList<>())
+                    .tiposUsuario(new ArrayList<>())
                     .build();
 
             //Agregamos a la lista de TU al tipo usuario recibido
-            usuario.getTipoUsuarioList().add(tu);
+            usuario.getTiposUsuario().add(tu);
 
             return usuarioRepository.save(usuario);
 
@@ -76,7 +76,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario,Long> implements
             if(tipoUsuarioRepository.existsById(utudto.getIdTipoUsuario()) && usuarioRepository.existsById(utudto.getIdUsuario())){
 
                 Usuario usuario = usuarioRepository.findById(utudto.getIdUsuario()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-                List<TipoUsuario> tipoUsuarioList = usuario.getTipoUsuarioList();
+                List<TipoUsuario> tipoUsuarioList = usuario.getTiposUsuario();
                 tipoUsuarioList.add(tipoUsuarioRepository.findById(utudto.getIdTipoUsuario()).orElseThrow(() -> new RuntimeException("Tipo usuario no encontrado")));
 
                 return usuarioRepository.save(usuario);
@@ -95,8 +95,8 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario,Long> implements
         Usuario usuario = usuarioRepository.findById(revocarRolUsuarioDTO.getIdUsuario()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         TipoUsuario tipoAEliminar = tipoUsuarioRepository.findById(revocarRolUsuarioDTO.getIdTipoUsuario()).orElseThrow(() -> new RuntimeException("TipoUsuario no encontrado"));
 
-        if(usuario.getTipoUsuarioList().contains(tipoAEliminar)){ //Chequeo si esta el tipo
-            usuario.getTipoUsuarioList().remove(tipoAEliminar); //Lo elimino
+        if(usuario.getTiposUsuario().contains(tipoAEliminar)){ //Chequeo si esta el tipo
+            usuario.getTiposUsuario().remove(tipoAEliminar); //Lo elimino
             usuarioRepository.save(usuario);
             return true;
         }else{

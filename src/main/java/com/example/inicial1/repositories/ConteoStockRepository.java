@@ -9,5 +9,10 @@ import java.util.List;
 
 @Repository
 public interface ConteoStockRepository extends BaseRepository<ConteoStock, Long>{
-   //Usar getALL generico
+
+    @Query(
+            value = "SELECT * FROM conteo_stock WHERE fecha_hora_baja_conteo_stock IS NULL",
+            nativeQuery = true
+    )
+    public List<ConteoStock> obtenerTodos();
 }
