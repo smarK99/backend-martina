@@ -13,7 +13,7 @@ public interface RefreshTokenRepository extends BaseRepository<RefreshToken, Lon
     // Sirve para buscar el token en la base de datos cuando Angular nos lo mande
     Optional<RefreshToken> findByToken(String token);
 
-    // Sirve para borrar el token viejo si el usuario vuelve a iniciar sesión
+    // Sirve para borrar el token viejo si el usuario vuelve a iniciar sesion
     @Modifying
     void deleteByUsuario(Usuario usuario);
 }

@@ -22,8 +22,8 @@ public class RefreshToken extends Base {
     private LocalDateTime fechaExpiracion;
 
     // Relación 1 a 1 con el Usuario si quiero solo una sesión activa.
-    // Si el día de mañana querés permitir múltiples sesiones (ej: PC y Celular),
-    // solo cambiás este @OneToOne por un @ManyToOne.
+    // Si el día de mañana queres permitir múltiples sesiones (ej: PC y Celular),
+    // solo cambias este @OneToOne por un @ManyToOne.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
     private Usuario usuario;

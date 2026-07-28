@@ -16,7 +16,7 @@ import java.util.UUID;
 @Service
 public class RefreshTokenService {
 
-    // Tiempo de vida del Refresh Token (Ej: 12 horas para cubrir un turno completo)
+    // Tiempo de vida del Refresh Token (Ejemplo: 12 horas para cubrir un turno completo)
     private static final long REFRESH_TOKEN_EXPIRATION_HOURS = 12;
 
     @Autowired
