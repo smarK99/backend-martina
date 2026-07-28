@@ -21,6 +21,9 @@ public class ConteoStock extends Base{
     @Column(name = "fecha_hora_alta_conteo_stock", nullable = false)
     private LocalDateTime fechaHoraAltaConteoStock;
 
+    @Column(name = "fecha_hora_baja_conteo_stock")
+    private LocalDateTime fechaHoraBajaConteoStock;
+
     //Relaciones
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_conteo_stock_id")

@@ -1,8 +1,6 @@
 package com.example.inicial1.services;
 
-import com.example.inicial1.dtos.AltaConteoStockDTO;
-import com.example.inicial1.dtos.AltaConteoStockInsumoDTO;
-import com.example.inicial1.dtos.AltaConteoStockProductoDTO;
+import com.example.inicial1.dtos.*;
 import com.example.inicial1.entities.*;
 import com.example.inicial1.entities.ConteoStock;
 import com.example.inicial1.repositories.ConteoStockRepository;
@@ -47,7 +45,7 @@ public class ConteoStockServiceImpl extends BaseServiceImpl<ConteoStock,Long> im
                     .build();
 
             //Recorro la lista de insumos contados
-            for(AltaConteoStockInsumoDTO acsidto : altaConteoStockDTO.getInsumosDTOList()){
+            for(AltaConteoStockInsumoDTO acsidto : altaConteoStockDTO.getInsumoDTOList()){
                 //Creo la clase correspondiente
                 ConteoStockInsumo csi = ConteoStockInsumo.builder()
                         .cantidadStockInsumo(acsidto.getCantidadStockInsumo())
@@ -58,7 +56,7 @@ public class ConteoStockServiceImpl extends BaseServiceImpl<ConteoStock,Long> im
             }
 
             //Recorro la lista de productos contados
-            for(AltaConteoStockProductoDTO acspdto : altaConteoStockDTO.getProductosDTOList()){
+            for(AltaConteoStockProductoDTO acspdto : altaConteoStockDTO.getProductoDTOList()){
                 //Creo la clase correspondiente
                 ConteoStockProducto csp = ConteoStockProducto.builder()
                         .cantidadStockProducto(acspdto.getCantidadStockProducto())
@@ -70,6 +68,95 @@ public class ConteoStockServiceImpl extends BaseServiceImpl<ConteoStock,Long> im
 
 
             return conteoStockRepository.save(conteoStock);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Transactional
+    @Override
+    public List<ConteoStock> obtenerTodos() throws Exception {
+        try {
+            return conteoStockRepository.obtenerTodos();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Transactional
+    @Override
+    public ConteoStock update(Long id, UpdateControlStockDTO csdto) throws Exception {
+        try {
+            //Impresion de prueba
+            System.out.println("CANTIDAD INSUMOS RECIBIDOS: " + (csdto.getInsumoDTOList() != null ? csdto.getInsumoDTOList().size() : "NULL"));
+            System.out.println("CANTIDAD PRODUCTOS RECIBIDOS: " + (csdto.getProductoDTOList() != null ? csdto.getProductoDTOList().size() : "NULL"));
+
+            // 1. Buscamos el conteo viejo en la base de datos
+            ConteoStock conteoViejo = conteoStockRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Conteo no encontrado"));
+
+            // 2. Actualizamos datos básicos
+            Usuario usuario = usuarioRepository.findById(csdto.getIdUsuario())
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            conteoViejo.setUsuario(usuario);
+            conteoViejo.setFechaHoraAltaConteoStock(LocalDateTime.now()); //Actualizamos su fecha de alta
+
+            // 3. VACIAR LAS LISTAS VIEJAS
+
+            conteoViejo.getCsinsumosList().clear();
+            conteoViejo.getCsproductosList().clear();
+
+            // 4. LLENAR CON LOS DATOS NUEVOS
+
+            // -- Para Insumos --
+            if (csdto.getInsumoDTOList() != null) {
+                for (ItemInsumoDTO item : csdto.getInsumoDTOList()) {
+                    Insumo insumoDB = insumoRepository.findById(item.getIdInsumo()).orElseThrow();
+
+                    ConteoStockInsumo nuevoCsi = new ConteoStockInsumo();
+                    nuevoCsi.setInsumo(insumoDB);
+                    nuevoCsi.setCantidadStockInsumo(item.getCantidadStockInsumo());
+
+                    conteoViejo.getCsinsumosList().add(nuevoCsi);
+                }
+            }
+
+            // -- Para Productos --
+            if (csdto.getProductoDTOList() != null) {
+                for (ItemProductoDTO item : csdto.getProductoDTOList()) {
+                    Producto prodDB = productoRepository.findById(item.getIdProducto()).orElseThrow();
+
+                    ConteoStockProducto nuevoCsp = new ConteoStockProducto();
+                    nuevoCsp.setProducto(prodDB);
+                    nuevoCsp.setCantidadStockProducto(item.getCantidadStockProducto());
+
+                    conteoViejo.getCsproductosList().add(nuevoCsp);
+                }
+            }
+
+            // 5. Guardamos y retornamos
+            return conteoStockRepository.save(conteoViejo);
+
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+    }
+
+    @Transactional
+    @Override
+    public Boolean delete(Long id) throws Exception{
+        try{
+            if(conteoStockRepository.existsById(id)){
+                ConteoStock conteo = conteoStockRepository.findById(id).orElseThrow(() -> new RuntimeException("Conteo no encontrado"));
+                conteo.setFechaHoraBajaConteoStock(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+                conteoStockRepository.save(conteo);
+                return true;
+            }
+            else{
+                return false;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
