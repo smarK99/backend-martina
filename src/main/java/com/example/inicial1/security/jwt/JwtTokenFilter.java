@@ -25,16 +25,25 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
         try {
             String token = getToken(req);
-            if (token != null && jwtProvider.validateToken(token)) {
-                String nombreUsuario = jwtProvider.getNombreUsuarioFromToken(token);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(nombreUsuario);
+            if (token != null) {
+                System.out.println(">>> DEBUG [Filtro]: Token recibido desde Angular: " + token.substring(0, Math.min(token.length(), 20)) + "...");
+                if (jwtProvider.validateToken(token)) {
+                    String nombreUsuario = jwtProvider.getNombreUsuarioFromToken(token);
+                    System.out.println(">>> DEBUG [Filtro]: Token validado OK para el usuario: " + nombreUsuario);
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(nombreUsuario);
 
-                UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                    UsernamePasswordAuthenticationToken auth =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                } else {
+                    System.out.println(">>> DEBUG [Filtro]: El token llegó pero el Provider dijo que es INVÁLIDO.");
+                }
+            } else {
+                System.out.println(">>> DEBUG [Filtro]: Angular no mandó token en la cabecera para la ruta: " + req.getRequestURI());
             }
         } catch (Exception e) {
-            // Log: Error en el filtro
+            System.out.println(">>> DEBUG [Filtro - ERROR FATAL]: " + e.getMessage());
+            e.printStackTrace();
         }
         filterChain.doFilter(req, res);
     }
