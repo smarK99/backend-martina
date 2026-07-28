@@ -16,6 +16,10 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+//import com.example.inicial1.services.EmailService;
+
 @SpringBootApplication
 public class Inicial1Application {
 	private static final Logger logger = LoggerFactory.getLogger(Inicial1Application.class);
@@ -64,6 +68,20 @@ public class Inicial1Application {
 	}
 
 
+    //Prueba MailTrap
+    /*@Bean
+    public CommandLineRunner probarEmail(EmailService emailService) {
+        return args -> {
+            System.out.println("Enviando correo de prueba...");
+            emailService.enviarCorreo(
+                    "prueba@martinasandwichs.com",
+                    "¡Prueba de Mailtrap exitosa!",
+                    "Si estás leyendo esto en Mailtrap, la configuración de correos está funcionando a la perfección. ¡Podemos seguir con la recuperación de clave!"
+            );
+        };
+    }*/
+
+
 	@Bean
 	@Transactional
 	CommandLineRunner init() {
@@ -97,6 +115,31 @@ public class Inicial1Application {
 					.build();
 
 			tipoUsuarioRepository.save(repartidor);
+
+            /*--------- Faltaban estos roles ---------*/
+            TipoUsuario duenio = TipoUsuario.builder()
+                    .descripcionTipoUsuario("Acceso total y reportes del negocio")
+                    .nombreTipoUsuario("DUENIO") // Usamos DUENIO sin la Ñ por seguridad
+                    .fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .fechaHoraFinVigenciaTipoUsuario(null)
+                    .build();
+            tipoUsuarioRepository.save(duenio);
+
+            TipoUsuario empleado = TipoUsuario.builder()
+                    .descripcionTipoUsuario("Acceso a gestión operativa")
+                    .nombreTipoUsuario("EMPLEADO")
+                    .fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .fechaHoraFinVigenciaTipoUsuario(null)
+                    .build();
+            tipoUsuarioRepository.save(empleado);
+
+            TipoUsuario stock = TipoUsuario.builder()
+                    .descripcionTipoUsuario("Acceso a inventario y almacén")
+                    .nombreTipoUsuario("STOCK")
+                    .fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .fechaHoraFinVigenciaTipoUsuario(null)
+                    .build();
+            tipoUsuarioRepository.save(stock);
 
 
 
@@ -838,8 +881,5 @@ public class Inicial1Application {
 
 		};
 	};
-
-
-
 
 }
