@@ -56,4 +56,15 @@ public class PedidoController extends BaseControllerImpl<Pedido, PedidoServiceIm
     }
 
     //Cancelar Pedido
+    @PutMapping("/cancelar/{id}")
+    public ResponseEntity<?> cancelarPedido(@PathVariable Long id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(pedidoService.cancelarPedido(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{\"error\":\"Error al cancelar el pedido. Detalle: " + e.getMessage() + "\"}");
+        }
+    }
+
 }

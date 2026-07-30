@@ -168,5 +168,37 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido,Long> implements I
         }
     }
 
+    // ------------------------------------------------
+    // Parte del caso de uso Cancelar Pedido
+    // ------------------------------------------------
+    @Transactional
+    public Pedido cancelarPedido(Long idPedido) throws Exception {
+        try {
+            // 1. Buscamos el pedido
+            Pedido pedido = pedidoRepository.findById(idPedido)
+                    .orElseThrow(() -> new RuntimeException("Pedido no encontrado con ID: " + idPedido));
+
+            // 2. Verificamos el estado actual para que no cancelen algo ya entregado
+            String estadoActual = pedido.getEstadoPedido().getNombreEstadoPedido();
+            if (estadoActual.equals("ENTREGADO") || estadoActual.equals("CANCELADO")) {
+                throw new RuntimeException("No se puede cancelar un pedido que ya está " + estadoActual);
+            }
+
+            // 3. Buscamos el estado "CANCELADO" (Según tu init() es el ID 5, o lo buscamos por nombre)
+            EstadoPedido estadoCancelado = estadoPedidoRepository.findById(5L)
+                    .orElseThrow(() -> new RuntimeException("EstadoPedido CANCELADO no encontrado"));
+
+            // 4. Modificamos el pedido
+            pedido.setEstadoPedido(estadoCancelado);
+            pedido.setFechaHoraBajaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+
+            // 5. Guardamos y retornamos
+            return pedidoRepository.save(pedido);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(e.getMessage());
+        }
+    }
 
 }
