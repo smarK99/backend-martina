@@ -57,6 +57,28 @@ public class SucursalServiceImpl extends BaseServiceImpl<Sucursal,Long> implemen
 
     @Transactional
     @Override
+    public Sucursal modificarSucursal(Long id, AltaSucursalDTO dto) throws Exception {
+        try {
+            Sucursal sucursal = sucursalRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Sucursal no encontrada"));
+
+            // Actualizamos los datos básicos
+            sucursal.setNombreSucursal(dto.getNombreSucursal());
+            sucursal.setDescripcionSucursal(dto.getDescripcionSucursal());
+            sucursal.setDireccionSucursal(dto.getDireccionSucursal());
+
+            // Si también queres registrar qué usuario hizo la modificación, descomentá esto:
+            sucursal.setUsuario(usuarioRepository.findById(dto.getIdUsuario()).orElseThrow(() -> new RuntimeException("Usuario no encontrado")));
+
+            return sucursalRepository.save(sucursal);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Transactional
+    @Override
     public Boolean borrarSucursal(Long id) throws Exception {
         try{
             if(sucursalRepository.existsById(id)){

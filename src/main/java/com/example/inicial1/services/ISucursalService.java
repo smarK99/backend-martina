@@ -9,4 +9,5 @@ public interface ISucursalService extends BaseService<Sucursal,Long>{
     public List<Sucursal> obtenerTodos() throws Exception;
     public Sucursal crearSucursal(AltaSucursalDTO altaSucursalDTO) throws Exception;
     public Boolean borrarSucursal(Long id) throws Exception;
+    Sucursal modificarSucursal(Long id, AltaSucursalDTO dto) throws Exception;
 }
