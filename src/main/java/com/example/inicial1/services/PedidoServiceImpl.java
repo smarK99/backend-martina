@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 @Service
 public class PedidoServiceImpl extends BaseServiceImpl<Pedido,Long> implements IPedidoService{
 
@@ -197,6 +200,24 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido,Long> implements I
 
         } catch (Exception e) {
             e.printStackTrace();
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Transactional
+    public Page<Pedido> obtenerTodosPaginados(Pageable pageable) throws Exception {
+        try {
+            return pedidoRepository.obtenerTodosPaginados(pageable);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Transactional
+    public Page<Pedido> buscarPedidosPorSucursalPaginados(Long idSucursal, Pageable pageable) throws Exception {
+        try {
+            return pedidoRepository.buscarPedidosPorSucursalPaginados(idSucursal, pageable);
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
