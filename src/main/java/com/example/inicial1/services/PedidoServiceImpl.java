@@ -222,4 +222,19 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido,Long> implements I
         }
     }
 
+    @Transactional
+    public Page<Pedido> buscarPaginadoYFiltrado(String termino, Long idSucursal, Pageable pageable) throws Exception {
+        try {
+            // Si el término viene nulo, lo pasamos a vacío para que no rompa el LIKE
+            String terminoBusqueda = (termino != null) ? termino : "";
+            // Si la sucursal viene nula, le pasamos 0L para que busque en todas
+            Long sucursalBusqueda = (idSucursal != null) ? idSucursal : 0L;
+
+            return pedidoRepository.buscarPaginadoYFiltrado(terminoBusqueda, sucursalBusqueda, pageable);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+
 }

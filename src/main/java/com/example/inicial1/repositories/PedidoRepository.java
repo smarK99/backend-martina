@@ -67,4 +67,12 @@ public interface PedidoRepository extends BaseRepository<Pedido, Long>{
             "AND p.fk_reparto_id IS NULL",
             nativeQuery = true)
     List<Pedido> obtenerPedidosDisponiblesParaReparto();
+
+
+    // NUEVO: Búsqueda dinámica por ID o Importe, respetando el filtro de sucursal
+    @Query("SELECT p FROM Pedido p WHERE " +
+            "(:idSucursal = 0L OR p.sucursal.id = :idSucursal) AND " +
+            "(CAST(p.id AS string) LIKE CONCAT('%', :termino, '%') OR CAST(p.importeTotalPedido AS string) LIKE CONCAT('%', :termino, '%')) " +
+            "ORDER BY p.fechaHoraAltaPedido DESC")
+    Page<Pedido> buscarPaginadoYFiltrado(@Param("termino") String termino, @Param("idSucursal") Long idSucursal, Pageable pageable);
 }

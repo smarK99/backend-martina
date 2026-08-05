@@ -81,4 +81,22 @@ public class PedidoController extends BaseControllerImpl<Pedido, PedidoServiceIm
                     .body("{\"error\":\"Error al cancelar el pedido. Detalle: " + e.getMessage() + "\"}");
         }
     }
+
+
+    // NUEVO: Endpoint para la barra de búsqueda combinada
+    @GetMapping("/busqueda-paginada")
+    public ResponseEntity<?> buscarPaginadoYFiltrado(
+            @RequestParam(required = false, defaultValue = "") String termino,
+            @RequestParam(required = false, defaultValue = "0") Long idSucursal,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "15") int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            return ResponseEntity.status(HttpStatus.OK).body(pedidoService.buscarPaginadoYFiltrado(termino, idSucursal, pageable));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
+        }
+    }
 }
