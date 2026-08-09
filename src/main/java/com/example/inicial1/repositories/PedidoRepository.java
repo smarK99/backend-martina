@@ -63,7 +63,7 @@ public interface PedidoRepository extends BaseRepository<Pedido, Long>{
     @Query(value = "SELECT p.* " +
             "FROM pedido p " +
             "INNER JOIN estado_pedido ep ON p.fk_estado_pedido_id = ep.id " +
-            "WHERE ep.nombre_estado_pedido != 'CANCELADO' " +
+            "WHERE ep.nombre_estado_pedido NOT IN ('CANCELADO', 'ENTREGADO') " +
             "AND p.fk_reparto_id IS NULL",
             nativeQuery = true)
     List<Pedido> obtenerPedidosDisponiblesParaReparto();
