@@ -15,11 +15,11 @@ import java.util.List;
 @Repository
 public interface PedidoRepository extends BaseRepository<Pedido, Long>{
 
-    // NUEVO: Obtener todos los pedidos paginados y ordenados por fecha descendente (Los más nuevos primero)
+    // Obtener todos los pedidos paginados y ordenados por fecha descendente (Los más nuevos primero)
     @Query("SELECT p FROM Pedido p ORDER BY p.fechaHoraAltaPedido DESC")
     Page<Pedido> obtenerTodosPaginados(Pageable pageable);
 
-    // NUEVO: Buscar historial de pedidos por sucursal con paginación
+    // Buscar historial de pedidos por sucursal con paginación
     @Query("SELECT p FROM Pedido p WHERE p.sucursal.id = :idSucursal ORDER BY p.fechaHoraAltaPedido DESC")
     Page<Pedido> buscarPedidosPorSucursalPaginados(@Param("idSucursal") Long idSucursal, Pageable pageable);
 
@@ -31,7 +31,6 @@ public interface PedidoRepository extends BaseRepository<Pedido, Long>{
     )
     List<Pedido> buscarPedidosPorSucursal(@Param("idSucursal") Long idSucursal);
 
-    // Mantenemos tus otras consultas intactas...
 
     @Query(value = "SELECT s.nombre_sucursal AS nombreSucursal, SUM(p.importe_total_pedido) AS montoTotalVentas " +
             "FROM pedido p " +
@@ -69,10 +68,19 @@ public interface PedidoRepository extends BaseRepository<Pedido, Long>{
     List<Pedido> obtenerPedidosDisponiblesParaReparto();
 
 
-    // NUEVO: Búsqueda dinámica por ID o Importe, respetando el filtro de sucursal
+    // ==========================================
+    // NUEVA CONSULTA: Paginación, Sucursal, Estado, Fecha y Búsqueda por Texto (ID o Importe)
+    // ==========================================
     @Query("SELECT p FROM Pedido p WHERE " +
             "(:idSucursal = 0L OR p.sucursal.id = :idSucursal) AND " +
-            "(CAST(p.id AS string) LIKE CONCAT('%', :termino, '%') OR CAST(p.importeTotalPedido AS string) LIKE CONCAT('%', :termino, '%')) " +
+            "(:idEstado = 0L OR p.estadoPedido.id = :idEstado) AND " +
+            "(:fecha IS NULL OR :fecha = '' OR CAST(p.fechaHoraAltaPedido AS string) LIKE CONCAT(:fecha, '%')) AND " +
+            "(:termino IS NULL OR :termino = '' OR CAST(p.id AS string) LIKE CONCAT('%', :termino, '%') OR CAST(p.importeTotalPedido AS string) LIKE CONCAT('%', :termino, '%')) " +
             "ORDER BY p.fechaHoraAltaPedido DESC")
-    Page<Pedido> buscarPaginadoYFiltrado(@Param("termino") String termino, @Param("idSucursal") Long idSucursal, Pageable pageable);
+    Page<Pedido> buscarPaginadoYFiltrado(
+            @Param("termino") String termino,
+            @Param("idSucursal") Long idSucursal,
+            @Param("fecha") String fecha,
+            @Param("idEstado") Long idEstado,
+            Pageable pageable);
 }
