@@ -222,19 +222,27 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido,Long> implements I
         }
     }
 
+    // ==========================================
+    // MÉTODO ACTUALIZADO: Búsqueda con Sucursal, Fecha y Estado
+    // ==========================================
     @Transactional
-    public Page<Pedido> buscarPaginadoYFiltrado(String termino, Long idSucursal, Pageable pageable) throws Exception {
+    public Page<Pedido> buscarPaginadoYFiltrado(String termino, Long idSucursal, String fecha, Long idEstado, Pageable pageable) throws Exception {
         try {
             // Si el término viene nulo, lo pasamos a vacío para que no rompa el LIKE
             String terminoBusqueda = (termino != null) ? termino : "";
+
             // Si la sucursal viene nula, le pasamos 0L para que busque en todas
             Long sucursalBusqueda = (idSucursal != null) ? idSucursal : 0L;
 
-            return pedidoRepository.buscarPaginadoYFiltrado(terminoBusqueda, sucursalBusqueda, pageable);
+            // Si la fecha viene nula, la pasamos vacía
+            String fechaBusqueda = (fecha != null) ? fecha : "";
+
+            // Si el estado viene nulo, le pasamos 0L para que busque todos
+            Long estadoBusqueda = (idEstado != null) ? idEstado : 0L;
+
+            return pedidoRepository.buscarPaginadoYFiltrado(terminoBusqueda, sucursalBusqueda, fechaBusqueda, estadoBusqueda, pageable);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
-
-
 }

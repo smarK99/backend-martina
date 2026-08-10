@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @RequestMapping(path = "api/producto")
 public class ProductoController extends BaseControllerImpl<Producto, ProductoServiceImpl>{
-    
+
     //ABMS
     @Autowired
     ProductoServiceImpl productoService;
@@ -40,6 +40,18 @@ public class ProductoController extends BaseControllerImpl<Producto, ProductoSer
         }
     }
 
+    // ==========================================
+    // NUEVO: Endpoint para Actualizar Producto (Edición)
+    // ==========================================
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<?> actualizarProducto(@PathVariable Long id, @RequestBody AltaProductoDTO altaProductoDTO) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(productoService.actualizarProducto(id, altaProductoDTO));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
+        }
+    }
 
     //Borrar Cat
     @DeleteMapping("/borrar/{id}")

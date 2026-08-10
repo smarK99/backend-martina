@@ -4,6 +4,7 @@ import com.example.inicial1.dtos.*;
 import com.example.inicial1.entities.Reparto;
 import com.example.inicial1.services.RepartoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class RepartoController extends BaseControllerImpl<Reparto, RepartoServic
             return ResponseEntity.status(HttpStatus.OK).body(repartoService.crearReparto(repartoDTO));
         }
         catch (Exception e){
-            e.printStackTrace(); // Imprime el stack trace de la excepción
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
         }
     }
@@ -35,7 +36,7 @@ public class RepartoController extends BaseControllerImpl<Reparto, RepartoServic
             return ResponseEntity.status(HttpStatus.OK).body(repartoService.agregarPedido(idReparto, pedidos));
         }
         catch (Exception e){
-            e.printStackTrace(); // Imprime el stack trace de la excepción
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
         }
     }
@@ -46,7 +47,7 @@ public class RepartoController extends BaseControllerImpl<Reparto, RepartoServic
             return ResponseEntity.status(HttpStatus.OK).body(repartoService.entregarPedido(entregarPedidoDTO));
         }
         catch (Exception e){
-            e.printStackTrace(); // Imprime el stack trace de la excepción
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
         }
     }
@@ -57,7 +58,7 @@ public class RepartoController extends BaseControllerImpl<Reparto, RepartoServic
             return ResponseEntity.status(HttpStatus.OK).body(repartoService.cargarGasto(cargarGastoDTO));
         }
         catch (Exception e){
-            e.printStackTrace(); // Imprime el stack trace de la excepción
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
         }
     }
@@ -68,21 +69,40 @@ public class RepartoController extends BaseControllerImpl<Reparto, RepartoServic
             return ResponseEntity.status(HttpStatus.OK).body(repartoService.finalizarReparto(finalizarRepartoDTO));
         }
         catch (Exception e){
-            e.printStackTrace(); // Imprime el stack trace de la excepción
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
         }
     }
 
-    //Realizar rendicion
     @PostMapping("/realizar_rendicion")
     public ResponseEntity<?> realizarRendicion(@RequestBody RealizarRendicionDTO realizarRendicionDTO) {
         try{
             return ResponseEntity.status(HttpStatus.OK).body(repartoService.realizarRendicion(realizarRendicionDTO));
         }
         catch (Exception e){
-            e.printStackTrace(); // Imprime el stack trace de la excepción
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
         }
     }
 
+    // ==========================================
+    // ENDPOINT PARA PAGINACIÓN Y BÚSQUEDA (CON ESTADO, FECHA Y TÉRMINO)
+    // ==========================================
+    @GetMapping("/busqueda-paginada")
+    public ResponseEntity<?> buscarPaginadoYFiltrado(
+            @RequestParam(required = false, defaultValue = "") String termino,
+            @RequestParam(defaultValue = "0") Integer idRepartidor,
+            @RequestParam(required = false, defaultValue = "") String fecha,
+            @RequestParam(defaultValue = "0") Long idEstado, // <-- RECIBE EL ESTADO
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "15") int size) {
+        try {
+            // SE LO PASAMOS AL SERVICIO
+            Page<Reparto> resultados = repartoService.buscarPaginadoYFiltrado(termino, idRepartidor, fecha, idEstado, page, size);
+            return ResponseEntity.status(HttpStatus.OK).body(resultados);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
+        }
+    }
 }

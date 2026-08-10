@@ -18,7 +18,7 @@ public class PedidoController extends BaseControllerImpl<Pedido, PedidoServiceIm
     @Autowired
     PedidoServiceImpl pedidoService;
 
-    // NUEVO: Traer todos los pedidos paginados
+    // Traer todos los pedidos paginados
     @GetMapping("/todos-paginados")
     public ResponseEntity<?> obtenerTodosPaginados(
             @RequestParam(defaultValue = "0") int page,
@@ -33,7 +33,7 @@ public class PedidoController extends BaseControllerImpl<Pedido, PedidoServiceIm
         }
     }
 
-    // NUEVO: Buscar pedidos por sucursal paginados
+    // Buscar pedidos por sucursal paginados
     @GetMapping("/sucursal/{idSucursal}/paged")
     public ResponseEntity<?> buscarPedidosPorSucursalPaginados(
             @PathVariable Long idSucursal,
@@ -83,16 +83,20 @@ public class PedidoController extends BaseControllerImpl<Pedido, PedidoServiceIm
     }
 
 
-    // NUEVO: Endpoint para la barra de búsqueda combinada
+    // ==========================================
+    // MÉTODO ACTUALIZADO: Endpoint para la barra de búsqueda combinada (Sucursal, Fecha, Estado y Texto)
+    // ==========================================
     @GetMapping("/busqueda-paginada")
     public ResponseEntity<?> buscarPaginadoYFiltrado(
             @RequestParam(required = false, defaultValue = "") String termino,
             @RequestParam(required = false, defaultValue = "0") Long idSucursal,
+            @RequestParam(required = false, defaultValue = "") String fecha,
+            @RequestParam(defaultValue = "0") Long idEstado,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "15") int size) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-            return ResponseEntity.status(HttpStatus.OK).body(pedidoService.buscarPaginadoYFiltrado(termino, idSucursal, pageable));
+            return ResponseEntity.status(HttpStatus.OK).body(pedidoService.buscarPaginadoYFiltrado(termino, idSucursal, fecha, idEstado, pageable));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
