@@ -6,6 +6,8 @@ import com.example.inicial1.entities.Pedido;
 import com.example.inicial1.services.IPedidoService;
 import com.example.inicial1.services.PedidoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +66,58 @@ public class PedidoController extends BaseControllerImpl<Pedido, PedidoServiceIm
         catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
+        }
+    }
+
+    // Traer todos los pedidos paginados
+    @GetMapping("/todos-paginados")
+    public ResponseEntity<?> obtenerTodosPaginados(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "15") int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            return ResponseEntity.status(HttpStatus.OK).body(pedidoService.obtenerTodosPaginados(pageable));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
+        }
+    }
+
+    // Buscar pedidos por sucursal paginados
+    @GetMapping("/sucursal/{idSucursal}/paged")
+    public ResponseEntity<?> buscarPedidosPorSucursalPaginados(
+            @PathVariable Long idSucursal,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "15") int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            return ResponseEntity.status(HttpStatus.OK).body(pedidoService.buscarPedidosPorSucursalPaginados(idSucursal, pageable));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
+        }
+    }
+
+    // ==========================================
+    // MÉTODO ACTUALIZADO: Endpoint para la barra de búsqueda combinada (Sucursal, Fecha, Estado y Texto)
+    // ==========================================
+    @GetMapping("/busqueda-paginada")
+    public ResponseEntity<?> buscarPaginadoYFiltrado(
+            @RequestParam(required = false, defaultValue = "") String termino,
+            @RequestParam(required = false, defaultValue = "0") Long idSucursal,
+            @RequestParam(required = false, defaultValue = "") String fecha,
+            @RequestParam(defaultValue = "0") Long idEstado,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "15") int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            return ResponseEntity.status(HttpStatus.OK).body(pedidoService.buscarPaginadoYFiltrado(termino, idSucursal, fecha, idEstado, pageable));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
         }
     }
 }

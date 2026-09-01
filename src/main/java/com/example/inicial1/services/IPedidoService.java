@@ -15,5 +15,5 @@ public interface IPedidoService extends BaseService<Pedido,Long>{
 
     public List<Pedido> obtenerPedidosDisponiblesParaReparto() throws Exception;
 
-    public Pedido cancelarPedido(Long idPedido) throws Exception;
+    public Boolean cancelarPedido(Long idPedido) throws Exception;
 }
