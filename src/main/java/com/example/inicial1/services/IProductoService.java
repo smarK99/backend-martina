@@ -8,5 +8,6 @@ import java.util.List;
 public interface IProductoService extends BaseService<Producto,Long>{
     public List<Producto> obtenerTodos() throws Exception;
     public Producto crearProducto(AltaProductoDTO altaProductoDTO) throws Exception;
+    Producto actualizarProducto(Long id, AltaProductoDTO dto) throws Exception;
     public Boolean borrarProducto(Long id) throws Exception;
 }

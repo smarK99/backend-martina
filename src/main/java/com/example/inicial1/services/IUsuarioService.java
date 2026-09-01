@@ -6,6 +6,8 @@ import com.example.inicial1.dtos.UsuarioTUDTO;
 import com.example.inicial1.entities.Categoria;
 import com.example.inicial1.entities.Usuario;
 import com.example.inicial1.security.dto.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -16,4 +18,9 @@ public interface IUsuarioService extends BaseService<Usuario, Long> {
     void bajaLogica(Long idUsuario);
     void actualizarRoles(UsuarioRolDTO dto);
     void cambiarClave(String username, CambioClaveDTO dto);
+
+    // ==========================================
+    // NUEVO: Paginación y Búsqueda
+    // ==========================================
+    Page<Usuario> buscarPaginadoYFiltrado(String termino, Pageable pageable) throws Exception;
 }

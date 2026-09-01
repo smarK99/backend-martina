@@ -3,7 +3,6 @@ package com.example.inicial1.services;
 import com.example.inicial1.dtos.AltaProductoDTO;
 import com.example.inicial1.dtos.AltaProductoInsumoDTO;
 import com.example.inicial1.entities.Producto;
-import com.example.inicial1.entities.Producto;
 import com.example.inicial1.entities.ProductoInsumo;
 import com.example.inicial1.repositories.CategoriaRepository;
 import com.example.inicial1.repositories.InsumoRepository;
@@ -42,26 +41,23 @@ public class ProductoServiceImpl extends BaseServiceImpl<Producto,Long> implemen
     @Transactional
     @Override
     public Producto crearProducto(AltaProductoDTO altaProductoDTO) throws Exception {
-
         try{
             Producto producto = Producto.builder()
                     .nombreProducto(altaProductoDTO.getNombreProducto())
                     .descripcionProducto(altaProductoDTO.getDescripcionProducto())
+                    .recetaPreparacion(altaProductoDTO.getRecetaPreparacion())
+                    .imagenProducto(altaProductoDTO.getImagenProducto()) // <-- NUEVO: Guardamos la imagen
                     .fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     .fechaHoraBajaProducto(null)
                     .categoria(categoriaRepository.findById(altaProductoDTO.getIdCategoria()).orElseThrow(() -> new RuntimeException("Categoria no encontrada")))
                     .productoInsumoList(new ArrayList<>())
                     .build();
 
-            //Recorro todos los insumos con sus cantidades que se utilizan para crear el producto
             for(AltaProductoInsumoDTO api : altaProductoDTO.getApiList()){
-
-                //Creo el producto insumo
                 ProductoInsumo pi = ProductoInsumo.builder()
                         .cantidadInsumo(api.getCantidadI())
                         .insumo(insumoRepository.findById(api.getIdInsumo()).orElseThrow( () -> new RuntimeException("Insumo no encontrado")))
                         .build();
-                //Lo agrego a la lista
                 producto.getProductoInsumoList().add(pi);
             }
 
@@ -69,6 +65,47 @@ public class ProductoServiceImpl extends BaseServiceImpl<Producto,Long> implemen
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    // ==========================================
+    // NUEVO: Método para Actualizar Producto (Edición)
+    // ==========================================
+    @Transactional
+    public Producto actualizarProducto(Long id, AltaProductoDTO dto) throws Exception {
+        try {
+            Producto productoViejo = productoRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+            productoViejo.setNombreProducto(dto.getNombreProducto());
+            productoViejo.setDescripcionProducto(dto.getDescripcionProducto());
+            productoViejo.setRecetaPreparacion(dto.getRecetaPreparacion());
+
+            // Si mandan una imagen nueva, la actualizamos
+            if (dto.getImagenProducto() != null && !dto.getImagenProducto().isEmpty()) {
+                productoViejo.setImagenProducto(dto.getImagenProducto());
+            }
+
+            productoViejo.setCategoria(categoriaRepository.findById(dto.getIdCategoria())
+                    .orElseThrow(() -> new RuntimeException("Categoría no encontrada")));
+
+            // Vaciamos los insumos viejos y cargamos los nuevos
+            productoViejo.getProductoInsumoList().clear();
+
+            if (dto.getApiList() != null) {
+                for(AltaProductoInsumoDTO api : dto.getApiList()){
+                    ProductoInsumo pi = ProductoInsumo.builder()
+                            .cantidadInsumo(api.getCantidadI())
+                            .insumo(insumoRepository.findById(api.getIdInsumo()).orElseThrow())
+                            .build();
+                    productoViejo.getProductoInsumoList().add(pi);
+                }
+            }
+
+            return productoRepository.save(productoViejo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
     }
 

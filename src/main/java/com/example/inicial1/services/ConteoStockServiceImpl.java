@@ -9,6 +9,9 @@ import com.example.inicial1.repositories.ProductoRepository;
 import com.example.inicial1.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -161,5 +164,13 @@ public class ConteoStockServiceImpl extends BaseServiceImpl<ConteoStock,Long> im
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    // ==========================================
+    // NUEVO MÉTODO PARA PAGINACIÓN Y BÚSQUEDA
+    // ==========================================
+    public Page<ConteoStock> buscarPaginadoYFiltrado(String termino, String fecha, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return conteoStockRepository.buscarPaginadoYFiltrado(termino, fecha, pageable);
     }
 }

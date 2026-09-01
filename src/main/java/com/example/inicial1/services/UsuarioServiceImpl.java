@@ -10,6 +10,8 @@ import com.example.inicial1.repositories.TipoUsuarioRepository;
 import com.example.inicial1.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Long> implements IUsuarioService {
@@ -173,6 +174,20 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Long> implement
 
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    // ==========================================
+    // NUEVO: Método para Paginación y Búsqueda
+    // ==========================================
+    @Transactional
+    public Page<Usuario> buscarPaginadoYFiltrado(String termino, Pageable pageable) throws Exception {
+        try {
+            // Si el término viene nulo, lo pasamos a vacío para que busque todo
+            String terminoBusqueda = (termino != null) ? termino : "";
+            return usuarioRepository.buscarPaginadoYFiltrado(terminoBusqueda, pageable);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 }

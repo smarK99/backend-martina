@@ -41,6 +41,19 @@ public class SucursalController extends BaseControllerImpl<Sucursal, SucursalSer
     }
 
 
+    @PutMapping("/modificar/{id}")
+    public ResponseEntity<?> modificarSucursal(@PathVariable Long id, @RequestBody AltaSucursalDTO dto) {
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(sucursalService.modificarSucursal(id, dto));
+        }
+        catch (Exception e){
+            e.printStackTrace(); // Imprime el stack trace de la excepción
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
+        }
+    }
+
+
     //Borrar Cat
     @DeleteMapping("/borrar/{id}")
     public ResponseEntity<?> borrarSucursal(@PathVariable Long id){

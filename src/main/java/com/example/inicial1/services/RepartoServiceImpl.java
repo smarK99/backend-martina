@@ -6,6 +6,9 @@ import com.example.inicial1.enums.MetodoPago;
 import com.example.inicial1.repositories.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -191,6 +194,7 @@ public class RepartoServiceImpl extends BaseServiceImpl<Reparto,Long> implements
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
+
     }
 
     @Transactional
@@ -237,21 +241,19 @@ public class RepartoServiceImpl extends BaseServiceImpl<Reparto,Long> implements
             rendicion.setDiferencia(r1.getRendicion().getMontoRendido() - rendicion.getMontoRecaudado());
 
             return rendicion;
-//            //Deben coincidir ambos montos de la rendicion MENOS los gastos
-//            if( rendicion.getMontoRendido().equals(rendicion.getMontoRecaudado() - gastoTotal)){
-//                rendicion.setDiferencia(0D);
-//                return rendicion;
-//
-//            }else {
-//                //Calcula la diferencia entre montos
-//                rendicion.setDiferencia((rendicion.getMontoRecaudado() - gastoTotal) - rendicion.getMontoRendido());
-//                return rendicion;
-//            }
 
 
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    // ==========================================
+    // MÉTODO PARA PAGINACIÓN Y BÚSQUEDA (CON ID ESTADO)
+    // ==========================================
+    public Page<Reparto> buscarPaginadoYFiltrado(String termino, Integer idRepartidor, String fecha, Long idEstado, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repartoRepository.buscarPaginadoYFiltrado(termino, idRepartidor, idEstado, fecha, pageable);
     }
 }

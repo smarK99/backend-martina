@@ -11,6 +11,9 @@ import com.example.inicial1.services.EmailService;
 import com.example.inicial1.services.IUsuarioService; // <-- Importamos la interfaz correcta
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -183,6 +186,25 @@ public class UsuarioController {
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", "Error interno al restablecer la contraseña."));
+        }
+    }
+
+    // ==========================================
+    // NUEVO ENDPOINT: Búsqueda y paginación
+    // ==========================================
+    @GetMapping("/busqueda-paginada")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DUEÑO')")
+    public ResponseEntity<?> buscarPaginadoYFiltrado(
+            @RequestParam(required = false, defaultValue = "") String termino,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "15") int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.buscarPaginadoYFiltrado(termino, pageable));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Error, por favor intente más tarde. Detalle: " + e.getMessage()));
         }
     }
 

@@ -6,6 +6,7 @@ import com.example.inicial1.dtos.UpdateControlStockDTO;
 import com.example.inicial1.entities.ConteoStock;
 import com.example.inicial1.services.ConteoStockServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,6 +59,24 @@ public class ConteoStockController extends BaseControllerImpl<ConteoStock, Conte
         }
         catch (Exception e){
             e.printStackTrace(); // Imprime el stack trace de la excepción
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
+        }
+    }
+
+    // ==========================================
+    // NUEVO ENDPOINT PARA PAGINACIÓN Y BÚSQUEDA
+    // ==========================================
+    @GetMapping("/busqueda-paginada")
+    public ResponseEntity<?> buscarPaginadoYFiltrado(
+            @RequestParam(required = false, defaultValue = "") String termino,
+            @RequestParam(required = false, defaultValue = "") String fecha,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "15") int size) {
+        try {
+            Page<ConteoStock> resultados = conteoStockService.buscarPaginadoYFiltrado(termino, fecha, page, size);
+            return ResponseEntity.status(HttpStatus.OK).body(resultados);
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Error, por favor intente más tarde. Detalle: " + e.getMessage() + "\"}");
         }
     }
