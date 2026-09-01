@@ -62,10 +62,10 @@ public class RepartoController extends BaseControllerImpl<Reparto, RepartoServic
         }
     }
 
-    @PostMapping("/finalizar")
-    public ResponseEntity<?> finalizarReparto(@RequestBody FinalizarRepartoDTO finalizarRepartoDTO){
+    @PutMapping("/finalizar/{idReparto}")
+    public ResponseEntity<?> finalizarReparto(@PathVariable Long idReparto){
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(repartoService.finalizarReparto(finalizarRepartoDTO));
+            return ResponseEntity.status(HttpStatus.OK).body(repartoService.finalizarReparto(idReparto));
         }
         catch (Exception e){
             e.printStackTrace(); // Imprime el stack trace de la excepción

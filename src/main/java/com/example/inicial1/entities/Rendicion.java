@@ -26,6 +26,9 @@ public class Rendicion extends Base{
     @Column(name = "diferencia")
     private Double diferencia;
 
+    @Column(name = "monto_total_reparto") //Suma todos los pedidos sin importar si se pagaron o no (sin gastos incluidos)
+    private Double montoTotalReparto;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_rendicion_id")
     private List<Gasto> gastos;

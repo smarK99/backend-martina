@@ -7,9 +7,9 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
-public class FinalizarRepartoDTO {
+public class FinalizarRepartoDTO { //NO USADA POR AHORA
 
     private Long idReparto;
 
-    private Double montoRecaudado;
+   // private Double montoRecaudado;
 }

@@ -822,7 +822,7 @@ public class Inicial1Application {
 					.descripcionReparto("Recorrido por el sur, aprox. 6hs")
 					.fechaHoraInicioReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraFinReparto(null)
-					.rendicion(new Rendicion(0D, 0D, 0D, null))
+					.rendicion(new Rendicion(0D, 0D, 0D, 0D, null))
 					.build();
 
 			r1.setPedidosList(List.of(p1,p4));
@@ -835,7 +835,7 @@ public class Inicial1Application {
 					.descripcionReparto("Recorrido semanal, aprox. 3hs")
 					.fechaHoraInicioReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraFinReparto(null)
-					.rendicion(new Rendicion(0D, 0D, 0D, null))
+					.rendicion(new Rendicion(0D, 0D, 0D, 0D, null))
 					.build();
 
 			r2.setPedidosList(List.of(p2));

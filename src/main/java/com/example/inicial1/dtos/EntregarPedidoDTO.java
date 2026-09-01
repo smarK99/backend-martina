@@ -14,6 +14,8 @@ public class EntregarPedidoDTO {
 
     private Long idPedido;
 
-    private MetodoPago metodoPago;
+    private Double montoEfectivo;
+
+    private Double montoTransferencia;
 
 }

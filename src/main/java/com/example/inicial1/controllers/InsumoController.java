@@ -1,6 +1,5 @@
 package com.example.inicial1.controllers;
 
-import com.example.inicial1.dtos.AltaCategoriaDTO;
 import com.example.inicial1.dtos.AltaInsumoDTO;
 import com.example.inicial1.entities.Insumo;
 import com.example.inicial1.services.InsumoServiceImpl;

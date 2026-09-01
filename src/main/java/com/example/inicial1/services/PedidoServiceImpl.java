@@ -35,6 +35,9 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido,Long> implements I
     @Autowired
     ProductoRepository productoRepository;
 
+    @Autowired
+    MovimientoCtaCteServiceImpl movimientoCtaCteService;
+
     @Transactional
     public Pedido generarPedido(PedidoDTO pedidoDTO) throws Exception{
         try{
@@ -90,6 +93,16 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido,Long> implements I
             nuevoPedido.setImporteTotalPedido(totalDetalles);
 
             System.out.println("Cantidad de detalles a persistir: " + nuevoPedido.getDetallePedidoList().size());
+
+            //Se asienta el pedido en la cta cte del cliente
+            MovimientoCtaCte mov = new MovimientoCtaCte();
+            mov.setSucursal(nuevoPedido.getSucursal());
+            // mov.setPedido(nuevoPedido);
+            mov.setConcepto("Pedido #" + nuevoPedido.getId());
+            mov.setImportePedido(nuevoPedido.getImporteTotalPedido()); // Suma a la deuda
+            mov.setMontoPagado(0D);
+
+            movimientoCtaCteService.registrarMovimiento(mov);
 
             //Retorno el pedido nuevo
             return pedidoRepository.save(nuevoPedido);
@@ -166,6 +179,29 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido,Long> implements I
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    @Transactional
+    public Boolean cancelarPedido(Long idPedido) throws Exception {
+        Pedido pedido = pedidoRepository.findById(idPedido)
+                .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+
+        // 1. Cambiar estado a CANCELADO
+        EstadoPedido estadoCancelado = estadoPedidoRepository.findById(5L).get();
+        pedido.setEstadoPedido(estadoCancelado);
+        pedidoRepository.save(pedido);
+
+        // 2. Asiento de Reversión (Anulamos la deuda ingresando el importe en negativo)
+        MovimientoCtaCte mov = new MovimientoCtaCte();
+        mov.setSucursal(pedido.getSucursal());
+        //mov.setPedido(pedido);
+        mov.setConcepto("Cancelación Pedido #" + pedido.getId());
+        mov.setImportePedido(-pedido.getImporteTotalPedido()); // El negativo resta la deuda
+        mov.setMontoPagado(0D);
+
+        movimientoCtaCteService.registrarMovimiento(mov);
+
+        return true;
     }
 
 

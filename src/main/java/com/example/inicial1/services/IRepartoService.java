@@ -13,7 +13,7 @@ public interface IRepartoService extends BaseService<Reparto,Long>{
     public Boolean agregarPedido(Long idReparto, List<AgregarPedidosDTO> pedidos) throws  Exception;
     public Boolean entregarPedido(EntregarPedidoDTO entregarPedidoDTO) throws  Exception;
     public Gasto cargarGasto(CargarGastoDTO cargarGastoDTO) throws Exception;
-    public Boolean finalizarReparto(FinalizarRepartoDTO finalizarRepartoDTO) throws Exception;
+    public Reparto finalizarReparto(Long idReparto) throws Exception;
     public Rendicion realizarRendicion(RealizarRendicionDTO realizarRendicionDTO) throws Exception;
 
 }
