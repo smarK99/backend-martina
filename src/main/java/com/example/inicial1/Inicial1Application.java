@@ -149,7 +149,7 @@ public class Inicial1Application {
 
             Usuario u1 = Usuario.builder()
                     .dni("40987221")
-                    .username("W21")
+                    .username("FW21")
                     .email("cliente1@gmail.com")
                     .direccion("San Martin 298")
                     .fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
@@ -172,8 +172,6 @@ public class Inicial1Application {
                     .build();
             u2.setTiposUsuario(List.of(admin));
             usuarioRepository.save(u2);
-
-// Repite lo mismo para u3, u4 y u5 usando passwordEncoder.encode("123")
 
 			Usuario u3 = Usuario.builder()
 					.dni("41755355")

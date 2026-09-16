@@ -26,7 +26,6 @@ public class Producto extends Base{
     @Column(name = "receta_preparacion", columnDefinition = "TEXT")
     private String recetaPreparacion;
 
-    // NUEVO: Columna para guardar la imagen en formato Base64
     @Column(name = "imagen_producto", columnDefinition = "LONGTEXT")
     private String imagenProducto;
 

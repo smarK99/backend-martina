@@ -93,7 +93,4 @@ public class Usuario extends Base implements UserDetails{
         return this.username; // <-- Hacemos lo mismo con el username por seguridad
     }
 
-//    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "fk_usuario_id")
-//    private List<TipoUsuario> tipoUsuarioList;
 }
