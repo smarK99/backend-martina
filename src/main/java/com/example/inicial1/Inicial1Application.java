@@ -87,7 +87,9 @@ public class Inicial1Application {
 	CommandLineRunner init() {
 		return args -> {
 
-		/*---------Alta Tipo Usuario---------*/
+		if(usuarioRepository.count() == 0) {
+
+			/*---------Alta Tipo Usuario---------*/
 
 			TipoUsuario admin = TipoUsuario.builder()
 					.descripcionTipoUsuario("Acceso a todas las funcionalidades")
@@ -116,62 +118,62 @@ public class Inicial1Application {
 
 			tipoUsuarioRepository.save(repartidor);
 
-            /*--------- Faltaban estos roles ---------*/
-            TipoUsuario duenio = TipoUsuario.builder()
-                    .descripcionTipoUsuario("Acceso total y reportes del negocio")
-                    .nombreTipoUsuario("DUENIO") // Usamos DUENIO sin la Ñ por seguridad
-                    .fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                    .fechaHoraFinVigenciaTipoUsuario(null)
-                    .build();
-            tipoUsuarioRepository.save(duenio);
+			/*--------- Faltaban estos roles ---------*/
+			TipoUsuario duenio = TipoUsuario.builder()
+					.descripcionTipoUsuario("Acceso total y reportes del negocio")
+					.nombreTipoUsuario("DUENIO") // Usamos DUENIO sin la Ñ por seguridad
+					.fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraFinVigenciaTipoUsuario(null)
+					.build();
+			tipoUsuarioRepository.save(duenio);
 
-            TipoUsuario empleado = TipoUsuario.builder()
-                    .descripcionTipoUsuario("Acceso a gestión operativa")
-                    .nombreTipoUsuario("EMPLEADO")
-                    .fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                    .fechaHoraFinVigenciaTipoUsuario(null)
-                    .build();
-            tipoUsuarioRepository.save(empleado);
+			TipoUsuario empleado = TipoUsuario.builder()
+					.descripcionTipoUsuario("Acceso a gestión operativa")
+					.nombreTipoUsuario("EMPLEADO")
+					.fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraFinVigenciaTipoUsuario(null)
+					.build();
+			tipoUsuarioRepository.save(empleado);
 
-            TipoUsuario stock = TipoUsuario.builder()
-                    .descripcionTipoUsuario("Acceso a inventario y almacén")
-                    .nombreTipoUsuario("STOCK")
-                    .fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                    .fechaHoraFinVigenciaTipoUsuario(null)
-                    .build();
-            tipoUsuarioRepository.save(stock);
+			TipoUsuario stock = TipoUsuario.builder()
+					.descripcionTipoUsuario("Acceso a inventario y almacén")
+					.nombreTipoUsuario("STOCK")
+					.fechaHoraInicioVigenciaTipoUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraFinVigenciaTipoUsuario(null)
+					.build();
+			tipoUsuarioRepository.save(stock);
 
 
 
 			/*---------Alta Usuario---------*/
 
-            /*---------Alta Usuario (CORREGIDO)---------*/
+			/*---------Alta Usuario (CORREGIDO)---------*/
 
-            Usuario u1 = Usuario.builder()
-                    .dni("40987221")
-                    .username("FW21")
-                    .email("cliente1@gmail.com")
-                    .direccion("San Martin 298")
-                    .fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                    .nombreCompletoUsuario("Federico w21")
-                    .password(passwordEncoder.encode("123")) // <--- ENCRIPTADO
-                    .telefono("413219")
-                    .build();
-            u1.setTiposUsuario(List.of(cliente)); // Asegúrate de usar el nombre correcto: tiposUsuario
-            usuarioRepository.save(u1);
+			Usuario u1 = Usuario.builder()
+					.dni("40987221")
+					.username("FW21")
+					.email("cliente1@gmail.com")
+					.direccion("San Martin 298")
+					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.nombreCompletoUsuario("Federico w21")
+					.password(passwordEncoder.encode("123")) // <--- ENCRIPTADO
+					.telefono("413219")
+					.build();
+			u1.setTiposUsuario(List.of(cliente)); // Asegúrate de usar el nombre correcto: tiposUsuario
+			usuarioRepository.save(u1);
 
-            Usuario u2 = Usuario.builder()
-                    .dni("23453123")
-                    .username("flavio74")
-                    .email("admin1@gmail.com")
-                    .direccion("Ozamis 123")
-                    .fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                    .nombreCompletoUsuario("Flavio Sabattini")
-                    .password(passwordEncoder.encode("123")) // <--- ENCRIPTADO
-                    .telefono("423949")
-                    .build();
-            u2.setTiposUsuario(List.of(admin));
-            usuarioRepository.save(u2);
+			Usuario u2 = Usuario.builder()
+					.dni("23453123")
+					.username("flavio74")
+					.email("admin1@gmail.com")
+					.direccion("Ozamis 123")
+					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.nombreCompletoUsuario("Flavio Sabattini")
+					.password(passwordEncoder.encode("123")) // <--- ENCRIPTADO
+					.telefono("423949")
+					.build();
+			u2.setTiposUsuario(List.of(admin));
+			usuarioRepository.save(u2);
 
 			Usuario u3 = Usuario.builder()
 					.dni("41755355")
@@ -572,7 +574,7 @@ public class Inicial1Application {
 					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
 					.fechaHoraBajaSucursal(null)
 					.build();
-			s1.setSucursalProductoList(List.of(sp2,sp6));
+			s1.setSucursalProductoList(List.of(sp2, sp6));
 			s1.setUsuario(u5);
 
 			sucursalRepository.save(s1);
@@ -727,7 +729,7 @@ public class Inicial1Application {
 
 			p2.setSucursal(s2);
 			p2.setEstadoPedido(creado);
-			p2.setDetallePedidoList(List.of(dp1,dp3));
+			p2.setDetallePedidoList(List.of(dp1, dp3));
 			p2.setImporteTotalPedido(14500.0);
 
 			pedidoRepository.save(p2);
@@ -823,7 +825,7 @@ public class Inicial1Application {
 					.rendicion(new Rendicion(0D, 0D, 0D, 0D, null))
 					.build();
 
-			r1.setPedidosList(List.of(p1,p4));
+			r1.setPedidosList(List.of(p1, p4));
 			r1.setEstadoReparto(er1);
 			r1.setUsuario(u3);
 			repartoRepository.save(r1);
@@ -876,6 +878,7 @@ public class Inicial1Application {
 			cs.setUsuario(u2);
 
 			conteoStockRepository.save(cs);
+		}
 
 		};
 	};

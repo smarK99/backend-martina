@@ -114,7 +114,9 @@ public class MainSecurity {
     public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
         org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
         // Permitimos específicamente el puerto de Angular
-        configuration.setAllowedOrigins(java.util.List.of("http://localhost:4200"));
+        configuration.setAllowedOrigins(java.util.List.of("http://localhost:4200",
+                "https://frontend-martina-git-main-smarks-projects.vercel.app/",
+                "https://frontend-martina-3611ktnfx-smarks-projects.vercel.app/"));
         // Permitimos todos los métodos, incluyendo el famoso OPTIONS que nos está fallando
         configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         // Permitimos que viajen los tokens en las cabeceras

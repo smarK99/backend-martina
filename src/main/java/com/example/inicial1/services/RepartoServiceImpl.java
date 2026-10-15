@@ -103,10 +103,10 @@ public class RepartoServiceImpl extends BaseServiceImpl<Reparto,Long> implements
                     // 1. Marcamos como entregado
                     p.setEstadoPedido(estadoPedidoRepository.findById(4L).get());
 
-                    // Aseguramos que no sean null (valores por defecto 0)
+                    // Aseguramos que no sean null
                     Double efvo = entregarPedidoDTO.getMontoEfectivo() != null ? entregarPedidoDTO.getMontoEfectivo() : 0D;
+                    // Recibimos la transferencia, pero ya NO la sumamos a un "totalCobrado"
                     Double transf = entregarPedidoDTO.getMontoTransferencia() != null ? entregarPedidoDTO.getMontoTransferencia() : 0D;
-                    Double totalCobrado = efvo + transf;
 
                     // 2. Logística de Caja: SOLO EL EFECTIVO va a la Rendición del Repartidor
                     if (efvo > 0) {
@@ -114,17 +114,20 @@ public class RepartoServiceImpl extends BaseServiceImpl<Reparto,Long> implements
                         r.getRendicion().setMontoRecaudado(recaudadoActual + efvo);
                     }
 
-                    // 3. Logística de Cuenta Corriente: Ambos montos pagan deuda
-                    if (totalCobrado > 0) {
+                    // 3. Logística de Cuenta Corriente: SOLO EL EFECTIVO achica la deuda hoy
+                    if (efvo > 0) {
                         MovimientoCtaCte mov = new MovimientoCtaCte();
                         mov.setSucursal(p.getSucursal());
-                        //mov.setPedido(p);
-                        mov.setConcepto("Cobro en calle Pedido #" + p.getId());
+                        mov.setConcepto("Cobro en Efectivo - Reparto Pedido #" + p.getId());
                         mov.setImportePedido(0D);
-                        mov.setMontoPagado(totalCobrado); // Achica la deuda
+                        mov.setMontoPagado(efvo); // Solo impacta el billete físico
 
                         movimientoCtaCteService.registrarMovimiento(mov);
                     }
+
+                    // Si la transferencia > 0, NO HACEMOS NADA.
+                    // La deuda sigue viva en la Cta Cte para que el Dueño la salde después.
+
                     break;
                 }
             }
