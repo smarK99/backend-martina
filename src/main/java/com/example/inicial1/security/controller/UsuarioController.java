@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/usuarios")
-@CrossOrigin(origins = "http://localhost:4200") // Permite que Angular se conecte sin error de CORS
+@RequestMapping("api/usuario")
+@CrossOrigin(origins = "*")
 public class UsuarioController {
 
     @Autowired
