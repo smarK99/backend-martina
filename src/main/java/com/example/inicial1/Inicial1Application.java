@@ -149,18 +149,18 @@ public class Inicial1Application {
 
 			/*---------Alta Usuario (CORREGIDO)---------*/
 
-			Usuario u1 = Usuario.builder()
-					.dni("40987221")
-					.username("FW21")
-					.email("cliente1@gmail.com")
-					.direccion("San Martin 298")
-					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.nombreCompletoUsuario("Federico w21")
-					.password(passwordEncoder.encode("123")) // <--- ENCRIPTADO
-					.telefono("413219")
-					.build();
-			u1.setTiposUsuario(List.of(cliente)); // Asegúrate de usar el nombre correcto: tiposUsuario
-			usuarioRepository.save(u1);
+//			Usuario u1 = Usuario.builder()
+//					.dni("40987221")
+//					.username("FW21")
+//					.email("cliente1@gmail.com")
+//					.direccion("San Martin 298")
+//					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.nombreCompletoUsuario("Federico w21")
+//					.password(passwordEncoder.encode("123")) // <--- ENCRIPTADO
+//					.telefono("413219")
+//					.build();
+//			u1.setTiposUsuario(List.of(cliente)); // Asegúrate de usar el nombre correcto: tiposUsuario
+//			usuarioRepository.save(u1);
 
 			Usuario u2 = Usuario.builder()
 					.dni("23453123")
@@ -189,35 +189,35 @@ public class Inicial1Application {
 			u3.setTiposUsuario(List.of(repartidor));
 			usuarioRepository.save(u3);
 
-			Usuario u4 = Usuario.builder()
-					.dni("22386759")
-					.username("shell")
-					.email("shell@gmail.com")
-					.direccion("Barrio El marquesado M A C 12")
-					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaUsuario(null)
-					.nombreCompletoUsuario("Osvaldo Scaglione")
-					.password(passwordEncoder.encode("123"))
-					.telefono("433619")
-					.build();
+//			Usuario u4 = Usuario.builder()
+//					.dni("22386759")
+//					.username("shell")
+//					.email("shell@gmail.com")
+//					.direccion("Barrio El marquesado M A C 12")
+//					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaUsuario(null)
+//					.nombreCompletoUsuario("Osvaldo Scaglione")
+//					.password(passwordEncoder.encode("123"))
+//					.telefono("433619")
+//					.build();
+//
+//			u4.setTiposUsuario(List.of(cliente));
+//			usuarioRepository.save(u4);
 
-			u4.setTiposUsuario(List.of(cliente));
-			usuarioRepository.save(u4);
-
-			Usuario u5 = Usuario.builder()
-					.dni("5489750")
-					.username("ErwinBoy")
-					.email("erwin@gmail.com")
-					.direccion("Barrio Canciller M D C 32")
-					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaUsuario(null)
-					.nombreCompletoUsuario("Erwin Rodriguez")
-					.password(passwordEncoder.encode("123"))
-					.telefono("466678")
-					.build();
-
-			u5.setTiposUsuario(List.of(cliente));
-			usuarioRepository.save(u5);
+//			Usuario u5 = Usuario.builder()
+//					.dni("5489750")
+//					.username("ErwinBoy")
+//					.email("erwin@gmail.com")
+//					.direccion("Barrio Canciller M D C 32")
+//					.fechaHoraAltaUsuario(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaUsuario(null)
+//					.nombreCompletoUsuario("Erwin Rodriguez")
+//					.password(passwordEncoder.encode("123"))
+//					.telefono("466678")
+//					.build();
+//
+//			u5.setTiposUsuario(List.of(cliente));
+//			usuarioRepository.save(u5);
 
 
 			/*---------Alta Estado Pedido---------*/
@@ -337,7 +337,7 @@ public class Inicial1Application {
 			insumoRepository.save(i2);
 
 			Insumo i3 = Insumo.builder()
-					.nombreInsumo("Salame picado grueso")
+					.nombreInsumo("Salame")
 					.descripcionInsumo("Pieza de 3kg p/cortar")
 					.precioCompraInsumo(4000.00)
 					.fechaHoraAltaInsumo(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
@@ -376,415 +376,435 @@ public class Inicial1Application {
 
 			insumoRepository.save(i6);
 
+			Insumo i7 = Insumo.builder()
+					.nombreInsumo("Queso Tybo")
+					.descripcionInsumo("Pieza 5KG")
+					.precioCompraInsumo(1300.00)
+					.fechaHoraAltaInsumo(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraBajaInsumo(null)
+					.build();
+
+			insumoRepository.save(i7);
+
+			Insumo i8 = Insumo.builder()
+					.nombreInsumo("Milanesa de Carne")
+					.descripcionInsumo("Unidad de milanesa")
+					.precioCompraInsumo(1300.00)
+					.fechaHoraAltaInsumo(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+					.fechaHoraBajaInsumo(null)
+					.build();
+
+			insumoRepository.save(i8);
+
 			/*---------Alta ProductoInsumo---------*/
 
-			ProductoInsumo pi1 = ProductoInsumo.builder()
-					.cantidadInsumo(2)
-					.build();
-
-			pi1.setInsumo(i1);//COCIDO
-
-			ProductoInsumo pi2 = ProductoInsumo.builder()
-					.cantidadInsumo(3)
-					.build();
-
-			pi2.setInsumo(i4);//Pan de miga
-
-			ProductoInsumo pi3 = ProductoInsumo.builder()
-					.cantidadInsumo(5)
-					.build();
-
-			pi3.setInsumo(i5);//Mayonesa
-
-			ProductoInsumo pi4 = ProductoInsumo.builder()
-					.cantidadInsumo(3)
-					.build();
-
-			pi4.setInsumo(i2);//Jamon crudo
-
-			ProductoInsumo pi5 = ProductoInsumo.builder()
-					.cantidadInsumo(1)
-					.build();
-
-			pi5.setInsumo(i3);//Salame
-
-			ProductoInsumo pi6 = ProductoInsumo.builder()
-					.cantidadInsumo(3)
-					.build();
-
-			pi6.setInsumo(i6);//Miga integral
+//			ProductoInsumo pi1 = ProductoInsumo.builder()
+//					.cantidadInsumo(2)
+//					.build();
+//
+//			pi1.setInsumo(i1);//COCIDO
+//
+//			ProductoInsumo pi2 = ProductoInsumo.builder()
+//					.cantidadInsumo(3)
+//					.build();
+//
+//			pi2.setInsumo(i4);//Pan de miga
+//
+//			ProductoInsumo pi3 = ProductoInsumo.builder()
+//					.cantidadInsumo(5)
+//					.build();
+//
+//			pi3.setInsumo(i5);//Mayonesa
+//
+//			ProductoInsumo pi4 = ProductoInsumo.builder()
+//					.cantidadInsumo(3)
+//					.build();
+//
+//			pi4.setInsumo(i2);//Jamon crudo
+//
+//			ProductoInsumo pi5 = ProductoInsumo.builder()
+//					.cantidadInsumo(1)
+//					.build();
+//
+//			pi5.setInsumo(i3);//Salame
+//
+//			ProductoInsumo pi6 = ProductoInsumo.builder()
+//					.cantidadInsumo(3)
+//					.build();
+//
+//			pi6.setInsumo(i6);//Miga integral
 
 
 			/*---------Alta Producto---------*/
 			/*Da error si vinculamos un pi a un producto ya que esto es invalido por el DC*/
 
-			Producto triplejyq = Producto.builder()
-					.nombreProducto("Triple Jamon Cocido")
-					.descripcionProducto("Sandwich triple de jamon cocido y queso")
-					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaProducto(null)
-					.build();
-
-			triplejyq.setProductoInsumoList(List.of(pi1));
-			triplejyq.setCategoria(c3);
-			productoRepository.save(triplejyq);
-
-			Producto trsalame = Producto.builder()
-					.nombreProducto("Triple Salame")
-					.descripcionProducto("Sandwich triple de salame y queso")
-					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaProducto(null)
-					.build();
-
-			trsalame.setProductoInsumoList(List.of(pi2));
-			trsalame.setCategoria(c3);
-			productoRepository.save(trsalame);
-
-			Producto trcrudo = Producto.builder()
-					.nombreProducto("Triple crudo")
-					.descripcionProducto("Sandwich triple de Jamon crudo y queso")
-					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaProducto(null)
-					.build();
-
-			trcrudo.setProductoInsumoList(List.of(pi3));
-			trcrudo.setCategoria(c3);
-			productoRepository.save(trcrudo);
-
-			Producto simplejyq = Producto.builder()
-					.nombreProducto("Escolar JyQ")
-					.descripcionProducto("Sandwich simple de Jamon cocido y queso")
-					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaProducto(null)
-					.build();
-
-			simplejyq.setProductoInsumoList(List.of(pi4));
-			simplejyq.setCategoria(c1);
-			productoRepository.save(simplejyq);
-
-			Producto blisterjyq = Producto.builder()
-					.nombreProducto("Blister x6 JyQ")
-					.descripcionProducto("x6 Sandwich de Jamon cocido y queso")
-					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaProducto(null)
-					.build();
-
-			blisterjyq.setProductoInsumoList(List.of(pi5));
-			blisterjyq.setCategoria(c4);
-			productoRepository.save(blisterjyq);
-
-			Producto blistercrudo = Producto.builder()
-					.nombreProducto("Blister x6 Crudo")
-					.descripcionProducto("x6 Sandwich de Jamon crudo y queso")
-					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaProducto(null)
-					.build();
-
-			blistercrudo.setProductoInsumoList(List.of(pi6));
-			blistercrudo.setCategoria(c4);
-			productoRepository.save(blistercrudo);
-
-			Producto blistercombinado = Producto.builder()
-					.nombreProducto("Blister x6 Combinado")
-					.descripcionProducto("x6 Sandwich de Jamon cocido y crudo en pan integral")
-					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaProducto(null)
-					.build();
-
-			blistercombinado.setProductoInsumoList(null); //No poner piX ya utilizados en anteriores productos
-			blistercombinado.setCategoria(c4);
-			productoRepository.save(blistercombinado);
-
-			Producto milanesa = Producto.builder()
-					.nombreProducto("Milanesa Simple")
-					.descripcionProducto("Sandwich de milanesa simple con jamon, queso y mayonesa")
-					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaProducto(null)
-					.build();
-
-			milanesa.setProductoInsumoList(null);
-			milanesa.setCategoria(c5);
-			productoRepository.save(milanesa);
+//			Producto triplejyq = Producto.builder()
+//					.nombreProducto("Triple Jamon Cocido")
+//					.descripcionProducto("Sandwich triple de jamon cocido y queso")
+//					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaProducto(null)
+//					.build();
+//
+//			triplejyq.setProductoInsumoList(List.of(pi1));
+//			triplejyq.setCategoria(c3);
+//			productoRepository.save(triplejyq);
+//
+//			Producto trsalame = Producto.builder()
+//					.nombreProducto("Triple Salame")
+//					.descripcionProducto("Sandwich triple de salame y queso")
+//					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaProducto(null)
+//					.build();
+//
+//			trsalame.setProductoInsumoList(List.of(pi2));
+//			trsalame.setCategoria(c3);
+//			productoRepository.save(trsalame);
+//
+//			Producto trcrudo = Producto.builder()
+//					.nombreProducto("Triple crudo")
+//					.descripcionProducto("Sandwich triple de Jamon crudo y queso")
+//					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaProducto(null)
+//					.build();
+//
+//			trcrudo.setProductoInsumoList(List.of(pi3));
+//			trcrudo.setCategoria(c3);
+//			productoRepository.save(trcrudo);
+//
+//			Producto simplejyq = Producto.builder()
+//					.nombreProducto("Escolar JyQ")
+//					.descripcionProducto("Sandwich simple de Jamon cocido y queso")
+//					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaProducto(null)
+//					.build();
+//
+//			simplejyq.setProductoInsumoList(List.of(pi4));
+//			simplejyq.setCategoria(c1);
+//			productoRepository.save(simplejyq);
+//
+//			Producto blisterjyq = Producto.builder()
+//					.nombreProducto("Blister x6 JyQ")
+//					.descripcionProducto("x6 Sandwich de Jamon cocido y queso")
+//					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaProducto(null)
+//					.build();
+//
+//			blisterjyq.setProductoInsumoList(List.of(pi5));
+//			blisterjyq.setCategoria(c4);
+//			productoRepository.save(blisterjyq);
+//
+//			Producto blistercrudo = Producto.builder()
+//					.nombreProducto("Blister x6 Crudo")
+//					.descripcionProducto("x6 Sandwich de Jamon crudo y queso")
+//					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaProducto(null)
+//					.build();
+//
+//			blistercrudo.setProductoInsumoList(List.of(pi6));
+//			blistercrudo.setCategoria(c4);
+//			productoRepository.save(blistercrudo);
+//
+//			Producto blistercombinado = Producto.builder()
+//					.nombreProducto("Blister x6 Combinado")
+//					.descripcionProducto("x6 Sandwich de Jamon cocido y crudo en pan integral")
+//					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaProducto(null)
+//					.build();
+//
+//			blistercombinado.setProductoInsumoList(null); //No poner piX ya utilizados en anteriores productos
+//			blistercombinado.setCategoria(c4);
+//			productoRepository.save(blistercombinado);
+//
+//			Producto milanesa = Producto.builder()
+//					.nombreProducto("Milanesa Simple")
+//					.descripcionProducto("Sandwich de milanesa simple con jamon, queso y mayonesa")
+//					.fechaHoraAltaProducto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaProducto(null)
+//					.build();
+//
+//			milanesa.setProductoInsumoList(null);
+//			milanesa.setCategoria(c5);
+//			productoRepository.save(milanesa);
 
 
 			/*---------Alta Sucursal Producto---------*/
 
-			SucursalProducto sp1 = SucursalProducto.builder()
-					.precioSucursalProducto(2900D)
-					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.build();
-
-			sp1.setProducto(triplejyq);
-
-			SucursalProducto sp2 = SucursalProducto.builder()
-					.precioSucursalProducto(2700D)
-					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.build();
-
-			sp2.setProducto(triplejyq);
-
-			SucursalProducto sp3 = SucursalProducto.builder()
-					.precioSucursalProducto(3500D)
-					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.build();
-
-			sp3.setProducto(triplejyq);
-
-			SucursalProducto sp4 = SucursalProducto.builder()
-					.precioSucursalProducto(3800D)
-					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.build();
-
-			sp4.setProducto(triplejyq);
-
-			SucursalProducto sp5 = SucursalProducto.builder()
-					.precioSucursalProducto(3700D)
-					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.build();
-
-			sp5.setProducto(trcrudo);
-
-			SucursalProducto sp6 = SucursalProducto.builder()
-					.precioSucursalProducto(6500D)
-					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.build();
-
-			sp6.setProducto(blisterjyq);
-
-			SucursalProducto sp7 = SucursalProducto.builder()
-					.precioSucursalProducto(1700D)
-					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.build();
-
-			sp7.setProducto(simplejyq);
-
-			SucursalProducto sp8 = SucursalProducto.builder()
-					.precioSucursalProducto(4200D)
-					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.build();
-
-			sp8.setProducto(milanesa);
+//			SucursalProducto sp1 = SucursalProducto.builder()
+//					.precioSucursalProducto(2900D)
+//					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.build();
+//
+//			sp1.setProducto(triplejyq);
+//
+//			SucursalProducto sp2 = SucursalProducto.builder()
+//					.precioSucursalProducto(2700D)
+//					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.build();
+//
+//			sp2.setProducto(triplejyq);
+//
+//			SucursalProducto sp3 = SucursalProducto.builder()
+//					.precioSucursalProducto(3500D)
+//					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.build();
+//
+//			sp3.setProducto(triplejyq);
+//
+//			SucursalProducto sp4 = SucursalProducto.builder()
+//					.precioSucursalProducto(3800D)
+//					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.build();
+//
+//			sp4.setProducto(triplejyq);
+//
+//			SucursalProducto sp5 = SucursalProducto.builder()
+//					.precioSucursalProducto(3700D)
+//					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.build();
+//
+//			sp5.setProducto(trcrudo);
+//
+//			SucursalProducto sp6 = SucursalProducto.builder()
+//					.precioSucursalProducto(6500D)
+//					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.build();
+//
+//			sp6.setProducto(blisterjyq);
+//
+//			SucursalProducto sp7 = SucursalProducto.builder()
+//					.precioSucursalProducto(1700D)
+//					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.build();
+//
+//			sp7.setProducto(simplejyq);
+//
+//			SucursalProducto sp8 = SucursalProducto.builder()
+//					.precioSucursalProducto(4200D)
+//					.fechaHoraUltModif(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.build();
+//
+//			sp8.setProducto(milanesa);
 
 			/*---------Alta Sucursal---------*/
 
-			Sucursal s1 = Sucursal.builder()
-					.nombreSucursal("BEBE I")
-					.direccionSucursal("Sarmiento 432")
-					.descripcionSucursal("Erwin boy mitad de cuadra")
-					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s1.setSucursalProductoList(List.of(sp2, sp6));
-			s1.setUsuario(u5);
-
-			sucursalRepository.save(s1);
-
-			Sucursal s2 = Sucursal.builder()
-					.nombreSucursal("BEBE II")
-					.direccionSucursal("Ozamis y San Martin")
-					.descripcionSucursal("Erwin boy esquina")
-					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s2.setSucursalProductoList(List.of(sp1));
-			s2.setUsuario(u5);
-
-			sucursalRepository.save(s2);
-
-			Sucursal s3 = Sucursal.builder()
-					.nombreSucursal("BEBE III")
-					.direccionSucursal("Padre Vazquez 435")
-					.descripcionSucursal("Erwin boy original casi esquina")
-					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s3.setSucursalProductoList(List.of(sp7));
-			s3.setUsuario(u5);
-
-			sucursalRepository.save(s3);
-
-			Sucursal s4 = Sucursal.builder()
-					.nombreSucursal("W21 I")
-					.direccionSucursal("Av. Vistalba 231")
-					.descripcionSucursal("")
-					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s4.setSucursalProductoList(List.of(sp8));
-			s4.setUsuario(u1);
-
-			sucursalRepository.save(s4);
-
-			Sucursal s5 = Sucursal.builder()
-					.nombreSucursal("W21 II")
-					.direccionSucursal("Av. Saenz Peña 786")
-					.descripcionSucursal("Sucursal mitad de cuadra")
-					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s5.setSucursalProductoList(null);
-			s5.setUsuario(u1);
-
-			sucursalRepository.save(s5);
-
-			Sucursal s6 = Sucursal.builder()
-					.nombreSucursal("Shell Maipu")
-					.direccionSucursal("Ozamis 433")
-					.descripcionSucursal("Shell esquina Ozamis y Mitre")
-					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s6.setSucursalProductoList(null);
-			s6.setUsuario(u4);
-
-			sucursalRepository.save(s6);
-
-			Sucursal s7 = Sucursal.builder()
-					.nombreSucursal("Shell La Consulta")
-					.direccionSucursal("Huarpes 324")
-					.descripcionSucursal("Shell esquina Huarpes y Colon")
-					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s7.setSucursalProductoList(null);
-			s7.setUsuario(u4);
-
-			sucursalRepository.save(s7);
-
-			Sucursal s8 = Sucursal.builder()
-					.nombreSucursal("Shell Eugenio Bustos")
-					.direccionSucursal("Ruta Nacional 40 y San Juan Bosco")
-					.descripcionSucursal("IIP S.A")
-					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaSucursal(null)
-					.build();
-			s8.setSucursalProductoList(null);
-			s8.setUsuario(u4);
-
-			sucursalRepository.save(s8);
+//			Sucursal s1 = Sucursal.builder()
+//					.nombreSucursal("BEBE I")
+//					.direccionSucursal("Sarmiento 432")
+//					.descripcionSucursal("Erwin boy mitad de cuadra")
+//					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaSucursal(null)
+//					.build();
+//			s1.setSucursalProductoList(List.of(sp2, sp6));
+//			s1.setUsuario(u5);
+//
+//			sucursalRepository.save(s1);
+//
+//			Sucursal s2 = Sucursal.builder()
+//					.nombreSucursal("BEBE II")
+//					.direccionSucursal("Ozamis y San Martin")
+//					.descripcionSucursal("Erwin boy esquina")
+//					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaSucursal(null)
+//					.build();
+//			s2.setSucursalProductoList(List.of(sp1));
+//			s2.setUsuario(u5);
+//
+//			sucursalRepository.save(s2);
+//
+//			Sucursal s3 = Sucursal.builder()
+//					.nombreSucursal("BEBE III")
+//					.direccionSucursal("Padre Vazquez 435")
+//					.descripcionSucursal("Erwin boy original casi esquina")
+//					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaSucursal(null)
+//					.build();
+//			s3.setSucursalProductoList(List.of(sp7));
+//			s3.setUsuario(u5);
+//
+//			sucursalRepository.save(s3);
+//
+//			Sucursal s4 = Sucursal.builder()
+//					.nombreSucursal("W21 I")
+//					.direccionSucursal("Av. Vistalba 231")
+//					.descripcionSucursal("")
+//					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaSucursal(null)
+//					.build();
+//			s4.setSucursalProductoList(List.of(sp8));
+//			s4.setUsuario(u1);
+//
+//			sucursalRepository.save(s4);
+//
+//			Sucursal s5 = Sucursal.builder()
+//					.nombreSucursal("W21 II")
+//					.direccionSucursal("Av. Saenz Peña 786")
+//					.descripcionSucursal("Sucursal mitad de cuadra")
+//					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaSucursal(null)
+//					.build();
+//			s5.setSucursalProductoList(null);
+//			s5.setUsuario(u1);
+//
+//			sucursalRepository.save(s5);
+//
+//			Sucursal s6 = Sucursal.builder()
+//					.nombreSucursal("Shell Maipu")
+//					.direccionSucursal("Ozamis 433")
+//					.descripcionSucursal("Shell esquina Ozamis y Mitre")
+//					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaSucursal(null)
+//					.build();
+//			s6.setSucursalProductoList(null);
+//			s6.setUsuario(u4);
+//
+//			sucursalRepository.save(s6);
+//
+//			Sucursal s7 = Sucursal.builder()
+//					.nombreSucursal("Shell La Consulta")
+//					.direccionSucursal("Huarpes 324")
+//					.descripcionSucursal("Shell esquina Huarpes y Colon")
+//					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaSucursal(null)
+//					.build();
+//			s7.setSucursalProductoList(null);
+//			s7.setUsuario(u4);
+//
+//			sucursalRepository.save(s7);
+//
+//			Sucursal s8 = Sucursal.builder()
+//					.nombreSucursal("Shell Eugenio Bustos")
+//					.direccionSucursal("Ruta Nacional 40 y San Juan Bosco")
+//					.descripcionSucursal("IIP S.A")
+//					.fechaHoraAltaSucursal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaSucursal(null)
+//					.build();
+//			s8.setSucursalProductoList(null);
+//			s8.setUsuario(u4);
+//
+//			sucursalRepository.save(s8);
 
 			/*---------Alta DetallePedido---------*/
 
-			DetallePedido dp1 = DetallePedido.builder()
-					.cantidadDetallePedido(3)
-					.subtotalDetallePedido(9000.0)
-					.build();
-
-			dp1.setProducto(triplejyq);
-
-			DetallePedido dp2 = DetallePedido.builder()
-					.cantidadDetallePedido(2)
-					.subtotalDetallePedido(4000.0)
-					.build();
-
-			dp2.setProducto(trsalame);
-
-			DetallePedido dp3 = DetallePedido.builder()
-					.cantidadDetallePedido(2)
-					.subtotalDetallePedido(5500.0)
-					.build();
-
-			dp3.setProducto(trcrudo);
-
-			DetallePedido dp4 = DetallePedido.builder()
-					.cantidadDetallePedido(25)
-					.subtotalDetallePedido(32500.0)
-					.build();
-
-			dp4.setProducto(simplejyq);
-
-			DetallePedido dp5 = DetallePedido.builder()
-					.cantidadDetallePedido(1)
-					.subtotalDetallePedido(2900.0)
-					.build();
-
-			dp5.setProducto(triplejyq);
-
-			DetallePedido dp6 = DetallePedido.builder()
-					.cantidadDetallePedido(1)
-					.subtotalDetallePedido(3050.0)
-					.build();
-			dp6.setProducto(trcrudo);
+//			DetallePedido dp1 = DetallePedido.builder()
+//					.cantidadDetallePedido(3)
+//					.subtotalDetallePedido(9000.0)
+//					.build();
+//
+//			dp1.setProducto(triplejyq);
+//
+//			DetallePedido dp2 = DetallePedido.builder()
+//					.cantidadDetallePedido(2)
+//					.subtotalDetallePedido(4000.0)
+//					.build();
+//
+//			dp2.setProducto(trsalame);
+//
+//			DetallePedido dp3 = DetallePedido.builder()
+//					.cantidadDetallePedido(2)
+//					.subtotalDetallePedido(5500.0)
+//					.build();
+//
+//			dp3.setProducto(trcrudo);
+//
+//			DetallePedido dp4 = DetallePedido.builder()
+//					.cantidadDetallePedido(25)
+//					.subtotalDetallePedido(32500.0)
+//					.build();
+//
+//			dp4.setProducto(simplejyq);
+//
+//			DetallePedido dp5 = DetallePedido.builder()
+//					.cantidadDetallePedido(1)
+//					.subtotalDetallePedido(2900.0)
+//					.build();
+//
+//			dp5.setProducto(triplejyq);
+//
+//			DetallePedido dp6 = DetallePedido.builder()
+//					.cantidadDetallePedido(1)
+//					.subtotalDetallePedido(3050.0)
+//					.build();
+//			dp6.setProducto(trcrudo);
 
 			/*---------Alta Pedido---------*/
 
-			Pedido p1 = Pedido.builder()
-					.descripcionPedido("Pedido #1")
-					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaPedido(null)
-					.build();
-
-			p1.setSucursal(s1);
-			p1.setEstadoPedido(creado);
-			p1.setDetallePedidoList(List.of(dp2));
-			p1.setImporteTotalPedido(4000.0);
-
-			pedidoRepository.save(p1);
-
-			Pedido p2 = Pedido.builder()
-					.descripcionPedido("Pedido #2")
-					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaPedido(null)
-					.build();
-
-			p2.setSucursal(s2);
-			p2.setEstadoPedido(creado);
-			p2.setDetallePedidoList(List.of(dp1, dp3));
-			p2.setImporteTotalPedido(14500.0);
-
-			pedidoRepository.save(p2);
-
-			Pedido p3 = Pedido.builder()
-					.descripcionPedido("Pedido #3")
-					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaPedido(null)
-					.build();
-
-			p3.setSucursal(s3);
-			p3.setEstadoPedido(creado);
-			p3.setDetallePedidoList(List.of(dp4));
-			p3.setImporteTotalPedido(32500.0);
-
-			pedidoRepository.save(p3);
-
-			Pedido p4 = Pedido.builder()
-					.descripcionPedido("Pedido #4")
-					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaPedido(null)
-					.build();
-
-			p4.setSucursal(s4);
-			p4.setEstadoPedido(creado);
-			p4.setDetallePedidoList(List.of(dp5, dp6));
-			p4.setImporteTotalPedido(5950.0);
-
-			pedidoRepository.save(p4);
-
-			Pedido p5 = Pedido.builder()
-					.descripcionPedido("Pedido Vacio")
-					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaPedido(null)
-					.build();
-
-			p5.setSucursal(s8);
-			p5.setEstadoPedido(creado);
-			p5.setDetallePedidoList(null);
-			p5.setImporteTotalPedido(0.0);
-
-			pedidoRepository.save(p5);
-
-			Pedido p6 = Pedido.builder()
-					.descripcionPedido("Pedido Vacio #2")
-					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraBajaPedido(null)
-					.build();
-
-			p6.setSucursal(s1);
-			p6.setEstadoPedido(creado);
-			p6.setDetallePedidoList(null);
-			p6.setImporteTotalPedido(0.0);
-
-			pedidoRepository.save(p6);
+//			Pedido p1 = Pedido.builder()
+//					.descripcionPedido("Pedido #1")
+//					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaPedido(null)
+//					.build();
+//
+//			p1.setSucursal(s1);
+//			p1.setEstadoPedido(creado);
+//			p1.setDetallePedidoList(List.of(dp2));
+//			p1.setImporteTotalPedido(4000.0);
+//
+//			pedidoRepository.save(p1);
+//
+//			Pedido p2 = Pedido.builder()
+//					.descripcionPedido("Pedido #2")
+//					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaPedido(null)
+//					.build();
+//
+//			p2.setSucursal(s2);
+//			p2.setEstadoPedido(creado);
+//			p2.setDetallePedidoList(List.of(dp1, dp3));
+//			p2.setImporteTotalPedido(14500.0);
+//
+//			pedidoRepository.save(p2);
+//
+//			Pedido p3 = Pedido.builder()
+//					.descripcionPedido("Pedido #3")
+//					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaPedido(null)
+//					.build();
+//
+//			p3.setSucursal(s3);
+//			p3.setEstadoPedido(creado);
+//			p3.setDetallePedidoList(List.of(dp4));
+//			p3.setImporteTotalPedido(32500.0);
+//
+//			pedidoRepository.save(p3);
+//
+//			Pedido p4 = Pedido.builder()
+//					.descripcionPedido("Pedido #4")
+//					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaPedido(null)
+//					.build();
+//
+//			p4.setSucursal(s4);
+//			p4.setEstadoPedido(creado);
+//			p4.setDetallePedidoList(List.of(dp5, dp6));
+//			p4.setImporteTotalPedido(5950.0);
+//
+//			pedidoRepository.save(p4);
+//
+//			Pedido p5 = Pedido.builder()
+//					.descripcionPedido("Pedido Vacio")
+//					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaPedido(null)
+//					.build();
+//
+//			p5.setSucursal(s8);
+//			p5.setEstadoPedido(creado);
+//			p5.setDetallePedidoList(null);
+//			p5.setImporteTotalPedido(0.0);
+//
+//			pedidoRepository.save(p5);
+//
+//			Pedido p6 = Pedido.builder()
+//					.descripcionPedido("Pedido Vacio #2")
+//					.fechaHoraAltaPedido(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraBajaPedido(null)
+//					.build();
+//
+//			p6.setSucursal(s1);
+//			p6.setEstadoPedido(creado);
+//			p6.setDetallePedidoList(null);
+//			p6.setImporteTotalPedido(0.0);
+//
+//			pedidoRepository.save(p6);
 
 			/*---------Alta EstadoReparto---------*/
 
@@ -817,67 +837,67 @@ public class Inicial1Application {
 
 			/*---------Alta Reparto---------*/
 
-			Reparto r1 = Reparto.builder()
-					.nombreReparto("Tunuyan/San Carlos/E. Bustos")
-					.descripcionReparto("Recorrido por el sur, aprox. 6hs")
-					.fechaHoraInicioReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraFinReparto(null)
-					.rendicion(new Rendicion(0D, 0D, 0D, 0D, null))
-					.build();
-
-			r1.setPedidosList(List.of(p1, p4));
-			r1.setEstadoReparto(er1);
-			r1.setUsuario(u3);
-			repartoRepository.save(r1);
-
-			Reparto r2 = Reparto.builder()
-					.nombreReparto("Lujan/Vistalba")
-					.descripcionReparto("Recorrido semanal, aprox. 3hs")
-					.fechaHoraInicioReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.fechaHoraFinReparto(null)
-					.rendicion(new Rendicion(0D, 0D, 0D, 0D, null))
-					.build();
-
-			r2.setPedidosList(List.of(p2));
-			r2.setEstadoReparto(er2);
-			r2.setUsuario(u3);
-			repartoRepository.save(r2);
+//			Reparto r1 = Reparto.builder()
+//					.nombreReparto("Tunuyan/San Carlos/E. Bustos")
+//					.descripcionReparto("Recorrido por el sur, aprox. 6hs")
+//					.fechaHoraInicioReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraFinReparto(null)
+//					.rendicion(new Rendicion(0D, 0D, 0D, 0D, null))
+//					.build();
+//
+//			r1.setPedidosList(List.of(p1, p4));
+//			r1.setEstadoReparto(er1);
+//			r1.setUsuario(u3);
+//			repartoRepository.save(r1);
+//
+//			Reparto r2 = Reparto.builder()
+//					.nombreReparto("Lujan/Vistalba")
+//					.descripcionReparto("Recorrido semanal, aprox. 3hs")
+//					.fechaHoraInicioReparto(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.fechaHoraFinReparto(null)
+//					.rendicion(new Rendicion(0D, 0D, 0D, 0D, null))
+//					.build();
+//
+//			r2.setPedidosList(List.of(p2));
+//			r2.setEstadoReparto(er2);
+//			r2.setUsuario(u3);
+//			repartoRepository.save(r2);
 
 			/*---------Alta Conteo Stock---------*/
 
-			ConteoStockInsumo csi = ConteoStockInsumo.builder()
-					.cantidadStockInsumo(3)
-					.build();
-
-			csi.setInsumo(i1);
-
-			ConteoStockInsumo csi2 = ConteoStockInsumo.builder()
-					.cantidadStockInsumo(2)
-					.build();
-
-			csi2.setInsumo(i2);
-
-			ConteoStockProducto csp = ConteoStockProducto.builder()
-					.cantidadStockProducto(100)
-					.build();
-
-			csp.setProducto(triplejyq);
-
-			ConteoStockProducto csp2 = ConteoStockProducto.builder()
-					.cantidadStockProducto(50)
-					.build();
-
-			csp2.setProducto(trsalame);
-
-			ConteoStock cs = ConteoStock.builder()
-					.fechaHoraAltaConteoStock(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-					.build();
-
-			cs.setCsinsumosList(List.of(csi, csi2));
-			cs.setCsproductosList(List.of(csp, csp2));
-			cs.setUsuario(u2);
-
-			conteoStockRepository.save(cs);
+//			ConteoStockInsumo csi = ConteoStockInsumo.builder()
+//					.cantidadStockInsumo(3)
+//					.build();
+//
+//			csi.setInsumo(i1);
+//
+//			ConteoStockInsumo csi2 = ConteoStockInsumo.builder()
+//					.cantidadStockInsumo(2)
+//					.build();
+//
+//			csi2.setInsumo(i2);
+//
+//			ConteoStockProducto csp = ConteoStockProducto.builder()
+//					.cantidadStockProducto(100)
+//					.build();
+//
+//			csp.setProducto(triplejyq);
+//
+//			ConteoStockProducto csp2 = ConteoStockProducto.builder()
+//					.cantidadStockProducto(50)
+//					.build();
+//
+//			csp2.setProducto(trsalame);
+//
+//			ConteoStock cs = ConteoStock.builder()
+//					.fechaHoraAltaConteoStock(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//					.build();
+//
+//			cs.setCsinsumosList(List.of(csi, csi2));
+//			cs.setCsproductosList(List.of(csp, csp2));
+//			cs.setUsuario(u2);
+//
+//			conteoStockRepository.save(cs);
 		}
 
 		};

@@ -205,46 +205,48 @@ public class RepartoServiceImpl extends BaseServiceImpl<Reparto,Long> implements
     public Rendicion realizarRendicion(RealizarRendicionDTO realizarRendicionDTO) throws Exception {
 
         try{
-            //Traer la rendicion del reparto ya creada
-            Reparto r1 = repartoRepository.findById(realizarRendicionDTO.getIdReparto()).orElseThrow(() -> new RuntimeException("Reparto No encontrado"));
+            // 1. Traer la rendicion del reparto ya creada
+            Reparto r1 = repartoRepository.findById(realizarRendicionDTO.getIdReparto())
+                    .orElseThrow(() -> new RuntimeException("Reparto No encontrado"));
 
-            //Tengo que verificar si el estado del reparto esta finalizado si no no se puede hacer la rendicion todavia
+            // 2. Verificar si el estado del reparto esta finalizado
             if(!r1.getEstadoReparto().getNombreEstadoReparto().equals("FINALIZADO")){
                 throw new RuntimeException("El reparto no esta finalizado todavía");
             }
 
-            //Obtengo la rendicion
             Rendicion rendicion = r1.getRendicion();
 
-            //Variable para guardar el monto total del reparto
+            // 3. Calcular el total del reparto
             Double montoTotal = 0D;
-
-            //Calcular el total del reparto (suma de valores de todos los pedidos sin importar si se pagaron o no sin gastos incluidos)
-            for(Pedido p : r1.getPedidosList()){
-                montoTotal += p.getImporteTotalPedido();
+            if (r1.getPedidosList() != null) {
+                for(Pedido p : r1.getPedidosList()){
+                    Double importePedido = p.getImporteTotalPedido() != null ? p.getImporteTotalPedido() : 0D;
+                    montoTotal += importePedido;
+                }
             }
-
-            //Seteamos el monto total del reparto calculado en el for anterior
             rendicion.setMontoTotalReparto(montoTotal);
 
-            //Le setea a la rendicion el monto total recaudado (contado por el repartidor al final de su recorrido)
-            r1.getRendicion().setMontoRendido(realizarRendicionDTO.getMontoRendido());
+            // 4. Seteamos el monto rendido asegurando que no sea nulo
+            Double montoRendido = realizarRendicionDTO.getMontoRendido() != null ? realizarRendicionDTO.getMontoRendido() : 0D;
+            rendicion.setMontoRendido(montoRendido);
 
-            //Calculamos los gastos
+            // 5. Calculamos los gastos asegurando la nulidad
             Double gastoTotal = 0D;
-
-            for(Gasto gasto : rendicion.getGastos()){
-                gastoTotal += gasto.getMontoGasto();
+            if (rendicion.getGastos() != null) {
+                for(Gasto gasto : rendicion.getGastos()){
+                    Double montoGasto = gasto.getMontoGasto() != null ? gasto.getMontoGasto() : 0D;
+                    gastoTotal += montoGasto;
+                }
             }
 
-            //Debemos restarle al monto recaudado los gastos realizados
-            rendicion.setMontoRecaudado(rendicion.getMontoRecaudado() - gastoTotal);
+            // 6. Previene error de null pointer exception cuando el monto recaudado en el reparto ha sido cero
+            Double recaudadoActual = rendicion.getMontoRecaudado() != null ? rendicion.getMontoRecaudado() : 0D;
 
-            //Calculo de rendicion y diferencia
-            rendicion.setDiferencia(r1.getRendicion().getMontoRendido() - rendicion.getMontoRecaudado());
+            // 7. Aplicamos las restas con los valores seguros
+            rendicion.setMontoRecaudado(recaudadoActual - gastoTotal);
+            rendicion.setDiferencia(montoRendido - rendicion.getMontoRecaudado());
 
             return rendicion;
-
 
         } catch (Exception e) {
             e.printStackTrace();
