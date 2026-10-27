@@ -11,7 +11,13 @@ import java.util.List;
 public interface SucursalProductoRepository extends BaseRepository<SucursalProducto, Long>{
 
 //    @Query("SELECT sp FROM SucursalProducto sp WHERE sp.sucursal.id = :idSucursal")
-    @Query(value = "SELECT * FROM sucursal_producto WHERE fk_sucursal_id = :idSucursal", nativeQuery = true)
+    @Query(value = "SELECT sp FROM SucursalProducto sp \n" +
+            "WHERE sp.sucursal.id = :idSucursal \n" +
+            "AND sp.fechaHoraUltimaModificacion = (\n" +
+            "    SELECT MAX(sp2.fechaHoraUltimaModificacion) \n" +
+            "    FROM SucursalProducto sp2 \n" +
+            "    WHERE sp2.producto.id = sp.producto.id AND sp2.sucursal.id = :idSucursal\n" +
+            ")", nativeQuery = true)
     public List<SucursalProducto> obtenerPreciosPorSucursal(@Param("idSucursal") Long idSucursal );
 
 }
